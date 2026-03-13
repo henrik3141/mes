@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MES</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+<title>References for Multiple Eisenstein Series</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -612,9 +612,9 @@ const AUTHORS = [
   { id: "yaddaden", name: "Khalef Yaddaden", url: "https://khalefyaddaden.github.io/", affiliation: "University of Caen-Normandie", affiliation_ja: "カーン・ノルマンディー大学" },
   { id: "kaneko", name: "Masanobu Kaneko", name_ja: "金子 昌信", url: "https://www2.math.kyushu-u.ac.jp/~mkaneko/", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
   { id: "sakugawa", name: "Kenji Sakugawa", name_ja: "佐久川 健司", url: "https://sites.google.com/site/kenjisakugawashomepage/home", affiliation: "Shinshu University", affiliation_ja: "信州大学" },
-  { id: "hara", name: "Takuya Hara", name_ja: "原 卓也", url: "https://edu.tsuda.ac.jp/~t-hara/index.html", affiliation: "Tsuda University", affiliation_ja: "津田塾大学" },
+  { id: "hara", name: "Takashi Hara", name_ja: "原 隆", url: "https://edu.tsuda.ac.jp/~t-hara/index.html", affiliation: "Tsuda University", affiliation_ja: "津田塾大学" },
   { id: "hirose", name: "Minoru Hirose", name_ja: "廣瀬 稔", url: "https://sites.google.com/view/minoru-hirose/english", affiliation: "Kagoshima University", affiliation_ja: "鹿児島大学" },
-  { id: "sato", name: "Nobuo Sato", name_ja: "佐藤 信夫", url: "", affiliation: "", affiliation_ja: "" },
+  { id: "sato", name: "Nobuo Sato", name_ja: "佐藤 信夫", url: "", affiliation: "National Taiwan University", affiliation_ja: "国立台湾大学" },
   { id: "gangl", name: "Herbert Gangl", url: "https://www.maths.dur.ac.uk/users/herbert.gangl/", affiliation: "Durham University", affiliation_ja: "ダラム大学" },
   { id: "zagier", name: "Don Zagier", url: "https://people.mpim-bonn.mpg.de/zagier/", affiliation: "Max Planck Institute / ICTP", affiliation_ja: "マックス・プランク研究所 / ICTP" },
   { id: "kina", name: "Katsumi Kina", name_ja: "喜納 勝海", url: "https://sites.google.com/view/katsumikina/", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
@@ -1687,6 +1687,32 @@ const REFERENCES = [
       { label: "Iwanami", url: "https://www.iwanami.co.jp/book/b10155812.html" }
     ],
     journal: "岩波数学叢書, Iwanami Shoten (2026)"
+  },
+  {
+    id: "v01",
+    title: "Multiple zeta values — Lecture 13: Multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2020,
+    type: "video",
+    tags: ["multiple Eisenstein series", "survey"],
+    language: "English",
+    links: [
+      { label: "YouTube", url: "https://www.youtube.com/watch?v=S18YQdM5Rrk" }
+    ],
+    journal: "MZV Lecture Series, Nagoya University, 2020"
+  },
+  {
+    id: "v02",
+    title: "Multiple zeta values — Lecture 14: Regularized multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2020,
+    type: "video",
+    tags: ["q-analogues", "multiple zeta values", "multiple Eisenstein series"],
+    language: "English",
+    links: [
+      { label: "YouTube", url: "https://www.youtube.com/watch?v=0IfomwIXJZo" }
+    ],
+    journal: "MZV Lecture Series, Nagoya University, 2020"
   }
 ];
 
@@ -1757,8 +1783,8 @@ const REFERENCES = [
 
   // Type names in Japanese
   const TYPE_NAME = {
-    en: { paper: 'paper', preprint: 'preprint', book: 'book', thesis: 'thesis', notes: 'notes', slides: 'slides', 'lecture notes': 'lecture notes', blog: 'blog' },
-    ja: { paper: '論文', preprint: 'プレプリント', book: '書籍', thesis: '学位論文', notes: 'ノート', slides: 'スライド', 'lecture notes': '講義ノート', blog: 'ブログ' }
+    en: { paper: 'paper', preprint: 'preprint', book: 'book', thesis: 'thesis', notes: 'notes', slides: 'slides', 'lecture notes': 'lecture notes', blog: 'blog', video: 'video' },
+    ja: { paper: '論文', preprint: 'プレプリント', book: '書籍', thesis: '学位論文', notes: 'ノート', slides: 'スライド', 'lecture notes': '講義ノート', blog: 'ブログ', video: '動画' }
   };
 
   let currentLang = 'en';
@@ -1810,7 +1836,8 @@ const REFERENCES = [
     'slides': '\u{1F4CA}',
     'lecture notes': '\u{1F4DA}',
     'thesis': '\u{1F393}',
-    'blog': '\u{1F310}'
+    'blog': '\u{1F310}',
+    'video': '\u{1F3AC}'
   };
 
   function langWithFlag(lang) {
@@ -2041,7 +2068,7 @@ const REFERENCES = [
 
   // --- Render authors ---
   // Type display order: paper first, then the rest
-  const TYPE_ORDER = ['paper', 'preprint', 'book', 'thesis', 'notes', 'slides', 'lecture notes', 'blog'];
+  const TYPE_ORDER = ['paper', 'preprint', 'book', 'thesis', 'notes', 'slides', 'lecture notes', 'blog', 'video'];
 
   function renderAuthors() {
     const list = $('#author-list');
