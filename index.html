@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multiple Eisenstein Series</title>
+<title>References for Multiple Eisenstein Series</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -136,6 +136,33 @@
     right: 0;
     height: 2px;
     background: var(--accent);
+  }
+
+  /* ===== SEARCH BAR ===== */
+  .search-bar {
+    margin-bottom: 0.8rem;
+  }
+
+  .search-bar input {
+    width: 100%;
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    border-radius: 3px;
+    transition: border-color var(--transition);
+  }
+
+  .search-bar input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .search-bar input::placeholder {
+    color: var(--border);
+    font-style: italic;
   }
 
   /* ===== FILTER BAR ===== */
@@ -547,6 +574,11 @@
       <span class="filter-label" data-i18n="filter_by_author">Filtering by author:</span>
       <span class="filter-value" id="author-filter-name"></span>
       <button class="clear-filter" id="clear-author-filter" data-i18n="clear">Clear</button>
+    </div>
+
+    <!-- Search bar -->
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search titles, authors, journals..." data-i18n-placeholder="search_placeholder">
     </div>
 
     <!-- Filter bar -->
@@ -1753,6 +1785,7 @@ const REFERENCES = [
       appendix_by: 'Appendix by',
       of: 'of',
       entries: 'entries',
+      search_placeholder: 'Search titles, authors, journals...',
     },
     ja: {
       header_subtitle: '文献リスト',
@@ -1778,6 +1811,7 @@ const REFERENCES = [
       appendix_by: '付録:',
       of: '/',
       entries: '件',
+      search_placeholder: 'タイトル、著者、雑誌を検索...',
     }
   };
 
@@ -1802,6 +1836,12 @@ const REFERENCES = [
       const key = el.dataset.i18n;
       if (I18N[currentLang] && I18N[currentLang][key]) {
         el.textContent = I18N[currentLang][key];
+      }
+    });
+    $$('[data-i18n-placeholder]').forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      if (I18N[currentLang] && I18N[currentLang][key]) {
+        el.placeholder = I18N[currentLang][key];
       }
     });
   }
@@ -1948,6 +1988,10 @@ const REFERENCES = [
   typeSelect.addEventListener('change', renderReferences);
   langSelect.addEventListener('change', renderReferences);
 
+  // --- Search ---
+  const searchInput = $('#search-input');
+  searchInput.addEventListener('input', renderReferences);
+
   // --- Author filter functions ---
   function setAuthorFilter(authorId) {
     activeAuthorFilter = authorId;
@@ -1979,6 +2023,7 @@ const REFERENCES = [
     const typeFilter = typeSelect.value;
     const langFilter = langSelect.value;
     const activeTags = [...$$('.tag-chip.active')].map(b => b.dataset.tag);
+    const searchQuery = (searchInput.value || '').trim().toLowerCase();
 
     let refs = REFERENCES.filter(r => {
       if (typeFilter !== 'all' && r.type !== typeFilter) return false;
@@ -1987,6 +2032,17 @@ const REFERENCES = [
       if (activeAuthorFilter) {
         const allAuthors = [...r.authors, ...(r.appendix || [])];
         if (!allAuthors.includes(activeAuthorFilter)) return false;
+      }
+      if (searchQuery) {
+        const authorNames = [...r.authors, ...(r.appendix || [])]
+          .map(id => { const a = authorMap.get(id); return a ? (a.name + ' ' + (a.name_ja || '')) : ''; })
+          .join(' ').toLowerCase();
+        const haystack = [
+          r.title, r.journal, r.type, r.language,
+          authorNames, r.year.toString(),
+          ...r.tags
+        ].join(' ').toLowerCase();
+        if (!haystack.includes(searchQuery)) return false;
       }
       return true;
     });
