@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiple Eisenstein Series — Academic Hub</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  /* ===== CSS RESET & BASE ===== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #faf8f5;
+    --bg-alt: #f2efe9;
+    --text: #2c2418;
+    --text-muted: #6b5e4f;
+    --accent: #8b1a1a;
+    --accent-hover: #a52222;
+    --border: #d6cfc4;
+    --border-light: #e8e2d8;
+    --tag-bg: #ece7de;
+    --tag-active: #8b1a1a;
+    --tag-active-text: #faf8f5;
+    --shadow: rgba(44, 36, 24, 0.06);
+    --font-serif: 'Latin Modern Roman', 'Computer Modern', 'CMU Serif', 'STIX Two Text', 'Libertinus Serif', Georgia, 'Times New Roman', serif;
+    --font-mono: 'Latin Modern Mono', 'CMU Typewriter Text', 'Courier New', monospace;
+    --max-width: 820px;
+    --transition: 0.2s ease;
+  }
+
+  html { font-size: 17px; scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.72;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== LAYOUT ===== */
+  .page-wrapper {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    text-align: center;
+    margin-bottom: 2.8rem;
+    padding-bottom: 2rem;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .site-header h1 {
+    font-size: 2.1rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+    color: var(--text);
+    font-variant: small-caps;
+  }
+
+  .site-header .subtitle {
+    font-size: 1.02rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 1.2rem;
+  }
+
+  .site-header .description {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  /* ===== NAVIGATION TABS ===== */
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 2rem;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .nav-tab {
+    background: none;
+    border: none;
+    font-family: var(--font-serif);
+    font-size: 0.98rem;
+    padding: 0.7rem 1.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    position: relative;
+    transition: color var(--transition);
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+  }
+
+  .nav-tab:hover { color: var(--text); }
+
+  .nav-tab.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .nav-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1.5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  /* ===== FILTER BAR ===== */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.6rem;
+    padding: 1rem 1.2rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border-light);
+    border-radius: 3px;
+  }
+
+  .filter-bar label {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    margin-right: 0.2rem;
+  }
+
+  .filter-bar select {
+    font-family: var(--font-serif);
+    font-size: 0.88rem;
+    padding: 0.32rem 0.6rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    border-radius: 2px;
+    cursor: pointer;
+    appearance: auto;
+  }
+
+  .filter-sep {
+    width: 1px;
+    height: 1.4rem;
+    background: var(--border);
+    margin: 0 0.3rem;
+  }
+
+  .filter-bar .sort-btn {
+    font-family: var(--font-serif);
+    font-size: 0.85rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-muted);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .filter-bar .sort-btn:hover,
+  .filter-bar .sort-btn.active {
+    background: var(--accent);
+    color: var(--tag-active-text);
+    border-color: var(--accent);
+  }
+
+  .result-count {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-left: auto;
+    font-style: italic;
+  }
+
+  /* ===== TAG CHIPS ===== */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .tag-chip {
+    font-family: var(--font-serif);
+    font-size: 0.78rem;
+    padding: 0.22rem 0.65rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-muted);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all var(--transition);
+    letter-spacing: 0.02em;
+  }
+
+  .tag-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+  .tag-chip.active {
+    background: var(--tag-active);
+    color: var(--tag-active-text);
+    border-color: var(--tag-active);
+  }
+
+  /* ===== REFERENCE LIST ===== */
+  .ref-list { list-style: none; }
+
+  .ref-item {
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--border-light);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .ref-item:last-child { border-bottom: none; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ref-number {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-bottom: 0.15rem;
+  }
+
+  .ref-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    line-height: 1.45;
+    color: var(--text);
+  }
+
+  .ref-authors {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .ref-authors a {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--border);
+    transition: all var(--transition);
+  }
+
+  .ref-authors a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .ref-meta {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+    font-style: italic;
+  }
+
+  .ref-links {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .ref-links a {
+    font-size: 0.82rem;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+
+  .ref-links a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .ref-links a::before {
+    content: '→ ';
+    font-size: 0.75rem;
+  }
+
+  .ref-tags {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    margin-top: 0.4rem;
+  }
+
+  .ref-tag {
+    font-size: 0.72rem;
+    padding: 0.12rem 0.45rem;
+    background: var(--tag-bg);
+    color: var(--text-muted);
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+  }
+
+  .ref-type {
+    font-size: 0.72rem;
+    padding: 0.12rem 0.45rem;
+    background: var(--accent);
+    color: var(--tag-active-text);
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+    font-variant: small-caps;
+  }
+
+  /* ===== AUTHOR LIST ===== */
+  .author-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .author-card {
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border-light);
+    background: var(--bg);
+    border-radius: 3px;
+    transition: border-color var(--transition);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .author-card:hover { border-color: var(--accent); }
+
+  .author-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+
+  .author-name a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--border);
+    transition: all var(--transition);
+  }
+
+  .author-name a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .author-affiliation {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 0.3rem;
+  }
+
+  .author-pub-count {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* ===== SECTION VIEW TOGGLE ===== */
+  .view-section { display: none; }
+  .view-section.active { display: block; }
+
+  /* ===== EMPTY STATE ===== */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* ===== FOOTER ===== */
+  .site-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1.5px solid var(--border);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .site-footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    html { font-size: 15.5px; }
+    .page-wrapper { padding: 2rem 1rem 3rem; }
+    .site-header h1 { font-size: 1.65rem; }
+    .nav-tab { padding: 0.6rem 1rem; font-size: 0.9rem; }
+    .filter-bar { flex-direction: column; align-items: stretch; }
+    .filter-sep { display: none; }
+    .result-count { margin-left: 0; margin-top: 0.3rem; }
+    .author-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <h1>Multiple Eisenstein Series</h1>
+    <p class="subtitle">An Academic Resource Hub</p>
+    <p class="description">
+      A curated collection of literature on multiple Eisenstein series, their $q$-analogues, and connections to multiple zeta values — maintained for the mathematical community.
+    </p>
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav class="nav-tabs">
+    <button class="nav-tab active" data-view="references">References</button>
+    <button class="nav-tab" data-view="authors">Mathematicians</button>
+  </nav>
+
+  <!-- ==================== REFERENCES VIEW ==================== -->
+  <section id="view-references" class="view-section active">
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <label>Type:</label>
+      <select id="filter-type">
+        <option value="all">All types</option>
+      </select>
+      <div class="filter-sep"></div>
+      <label>Language:</label>
+      <select id="filter-lang">
+        <option value="all">All languages</option>
+      </select>
+      <div class="filter-sep"></div>
+      <label>Sort:</label>
+      <button class="sort-btn active" id="sort-year-desc">Newest first</button>
+      <button class="sort-btn" id="sort-year-asc">Oldest first</button>
+      <span class="result-count" id="result-count"></span>
+    </div>
+
+    <!-- Tag chips -->
+    <div class="tag-row" id="tag-row"></div>
+
+    <!-- Reference list -->
+    <ol class="ref-list" id="ref-list"></ol>
+    <div class="empty-state" id="empty-state" style="display:none;">No references match the current filters.</div>
+
+  </section>
+
+  <!-- ==================== AUTHORS VIEW ==================== -->
+  <section id="view-authors" class="view-section">
+    <div class="author-grid" id="author-grid"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>Multiple Eisenstein Series — Academic Hub</p>
+    <p>Last updated: March 2026</p>
+  </footer>
+
+</div>
+
+<!-- ==================== INLINE DATABASE ==================== -->
+<script>
+// ===================================================================
+//  AUTHORS DATABASE
+//  id · name · url · affiliation
+// ===================================================================
+const AUTHORS = [
+  { id: "bachmann", name: "Henrik Bachmann", url: "https://www.henrikbachmann.com/", affiliation: "Nagoya University" },
+  { id: "vanittersum", name: "Jan-Willem van Ittersum", url: "http://www.mi.uni-koeln.de/~jittersu/", affiliation: "University of Cologne" },
+  { id: "matthes", name: "Nils Matthes", url: "https://nilsmatthes.github.io/", affiliation: "" },
+  { id: "kuehn", name: "Ulf Kühn", url: "https://www.math.uni-hamburg.de/home/kuehn/", affiliation: "University of Hamburg" },
+  { id: "burmester", name: "Annika Burmester", url: "https://sites.google.com/view/annikaburmester", affiliation: "" },
+  { id: "tasaka", name: "Koji Tasaka", url: "http://www.ist.aichi-pu.ac.jp/~tasaka/", affiliation: "Aichi Prefectural University" },
+  { id: "tsumura", name: "Hirofumi Tsumura", url: "http://www.comp.tmu.ac.jp/math-tsumura/index.htm", affiliation: "Tokyo Metropolitan University" },
+  { id: "kanno", name: "Hiroya Kanno", url: "https://sites.google.com/view/hkanno/home", affiliation: "" }
+];
+
+// ===================================================================
+//  REFERENCES DATABASE
+//  Eisenstein series papers (published, preprints, proceedings, thesis)
+// ===================================================================
+const REFERENCES = [
+  {
+    id: "r01",
+    title: "Relations and Derivatives of Multiple Eisenstein Series",
+    authors: ["bachmann", "kanno"],
+    year: 2026,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "derivatives", "relations"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2602.08176" }
+    ],
+    journal: "Preprint"
+  },
+  {
+    id: "r02",
+    title: "Formal multiple Eisenstein series and their derivations",
+    authors: ["bachmann", "vanittersum"],
+    appendix: ["matthes"],
+    year: 2025,
+    type: "paper",
+    tags: ["formal multiple Eisenstein series", "derivations", "q-analogues"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://www.sciencedirect.com/science/article/pii/S0001870825006371" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2312.04124" }
+    ],
+    journal: "Adv. Math. 487 (2026)"
+  },
+  {
+    id: "r03",
+    title: "Realizations of the formal double Eisenstein space",
+    authors: ["bachmann", "kuehn", "matthes"],
+    year: 2025,
+    type: "paper",
+    tags: ["formal double Eisenstein space", "realizations", "double zeta values"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2109.04267" }
+    ],
+    journal: "To appear in Tohoku Math. J."
+  },
+  {
+    id: "r04",
+    title: "MacMahon's sums-of-divisors and their connection to multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2024,
+    type: "paper",
+    tags: ["multiple Eisenstein series", "sums-of-divisors", "MacMahon", "q-series"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://link.springer.com/article/10.1007/s40993-024-00537-2" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2312.06132" }
+    ],
+    journal: "Res. Number Theory 10(50), 2024"
+  },
+  {
+    id: "r05",
+    title: "Combinatorial multiple Eisenstein series",
+    authors: ["bachmann", "burmester"],
+    year: 2023,
+    type: "paper",
+    tags: ["multiple Eisenstein series", "combinatorial", "q-analogues"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://link.springer.com/article/10.1007/s40687-023-00398-8" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2203.17074" }
+    ],
+    journal: "Res. Math. Sci. 10, 35 (2023)"
+  },
+  {
+    id: "r06",
+    title: "Modular forms and $q$-analogues of modified double zeta values",
+    authors: ["bachmann"],
+    year: 2020,
+    type: "paper",
+    tags: ["modular forms", "q-analogues", "double zeta values"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://link.springer.com/article/10.1007/s12188-020-00227-7" },
+      { label: "arXiv", url: "https://arxiv.org/abs/1808.09674" }
+    ],
+    journal: "Abh. Math. Seminar Uni. Hamburg 90, 201–213"
+  },
+  {
+    id: "r07",
+    title: "A dimension conjecture for $q$-analogues of multiple zeta values",
+    authors: ["bachmann", "kuehn"],
+    year: 2020,
+    type: "paper",
+    tags: ["q-analogues", "multiple zeta values", "dimension conjecture"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://link.springer.com/chapter/10.1007/978-3-030-37031-2_9" },
+      { label: "arXiv", url: "https://arxiv.org/abs/1708.07464" }
+    ],
+    journal: "Springer Proc. Math. Stat. 314, 237–258"
+  },
+  {
+    id: "r08",
+    title: "Multiple Eisenstein series and $q$-analogues of multiple zeta values",
+    authors: ["bachmann"],
+    year: 2020,
+    type: "book",
+    tags: ["multiple Eisenstein series", "q-analogues", "multiple zeta values", "survey"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://link.springer.com/chapter/10.1007/978-3-030-37031-2_8" },
+      { label: "Download", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmann_mes_and_qmzv.pdf" }
+    ],
+    journal: "Springer Proc. Math. Stat. 314, 173–235"
+  },
+  {
+    id: "r09",
+    title: "The algebra of bi-brackets and regularized multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2019,
+    type: "paper",
+    tags: ["multiple Eisenstein series", "bi-brackets", "regularization"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.1016/j.jnt.2018.12.006" },
+      { label: "arXiv", url: "http://arxiv.org/abs/1504.08138" }
+    ],
+    journal: "J. Number Theory 200, 260–294"
+  },
+  {
+    id: "r10",
+    title: "The double shuffle relations for multiple Eisenstein series",
+    authors: ["bachmann", "tasaka"],
+    year: 2017,
+    type: "paper",
+    tags: ["multiple Eisenstein series", "double shuffle relations"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://www.cambridge.org/core/journals/nagoya-mathematical-journal/article/double-shuffle-relations-for-multiple-eisenstein-series/7FDE55A2B0BA609AB72D3F95436F08FF" },
+      { label: "arXiv", url: "http://arxiv.org/abs/1501.03408" }
+    ],
+    journal: "Nagoya Math. J. 230, 180–212"
+  },
+  {
+    id: "r11",
+    title: "On multiple series of Eisenstein type",
+    authors: ["bachmann", "tsumura"],
+    year: 2017,
+    type: "paper",
+    tags: ["Eisenstein series", "multiple series"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "http://link.springer.com/article/10.1007%2Fs11139-015-9738-0" },
+      { label: "arXiv", url: "http://arxiv.org/abs/1505.04040" }
+    ],
+    journal: "Ramanujan J. 42(2), 479–489"
+  },
+  {
+    id: "r12",
+    title: "The algebra of multiple divisor functions and applications to multiple zeta values",
+    authors: ["bachmann", "kuehn"],
+    year: 2016,
+    type: "paper",
+    tags: ["multiple divisor functions", "multiple zeta values", "q-analogues"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "http://link.springer.com/article/10.1007%2Fs11139-015-9707-7" },
+      { label: "arXiv", url: "http://arxiv.org/abs/1309.3920" }
+    ],
+    journal: "Ramanujan J. 40(3), 605–648"
+  },
+  {
+    id: "r13",
+    title: "Derivatives of multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2026,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "derivatives"],
+    language: "English",
+    links: [],
+    journal: "RIMS Kôkyûroku, to appear"
+  },
+  {
+    id: "r14",
+    title: "On $\\mathrm{sl}_2$-algebras and multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2025,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "sl2-algebra"],
+    language: "English",
+    links: [],
+    journal: "Proceedings of the 71st Algebra Symposium, to appear"
+  },
+  {
+    id: "r15",
+    title: "On the $\\mathrm{sl}_2$-algebra of formal multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2024,
+    type: "notes",
+    tags: ["formal multiple Eisenstein series", "sl2-algebra"],
+    language: "English",
+    links: [],
+    journal: "RIMS Kôkyûroku, to appear"
+  },
+  {
+    id: "r16",
+    title: "Stuffle regularized multiple Eisenstein series revisited",
+    authors: ["bachmann"],
+    year: 2022,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "stuffle regularization"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2212.10700" }
+    ],
+    journal: "RIMS Kôkyûroku, No. 2239, p. 73–86"
+  },
+  {
+    id: "r17",
+    title: "$q$-analogues of multiple zeta values and the formal double Eisenstein space",
+    authors: ["bachmann"],
+    year: 2021,
+    type: "notes",
+    tags: ["q-analogues", "multiple zeta values", "formal double Eisenstein space"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2108.08634" }
+    ],
+    journal: "Waseda Number Theory Conference Proceedings, 2021"
+  },
+  {
+    id: "r18",
+    title: "Relations satisfied by double $q$-zeta values",
+    authors: ["burmester", "bachmann", "kuehn"],
+    year: 2020,
+    type: "notes",
+    tags: ["q-analogues", "double zeta values", "relations"],
+    language: "English",
+    links: [],
+    journal: "RIMS Kôkyûroku No. 2160, p. 219–232"
+  },
+  {
+    id: "r19",
+    title: "Double shuffle relations for $q$-analogues of multiple zeta values, their derivatives and the connection to multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2016,
+    type: "notes",
+    tags: ["double shuffle relations", "q-analogues", "multiple Eisenstein series", "derivatives"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/1609.09182" }
+    ],
+    journal: "RIMS Kôkyûroku, No. 2015, p. 22–43"
+  },
+  {
+    id: "r20",
+    title: "A short note on a conjecture of Okounkov about a $q$-analogue of multiple zeta values",
+    authors: ["bachmann", "kuehn"],
+    year: 2014,
+    type: "notes",
+    tags: ["q-analogues", "multiple zeta values", "Okounkov conjecture"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "http://arxiv.org/abs/1407.6796" }
+    ],
+    journal: "Preprint"
+  },
+  {
+    id: "r21",
+    title: "Multiple Eisenstein series and $q$-analogues of multiple zeta values",
+    authors: ["bachmann"],
+    year: 2015,
+    type: "book",
+    tags: ["multiple Eisenstein series", "q-analogues", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "Download", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/thesis_bachmann.pdf" }
+    ],
+    journal: "PhD Thesis, University of Hamburg"
+  },
+  {
+    id: "r22",
+    title: "Multiple Zeta-Werte und die Verbindung zu Modulformen durch Multiple Eisensteinreihen",
+    authors: ["bachmann"],
+    year: 2012,
+    type: "book",
+    tags: ["multiple zeta values", "modular forms", "multiple Eisenstein series"],
+    language: "German",
+    links: [
+      { label: "Download", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/msc_henrik_bachmann.pdf" }
+    ],
+    journal: "Master's Thesis, University of Hamburg"
+  }
+];
+
+// ===================================================================
+//  APPLICATION
+// ===================================================================
+(function() {
+  'use strict';
+
+  // --- Helpers ---
+  const $ = s => document.querySelector(s);
+  const $$ = s => document.querySelectorAll(s);
+  const authorMap = new Map(AUTHORS.map(a => [a.id, a]));
+
+  function getAuthorHTML(id) {
+    const a = authorMap.get(id);
+    if (!a) return id;
+    return a.url
+      ? `<a href="${a.url}" target="_blank" rel="noopener">${a.name}</a>`
+      : a.name;
+  }
+
+  // --- Gather unique values ---
+  const allTypes = [...new Set(REFERENCES.map(r => r.type))].sort();
+  const allLangs = [...new Set(REFERENCES.map(r => r.language))].sort();
+  const allTags  = [...new Set(REFERENCES.flatMap(r => r.tags))].sort();
+
+  // --- Populate dropdowns ---
+  const typeSelect = $('#filter-type');
+  const langSelect = $('#filter-lang');
+  allTypes.forEach(t => {
+    const o = document.createElement('option');
+    o.value = t; o.textContent = t.charAt(0).toUpperCase() + t.slice(1);
+    typeSelect.appendChild(o);
+  });
+  allLangs.forEach(l => {
+    const o = document.createElement('option');
+    o.value = l; o.textContent = l;
+    langSelect.appendChild(o);
+  });
+
+  // --- Populate tag chips ---
+  const tagRow = $('#tag-row');
+  allTags.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.className = 'tag-chip';
+    btn.dataset.tag = tag;
+    btn.textContent = tag;
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('active');
+      renderReferences();
+    });
+    tagRow.appendChild(btn);
+  });
+
+  // --- State ---
+  let sortDesc = true;
+
+  // --- Sorting ---
+  $('#sort-year-desc').addEventListener('click', () => {
+    sortDesc = true;
+    $('#sort-year-desc').classList.add('active');
+    $('#sort-year-asc').classList.remove('active');
+    renderReferences();
+  });
+  $('#sort-year-asc').addEventListener('click', () => {
+    sortDesc = false;
+    $('#sort-year-asc').classList.add('active');
+    $('#sort-year-desc').classList.remove('active');
+    renderReferences();
+  });
+
+  typeSelect.addEventListener('change', renderReferences);
+  langSelect.addEventListener('change', renderReferences);
+
+  // --- Render references ---
+  function renderReferences() {
+    const typeFilter = typeSelect.value;
+    const langFilter = langSelect.value;
+    const activeTags = [...$$('.tag-chip.active')].map(b => b.dataset.tag);
+
+    let refs = REFERENCES.filter(r => {
+      if (typeFilter !== 'all' && r.type !== typeFilter) return false;
+      if (langFilter !== 'all' && r.language !== langFilter) return false;
+      if (activeTags.length > 0 && !activeTags.some(t => r.tags.includes(t))) return false;
+      return true;
+    });
+
+    refs.sort((a, b) => sortDesc ? b.year - a.year : a.year - b.year);
+
+    const list = $('#ref-list');
+    const empty = $('#empty-state');
+    list.innerHTML = '';
+
+    if (refs.length === 0) {
+      empty.style.display = 'block';
+    } else {
+      empty.style.display = 'none';
+      refs.forEach((r, i) => {
+        const li = document.createElement('li');
+        li.className = 'ref-item';
+
+        const authorsHTML = r.authors.map(getAuthorHTML).join(', ');
+        const appendixHTML = r.appendix
+          ? `, Appendix by ${r.appendix.map(getAuthorHTML).join(', ')}`
+          : '';
+
+        const linksHTML = r.links.map(l =>
+          `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
+        ).join('');
+
+        const tagsHTML = r.tags.map(t => `<span class="ref-tag">${t}</span>`).join('');
+
+        li.innerHTML = `
+          <div class="ref-number">[${i + 1}]</div>
+          <div class="ref-title">${r.title}</div>
+          <div class="ref-authors">${authorsHTML}${appendixHTML}</div>
+          <div class="ref-meta">${r.journal} · ${r.year}</div>
+          <div class="ref-links">
+            <span class="ref-type">${r.type}</span>
+            ${linksHTML}
+          </div>
+          <div class="ref-tags">${tagsHTML}</div>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    $('#result-count').textContent = `${refs.length} of ${REFERENCES.length} entries`;
+
+    // Re-render KaTeX
+    if (window.renderMathInElement) {
+      renderMathInElement(list, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        throwOnError: false
+      });
+    }
+  }
+
+  // --- Render authors ---
+  function renderAuthors() {
+    const grid = $('#author-grid');
+    grid.innerHTML = '';
+
+    // Count publications per author
+    const pubCount = new Map();
+    REFERENCES.forEach(r => {
+      r.authors.forEach(id => pubCount.set(id, (pubCount.get(id) || 0) + 1));
+      if (r.appendix) r.appendix.forEach(id => pubCount.set(id, (pubCount.get(id) || 0) + 1));
+    });
+
+    // Sort by publication count descending
+    const sorted = [...AUTHORS].sort((a, b) => (pubCount.get(b.id) || 0) - (pubCount.get(a.id) || 0));
+
+    sorted.forEach(a => {
+      const count = pubCount.get(a.id) || 0;
+      if (count === 0) return;
+
+      const card = document.createElement('div');
+      card.className = 'author-card';
+
+      const nameHTML = a.url
+        ? `<a href="${a.url}" target="_blank" rel="noopener">${a.name}</a>`
+        : a.name;
+
+      card.innerHTML = `
+        <div class="author-name">${nameHTML}</div>
+        ${a.affiliation ? `<div class="author-affiliation">${a.affiliation}</div>` : ''}
+        <div class="author-pub-count">${count} reference${count !== 1 ? 's' : ''} in database</div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // --- Navigation ---
+  $$('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      $$('.nav-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      $$('.view-section').forEach(v => v.classList.remove('active'));
+      $(`#view-${tab.dataset.view}`).classList.add('active');
+    });
+  });
+
+  // --- Init ---
+  renderReferences();
+  renderAuthors();
+
+  // KaTeX auto-render on load
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.renderMathInElement) {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        throwOnError: false
+      });
+    }
+  });
+
+  // Fallback for deferred KaTeX
+  window.addEventListener('load', () => {
+    if (window.renderMathInElement) {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        throwOnError: false
+      });
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
