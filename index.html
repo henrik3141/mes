@@ -165,6 +165,14 @@
     font-style: italic;
   }
 
+  mark.search-hl {
+    background: #e8d44d40;
+    color: inherit;
+    padding: 0 1px;
+    border-radius: 2px;
+    border-bottom: 1.5px solid #c4a84d;
+  }
+
   /* ===== FILTER BAR ===== */
   .filter-bar {
     display: flex;
@@ -2148,6 +2156,15 @@ const REFERENCES = [
 
   $('#clear-author-filter').addEventListener('click', clearAuthorFilter);
 
+  // --- Search highlight helper ---
+  function highlightText(text, query) {
+    if (!query) return text;
+    // Escape regex special chars in query
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(`(${escaped})`, 'gi');
+    return text.replace(re, '<mark class="search-hl">$1</mark>');
+  }
+
   // --- Render references ---
   function renderReferences() {
     const typeFilter = typeSelect.value;
@@ -2196,9 +2213,23 @@ const REFERENCES = [
         const li = document.createElement('li');
         li.className = 'ref-item';
 
-        const authorsHTML = r.authors.map(getAuthorHTML).join(', ');
+        const hl = (text) => highlightText(text, searchQuery);
+
+        const authorsHTML = r.authors.map(id => {
+          const a = authorMap.get(id);
+          if (!a) return id;
+          const displayName = getAuthorName(a);
+          const hlName = hl(displayName);
+          return `<a class="author-filter-link" data-author-id="${a.id}" href="javascript:void(0)">${hlName}</a>`;
+        }).join(', ');
         const appendixHTML = r.appendix
-          ? `, ${t('appendix_by')} ${r.appendix.map(getAuthorHTML).join(', ')}`
+          ? `, ${t('appendix_by')} ${r.appendix.map(id => {
+              const a = authorMap.get(id);
+              if (!a) return id;
+              const displayName = getAuthorName(a);
+              const hlName = hl(displayName);
+              return `<a class="author-filter-link" data-author-id="${a.id}" href="javascript:void(0)">${hlName}</a>`;
+            }).join(', ')}`
           : '';
 
         const linksHTML = r.links.map(l =>
@@ -2212,12 +2243,12 @@ const REFERENCES = [
         li.innerHTML = `
           <div class="ref-head">
             <span class="ref-number">[${i + 1}]</span>
-            <span class="ref-title">${r.title}</span>
+            <span class="ref-title">${hl(r.title)}</span>
           </div>
           <div class="ref-detail">
             <span class="ref-authors">${authorsHTML}${appendixHTML}</span>
             <span class="ref-dot">·</span>
-            <span class="ref-meta">${r.journal}, ${r.year}</span>
+            <span class="ref-meta">${hl(r.journal)}, ${r.year}</span>
             <span class="ref-dot">·</span>
             <span class="ref-type" title="${r.type}">${flag} ${typeEmoji} ${typeName(r.type)}</span>
             ${linksHTML ? '<span class="ref-dot">·</span>' : ''}
@@ -2325,6 +2356,7 @@ const REFERENCES = [
       tab.classList.add('active');
       $$('.view-section').forEach(v => v.classList.remove('active'));
       $(`#view-${tab.dataset.view}`).classList.add('active');
+      updateURL();
     });
   });
 
@@ -2418,7 +2450,55 @@ const REFERENCES = [
     legend.innerHTML = legendHTML;
   }
 
+  // --- URL state system ---
+  function updateURL() {
+    try {
+      const params = new URLSearchParams();
+      if (typeSelect.value !== 'all') params.set('type', typeSelect.value);
+      if (langSelect.value !== 'all') params.set('lang', langSelect.value);
+      if (activeAuthorFilter) params.set('author', activeAuthorFilter);
+      if (searchInput.value.trim()) params.set('q', searchInput.value.trim());
+      if (!sortDesc) params.set('sort', 'asc');
+      const activeTab = document.querySelector('.nav-tab.active');
+      if (activeTab && activeTab.dataset.view !== 'references') params.set('view', activeTab.dataset.view);
+      const qs = params.toString();
+      const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+      history.replaceState(null, '', url);
+    } catch(e) { /* sandboxed environment */ }
+  }
+
+  function loadFromURL() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('type')) typeSelect.value = params.get('type');
+      if (params.has('lang')) langSelect.value = params.get('lang');
+      if (params.has('q')) searchInput.value = params.get('q');
+      if (params.has('sort') && params.get('sort') === 'asc') {
+        sortDesc = false;
+        $('#sort-year-desc').classList.remove('active');
+        $('#sort-year-asc').classList.add('active');
+      }
+      if (params.has('author')) {
+        setAuthorFilter(params.get('author'));
+      }
+      if (params.has('view')) {
+        const viewName = params.get('view');
+        $$('.nav-tab').forEach(tab => {
+          tab.classList.toggle('active', tab.dataset.view === viewName);
+        });
+        $$('.view-section').forEach(v => {
+          v.classList.toggle('active', v.id === `view-${viewName}`);
+        });
+      }
+    } catch(e) { /* sandboxed environment */ }
+  }
+
+  // Hook URL updates into all filter changes
+  const _origRender = renderReferences;
+  renderReferences = function() { _origRender(); updateURL(); };
+
   // --- Init ---
+  loadFromURL();
   renderReferences();
   renderAuthors();
   renderStats();
