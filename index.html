@@ -531,6 +531,118 @@
     text-decoration: none;
   }
 
+  /* ===== STATISTICS VIEW ===== */
+  .stats-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .stats-card {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border-light);
+    border-radius: 3px;
+    font-size: 0.88rem;
+  }
+
+  .stats-card .stats-emoji { font-size: 1.1rem; }
+  .stats-card .stats-count { font-weight: 600; color: var(--text); }
+  .stats-card .stats-label { color: var(--text-muted); }
+
+  .stats-chart-title {
+    font-size: 0.92rem;
+    font-variant: small-caps;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.8rem;
+  }
+
+  .stats-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 220px;
+    padding-bottom: 2.8rem;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stats-bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .stats-bar-stack {
+    width: 100%;
+    max-width: 32px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .stats-bar-segment {
+    width: 100%;
+    min-height: 0;
+    transition: opacity 0.2s;
+  }
+
+  .stats-bar-segment:first-child {
+    border-radius: 0 0 2px 2px;
+  }
+
+  .stats-bar-segment:last-child {
+    border-radius: 2px 2px 0 0;
+  }
+
+  .stats-bar-group:hover .stats-bar-segment { opacity: 0.8; }
+
+  .stats-bar-total {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+    text-align: center;
+  }
+
+  .stats-bar-year {
+    position: absolute;
+    bottom: -2.4rem;
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    transform: rotate(-45deg);
+    transform-origin: top left;
+    white-space: nowrap;
+  }
+
+  .stats-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2.2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .stats-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .stats-legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 600px) {
     html { font-size: 15.5px; }
@@ -564,6 +676,7 @@
   <nav class="nav-tabs">
     <button class="nav-tab active" data-view="references" data-i18n="nav_references">References</button>
     <button class="nav-tab" data-view="authors" data-i18n="nav_authors">Mathematicians</button>
+    <button class="nav-tab" data-view="stats" data-i18n="nav_stats">Statistics</button>
   </nav>
 
   <!-- ==================== REFERENCES VIEW ==================== -->
@@ -616,6 +729,14 @@
   <!-- ==================== AUTHORS VIEW ==================== -->
   <section id="view-authors" class="view-section">
     <ul class="author-list" id="author-list"></ul>
+  </section>
+
+  <!-- ==================== STATISTICS VIEW ==================== -->
+  <section id="view-stats" class="view-section">
+    <div id="stats-summary" class="stats-summary"></div>
+    <div class="stats-chart-title" data-i18n="chart_title">References by year</div>
+    <div id="stats-chart" class="stats-chart"></div>
+    <div id="stats-legend" class="stats-legend"></div>
   </section>
 
   <!-- FOOTER -->
@@ -1786,6 +1907,10 @@ const REFERENCES = [
       of: 'of',
       entries: 'entries',
       search_placeholder: 'Search titles, authors, journals...',
+      nav_stats: 'Statistics',
+      chart_title: 'References by year',
+      total_entries: 'Total entries',
+      total_authors: 'Authors',
     },
     ja: {
       header_subtitle: '文献リスト',
@@ -1812,6 +1937,10 @@ const REFERENCES = [
       of: '/',
       entries: '件',
       search_placeholder: 'タイトル、著者、雑誌を検索...',
+      nav_stats: '統計',
+      chart_title: '年別文献数',
+      total_entries: '総文献数',
+      total_authors: '研究者数',
     }
   };
 
@@ -1857,6 +1986,7 @@ const REFERENCES = [
       populateDropdowns();
       renderReferences();
       renderAuthors();
+      renderStats();
     });
   });
 
@@ -2198,9 +2328,100 @@ const REFERENCES = [
     });
   });
 
+  // --- Render statistics ---
+  const TYPE_COLORS = {
+    'paper': '#2b7a5f',
+    'preprint': '#5cad8a',
+    'book': '#d4813a',
+    'thesis': '#8e6bbf',
+    'notes': '#c4a84d',
+    'slides': '#4a9ec2',
+    'lecture notes': '#3ab88a',
+    'blog': '#d46a8a',
+    'video': '#6a8ad4'
+  };
+
+  function renderStats() {
+    const summary = $('#stats-summary');
+    const chart = $('#stats-chart');
+    const legend = $('#stats-legend');
+
+    // --- Summary cards ---
+    const typeCounts = new Map();
+    REFERENCES.forEach(r => typeCounts.set(r.type, (typeCounts.get(r.type) || 0) + 1));
+
+    const authorCount = AUTHORS.filter(a => {
+      return REFERENCES.some(r => r.authors.includes(a.id) || (r.appendix || []).includes(a.id));
+    }).length;
+
+    let summaryHTML = `<div class="stats-card"><span class="stats-count">${REFERENCES.length}</span><span class="stats-label">${t('total_entries')}</span></div>`;
+    summaryHTML += `<div class="stats-card"><span class="stats-count">${authorCount}</span><span class="stats-label">${t('total_authors')}</span></div>`;
+
+    TYPE_ORDER.filter(tp => typeCounts.has(tp)).forEach(tp => {
+      summaryHTML += `<div class="stats-card"><span class="stats-emoji">${TYPE_EMOJI[tp] || ''}</span><span class="stats-count">${typeCounts.get(tp)}</span><span class="stats-label">${typeName(tp)}</span></div>`;
+    });
+    summary.innerHTML = summaryHTML;
+
+    // --- Bar chart by year ---
+    const startYear = 2004;
+    const endYear = new Date().getFullYear();
+    const years = [];
+    for (let y = startYear; y <= endYear; y++) years.push(y);
+
+    // Count per year per type
+    const yearData = new Map();
+    years.forEach(y => yearData.set(y, new Map()));
+    REFERENCES.forEach(r => {
+      if (r.year >= startYear && r.year <= endYear) {
+        const ym = yearData.get(r.year);
+        ym.set(r.type, (ym.get(r.type) || 0) + 1);
+      }
+    });
+
+    const maxTotal = Math.max(...years.map(y => {
+      let sum = 0;
+      yearData.get(y).forEach(v => sum += v);
+      return sum;
+    }), 1);
+
+    const activeTypes = TYPE_ORDER.filter(tp => typeCounts.has(tp));
+
+    let chartHTML = '';
+    years.forEach(y => {
+      const ym = yearData.get(y);
+      let total = 0;
+      ym.forEach(v => total += v);
+      const heightPct = (total / maxTotal) * 100;
+
+      let stackHTML = '';
+      activeTypes.forEach(tp => {
+        const count = ym.get(tp) || 0;
+        if (count > 0) {
+          const segPct = (count / total) * heightPct;
+          stackHTML += `<div class="stats-bar-segment" style="height:${segPct}%;background:${TYPE_COLORS[tp] || '#999'}" title="${typeName(tp)}: ${count}"></div>`;
+        }
+      });
+
+      chartHTML += `<div class="stats-bar-group">
+        ${total > 0 ? `<div class="stats-bar-total">${total}</div>` : ''}
+        <div class="stats-bar-stack" style="height:${heightPct}%">${stackHTML}</div>
+        <span class="stats-bar-year">${y}</span>
+      </div>`;
+    });
+    chart.innerHTML = chartHTML;
+
+    // --- Legend ---
+    let legendHTML = '';
+    activeTypes.forEach(tp => {
+      legendHTML += `<div class="stats-legend-item"><div class="stats-legend-swatch" style="background:${TYPE_COLORS[tp] || '#999'}"></div>${TYPE_EMOJI[tp] || ''} ${typeName(tp)}</div>`;
+    });
+    legend.innerHTML = legendHTML;
+  }
+
   // --- Init ---
   renderReferences();
   renderAuthors();
+  renderStats();
 
   // KaTeX auto-render on load
   document.addEventListener('DOMContentLoaded', () => {
