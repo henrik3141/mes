@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multiple Eisenstein Series — Academic Hub</title>
+<title>MES/title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -16,12 +17,12 @@
     --bg-alt: #f2efe9;
     --text: #2c2418;
     --text-muted: #6b5e4f;
-    --accent: #8b1a1a;
-    --accent-hover: #a52222;
+    --accent: #2b3a37;
+    --accent-hover: #3a4f4b;
     --border: #d6cfc4;
     --border-light: #e8e2d8;
     --tag-bg: #ece7de;
-    --tag-active: #8b1a1a;
+    --tag-active: #2b3a37;
     --tag-active-text: #faf8f5;
     --shadow: rgba(44, 36, 24, 0.06);
     --font-serif: 'Latin Modern Roman', 'Computer Modern', 'CMU Serif', 'STIX Two Text', 'Libertinus Serif', Georgia, 'Times New Roman', serif;
@@ -51,9 +52,8 @@
   /* ===== HEADER ===== */
   .site-header {
     text-align: center;
-    margin-bottom: 2.8rem;
-    padding-bottom: 2rem;
-    border-bottom: 1.5px solid var(--border);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
   }
 
   .site-header h1 {
@@ -66,26 +66,44 @@
   }
 
   .site-header .subtitle {
-    font-size: 1.02rem;
-    color: var(--text-muted);
-    font-style: italic;
-    margin-bottom: 1.2rem;
-  }
-
-  .site-header .description {
     font-size: 0.92rem;
     color: var(--text-muted);
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.65;
+    margin-bottom: 0.15rem;
+    letter-spacing: 0.04em;
+    font-variant: small-caps;
   }
+
+  /* ===== LANGUAGE TOGGLE ===== */
+  .lang-toggle {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .lang-btn {
+    font-size: 1.3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity var(--transition);
+    padding: 0.15rem;
+    line-height: 1;
+  }
+
+  .lang-btn:hover { opacity: 0.7; }
+  .lang-btn.active { opacity: 1; }
+
+  .page-wrapper { position: relative; }
 
   /* ===== NAVIGATION TABS ===== */
   .nav-tabs {
     display: flex;
     justify-content: center;
     gap: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
     border-bottom: 1.5px solid var(--border);
   }
 
@@ -186,13 +204,44 @@
     font-style: italic;
   }
 
-  /* ===== TAG CHIPS ===== */
+  /* ===== TAG SECTION (collapsible, currently hidden) ===== */
+  .tag-section { display: none; }
+
+  .tag-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-serif);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem 0;
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    transition: color var(--transition);
+  }
+
+  .tag-toggle:hover { color: var(--accent); }
+
+  .tag-toggle .arrow {
+    display: inline-block;
+    font-size: 0.65rem;
+    transition: transform 0.2s ease;
+  }
+
+  .tag-toggle.open .arrow { transform: rotate(90deg); }
+
   .tag-row {
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     gap: 0.4rem;
-    margin-bottom: 1.6rem;
+    margin-top: 0.5rem;
+    padding: 0.6rem 0;
   }
+
+  .tag-row.open { display: flex; }
 
   .tag-chip {
     font-family: var(--font-serif);
@@ -219,66 +268,87 @@
   .ref-list { list-style: none; }
 
   .ref-item {
-    padding: 1.1rem 0;
+    padding: 0.6rem 0;
     border-bottom: 1px solid var(--border-light);
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.25s ease;
   }
 
   .ref-item:last-child { border-bottom: none; }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
+  .ref-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
   .ref-number {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
     font-family: var(--font-mono);
-    margin-bottom: 0.15rem;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .ref-title {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin-bottom: 0.25rem;
-    line-height: 1.45;
+    line-height: 1.4;
     color: var(--text);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ref-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.15rem;
+    padding-left: 2.8rem;
   }
 
   .ref-authors {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     color: var(--text-muted);
-    margin-bottom: 0.25rem;
   }
 
-  .ref-authors a {
+  .ref-authors a, .ref-authors .author-filter-link {
     color: var(--text-muted);
     text-decoration: none;
     border-bottom: 1px dotted var(--border);
     transition: all var(--transition);
   }
 
-  .ref-authors a:hover {
+  .ref-authors a:hover, .ref-authors .author-filter-link:hover {
     color: var(--accent);
     border-bottom-color: var(--accent);
   }
 
+  .ref-dot {
+    color: var(--border);
+    font-size: 0.7rem;
+  }
+
   .ref-meta {
-    font-size: 0.83rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
-    margin-bottom: 0.35rem;
     font-style: italic;
   }
 
   .ref-links {
-    display: flex;
-    gap: 0.8rem;
+    display: inline-flex;
+    gap: 0.55rem;
     flex-wrap: wrap;
+    align-items: baseline;
   }
 
   .ref-links a {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--accent);
     text-decoration: none;
     transition: color var(--transition);
@@ -289,59 +359,28 @@
     text-decoration: underline;
   }
 
-  .ref-links a::before {
-    content: '→ ';
-    font-size: 0.75rem;
-  }
-
-  .ref-tags {
-    display: flex;
-    gap: 0.35rem;
-    flex-wrap: wrap;
-    margin-top: 0.4rem;
-  }
-
-  .ref-tag {
-    font-size: 0.72rem;
-    padding: 0.12rem 0.45rem;
-    background: var(--tag-bg);
-    color: var(--text-muted);
-    border-radius: 2px;
-    letter-spacing: 0.02em;
-  }
-
   .ref-type {
-    font-size: 0.72rem;
-    padding: 0.12rem 0.45rem;
-    background: var(--accent);
-    color: var(--tag-active-text);
-    border-radius: 2px;
-    letter-spacing: 0.02em;
-    font-variant: small-caps;
+    font-size: 0.78rem;
+    cursor: default;
   }
 
   /* ===== AUTHOR LIST ===== */
-  .author-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
+  .author-list { list-style: none; }
+
+  .author-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border-light);
   }
 
-  .author-card {
-    padding: 1rem 1.2rem;
-    border: 1px solid var(--border-light);
-    background: var(--bg);
-    border-radius: 3px;
-    transition: border-color var(--transition);
-    animation: fadeIn 0.3s ease;
-  }
-
-  .author-card:hover { border-color: var(--accent); }
+  .author-item:last-child { border-bottom: none; }
 
   .author-name {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin-bottom: 0.15rem;
   }
 
   .author-name a {
@@ -357,10 +396,9 @@
   }
 
   .author-affiliation {
-    font-size: 0.83rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     font-style: italic;
-    margin-bottom: 0.3rem;
   }
 
   .author-pub-count {
@@ -368,9 +406,79 @@
     color: var(--text-muted);
   }
 
+  .author-dot {
+    color: var(--border);
+    font-size: 0.7rem;
+  }
+
+  .author-show-refs {
+    font-family: var(--font-serif);
+    font-size: 0.78rem;
+    color: var(--accent);
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+    transition: all var(--transition);
+  }
+
+  .author-show-refs:hover {
+    color: var(--accent-hover);
+    border-bottom-style: solid;
+  }
+
   /* ===== SECTION VIEW TOGGLE ===== */
   .view-section { display: none; }
   .view-section.active { display: block; }
+
+  /* ===== ACTIVE FILTER BANNER ===== */
+  .active-filter-banner {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    padding: 0.6rem 1rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .active-filter-banner.visible { display: flex; }
+
+  .active-filter-banner .filter-label {
+    font-variant: small-caps;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+  }
+
+  .active-filter-banner .filter-value {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .active-filter-banner .clear-filter {
+    margin-left: auto;
+    font-family: var(--font-serif);
+    font-size: 0.8rem;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-muted);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .active-filter-banner .clear-filter:hover {
+    background: var(--accent);
+    color: var(--tag-active-text);
+    border-color: var(--accent);
+  }
 
   /* ===== EMPTY STATE ===== */
   .empty-state {
@@ -413,60 +521,75 @@
 
 <div class="page-wrapper">
 
+  <!-- LANGUAGE TOGGLE -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="en" title="English">🇬🇧</button>
+    <button class="lang-btn" data-lang="ja" title="日本語">🇯🇵</button>
+  </div>
+
   <!-- HEADER -->
   <header class="site-header">
-    <h1>Multiple Eisenstein Series</h1>
-    <p class="subtitle">An Academic Resource Hub</p>
-    <p class="description">
-      A curated collection of literature on multiple Eisenstein series, their $q$-analogues, and connections to multiple zeta values — maintained for the mathematical community.
-    </p>
+    <p class="subtitle" data-i18n="header_subtitle">References for</p>
+    <h1 data-i18n="header_title">Multiple Eisenstein Series</h1>
   </header>
 
   <!-- NAVIGATION -->
   <nav class="nav-tabs">
-    <button class="nav-tab active" data-view="references">References</button>
-    <button class="nav-tab" data-view="authors">Mathematicians</button>
+    <button class="nav-tab active" data-view="references" data-i18n="nav_references">References</button>
+    <button class="nav-tab" data-view="authors" data-i18n="nav_authors">Mathematicians</button>
   </nav>
 
   <!-- ==================== REFERENCES VIEW ==================== -->
   <section id="view-references" class="view-section active">
 
+    <!-- Author filter banner -->
+    <div class="active-filter-banner" id="author-filter-banner">
+      <span class="filter-label" data-i18n="filter_by_author">Filtering by author:</span>
+      <span class="filter-value" id="author-filter-name"></span>
+      <button class="clear-filter" id="clear-author-filter" data-i18n="clear">Clear</button>
+    </div>
+
     <!-- Filter bar -->
     <div class="filter-bar">
-      <label>Type:</label>
+      <label data-i18n="label_type">Type:</label>
       <select id="filter-type">
-        <option value="all">All types</option>
+        <option value="all" data-i18n="all_types">All types</option>
       </select>
       <div class="filter-sep"></div>
-      <label>Language:</label>
+      <label>🌍</label>
       <select id="filter-lang">
-        <option value="all">All languages</option>
+        <option value="all" data-i18n="all_languages">All languages</option>
       </select>
       <div class="filter-sep"></div>
-      <label>Sort:</label>
-      <button class="sort-btn active" id="sort-year-desc">Newest first</button>
-      <button class="sort-btn" id="sort-year-asc">Oldest first</button>
+      <label data-i18n="label_sort">Sort:</label>
+      <button class="sort-btn active" id="sort-year-desc" data-i18n="newest_first">Newest first</button>
+      <button class="sort-btn" id="sort-year-asc" data-i18n="oldest_first">Oldest first</button>
       <span class="result-count" id="result-count"></span>
     </div>
 
-    <!-- Tag chips -->
-    <div class="tag-row" id="tag-row"></div>
+    <!-- Tag chips (collapsible) -->
+    <div class="tag-section">
+      <button class="tag-toggle" id="tag-toggle">
+        <span class="arrow">&#9654;</span> <span data-i18n="filter_by_topic">Filter by topic</span>
+      </button>
+      <div class="tag-row" id="tag-row"></div>
+    </div>
 
     <!-- Reference list -->
     <ol class="ref-list" id="ref-list"></ol>
-    <div class="empty-state" id="empty-state" style="display:none;">No references match the current filters.</div>
+    <div class="empty-state" id="empty-state" style="display:none;" data-i18n="no_results">No references match the current filters.</div>
 
   </section>
 
   <!-- ==================== AUTHORS VIEW ==================== -->
   <section id="view-authors" class="view-section">
-    <div class="author-grid" id="author-grid"></div>
+    <ul class="author-list" id="author-list"></ul>
   </section>
 
   <!-- FOOTER -->
   <footer class="site-footer">
-    <p>Multiple Eisenstein Series — Academic Hub</p>
-    <p>Last updated: March 2026</p>
+    <p><span data-i18n="created_by">Created by:</span> <a href="https://www.henrikbachmann.com/">Henrik Bachmann</a></p>
+    <p><span data-i18n="last_updated">Last updated:</span> March 2026</p>
   </footer>
 
 </div>
@@ -478,14 +601,29 @@
 //  id · name · url · affiliation
 // ===================================================================
 const AUTHORS = [
-  { id: "bachmann", name: "Henrik Bachmann", url: "https://www.henrikbachmann.com/", affiliation: "Nagoya University" },
-  { id: "vanittersum", name: "Jan-Willem van Ittersum", url: "http://www.mi.uni-koeln.de/~jittersu/", affiliation: "University of Cologne" },
-  { id: "matthes", name: "Nils Matthes", url: "https://nilsmatthes.github.io/", affiliation: "" },
-  { id: "kuehn", name: "Ulf Kühn", url: "https://www.math.uni-hamburg.de/home/kuehn/", affiliation: "University of Hamburg" },
-  { id: "burmester", name: "Annika Burmester", url: "https://sites.google.com/view/annikaburmester", affiliation: "" },
-  { id: "tasaka", name: "Koji Tasaka", url: "http://www.ist.aichi-pu.ac.jp/~tasaka/", affiliation: "Aichi Prefectural University" },
-  { id: "tsumura", name: "Hirofumi Tsumura", url: "http://www.comp.tmu.ac.jp/math-tsumura/index.htm", affiliation: "Tokyo Metropolitan University" },
-  { id: "kanno", name: "Hiroya Kanno", url: "https://sites.google.com/view/hkanno/home", affiliation: "" }
+  { id: "bachmann", name: "Henrik Bachmann", url: "https://www.henrikbachmann.com/", affiliation: "Nagoya University", affiliation_ja: "名古屋大学" },
+  { id: "vanittersum", name: "Jan-Willem van Ittersum", url: "https://staff.fnwi.uva.nl/j.w.m.vanittersum/", affiliation: "University of Amsterdam", affiliation_ja: "アムステルダム大学" },
+  { id: "matthes", name: "Nils Matthes", url: "https://nilsmatthes.github.io/", affiliation: "", affiliation_ja: "" },
+  { id: "kuehn", name: "Ulf Kühn", url: "https://www.math.uni-hamburg.de/home/kuehn/", affiliation: "University of Hamburg", affiliation_ja: "ハンブルク大学" },
+  { id: "burmester", name: "Annika Burmester", url: "https://sites.google.com/view/annikaburmester", affiliation: "Bielefeld University", affiliation_ja: "ビーレフェルト大学" },
+  { id: "tasaka", name: "Koji Tasaka", name_ja: "田坂 浩二", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/", affiliation: "Kindai University", affiliation_ja: "近畿大学" },
+  { id: "tsumura", name: "Hirofumi Tsumura", name_ja: "津村 博文", url: "http://www.comp.tmu.ac.jp/math-tsumura/index.htm", affiliation: "Tokyo Metropolitan University", affiliation_ja: "東京都立大学" },
+  { id: "kanno", name: "Hayato Kanno", name_ja: "菅野 隼人", url: "https://sites.google.com/view/hkanno/home", affiliation: "Tohoku University", affiliation_ja: "東北大学" },
+  { id: "yaddaden", name: "Khalef Yaddaden", url: "https://khalefyaddaden.github.io/", affiliation: "University of Caen-Normandie", affiliation_ja: "カーン・ノルマンディー大学" },
+  { id: "kaneko", name: "Masanobu Kaneko", name_ja: "金子 昌信", url: "https://www2.math.kyushu-u.ac.jp/~mkaneko/", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
+  { id: "sakugawa", name: "Kenji Sakugawa", name_ja: "佐久川 健司", url: "https://sites.google.com/site/kenjisakugawashomepage/home", affiliation: "Shinshu University", affiliation_ja: "信州大学" },
+  { id: "hara", name: "Takuya Hara", name_ja: "原 卓也", url: "https://edu.tsuda.ac.jp/~t-hara/index.html", affiliation: "Tsuda University", affiliation_ja: "津田塾大学" },
+  { id: "hirose", name: "Minoru Hirose", name_ja: "廣瀬 稔", url: "https://sites.google.com/view/minoru-hirose/english", affiliation: "Kagoshima University", affiliation_ja: "鹿児島大学" },
+  { id: "sato", name: "Nobuo Sato", name_ja: "佐藤 信夫", url: "", affiliation: "", affiliation_ja: "" },
+  { id: "gangl", name: "Herbert Gangl", url: "https://www.maths.dur.ac.uk/users/herbert.gangl/", affiliation: "Durham University", affiliation_ja: "ダラム大学" },
+  { id: "zagier", name: "Don Zagier", url: "https://people.mpim-bonn.mpg.de/zagier/", affiliation: "Max Planck Institute / ICTP", affiliation_ja: "マックス・プランク研究所 / ICTP" },
+  { id: "kina", name: "Katsumi Kina", name_ja: "喜納 勝海", url: "https://sites.google.com/view/katsumikina/", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
+  { id: "seki", name: "Shin-ichiro Seki", name_ja: "関 真一朗", url: "https://sites.google.com/view/shinichiro-seki/home-english", affiliation: "Nagahama Institute of Bio-Science and Technology", affiliation_ja: "長浜バイオ大学" },
+  { id: "maesaka", name: "Takumi Maesaka", name_ja: "前坂 巧", url: "https://mathlog.info/users/657/articles", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
+  { id: "yuan", name: "Huafeng Yuan", url: "", affiliation: "", affiliation_ja: "" },
+  { id: "zhao", name: "Jianqiang Zhao", url: "", affiliation: "The Bishop's School", affiliation_ja: "" },
+  { id: "turan", name: "Can Turan", url: "", affiliation: "University of Hamburg", affiliation_ja: "ハンブルク大学" },
+  { id: "skadborg", name: "Rasmus Peter Skadborg", url: "", affiliation: "", affiliation_ja: "" }
 ];
 
 // ===================================================================
@@ -563,20 +701,6 @@ const REFERENCES = [
     journal: "Res. Math. Sci. 10, 35 (2023)"
   },
   {
-    id: "r06",
-    title: "Modular forms and $q$-analogues of modified double zeta values",
-    authors: ["bachmann"],
-    year: 2020,
-    type: "paper",
-    tags: ["modular forms", "q-analogues", "double zeta values"],
-    language: "English",
-    links: [
-      { label: "Journal", url: "https://link.springer.com/article/10.1007/s12188-020-00227-7" },
-      { label: "arXiv", url: "https://arxiv.org/abs/1808.09674" }
-    ],
-    journal: "Abh. Math. Seminar Uni. Hamburg 90, 201–213"
-  },
-  {
     id: "r07",
     title: "A dimension conjecture for $q$-analogues of multiple zeta values",
     authors: ["bachmann", "kuehn"],
@@ -595,12 +719,12 @@ const REFERENCES = [
     title: "Multiple Eisenstein series and $q$-analogues of multiple zeta values",
     authors: ["bachmann"],
     year: 2020,
-    type: "book",
+    type: "paper",
     tags: ["multiple Eisenstein series", "q-analogues", "multiple zeta values", "survey"],
     language: "English",
     links: [
       { label: "Journal", url: "https://link.springer.com/chapter/10.1007/978-3-030-37031-2_8" },
-      { label: "Download", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmann_mes_and_qmzv.pdf" }
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmann_mes_and_qmzv.pdf" }
     ],
     journal: "Springer Proc. Math. Stat. 314, 173–235"
   },
@@ -668,7 +792,9 @@ const REFERENCES = [
     type: "notes",
     tags: ["multiple Eisenstein series", "derivatives"],
     language: "English",
-    links: [],
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmann_rims_mesderivative.pdf" }
+    ],
     journal: "RIMS Kôkyûroku, to appear"
   },
   {
@@ -720,17 +846,6 @@ const REFERENCES = [
     journal: "Waseda Number Theory Conference Proceedings, 2021"
   },
   {
-    id: "r18",
-    title: "Relations satisfied by double $q$-zeta values",
-    authors: ["burmester", "bachmann", "kuehn"],
-    year: 2020,
-    type: "notes",
-    tags: ["q-analogues", "double zeta values", "relations"],
-    language: "English",
-    links: [],
-    journal: "RIMS Kôkyûroku No. 2160, p. 219–232"
-  },
-  {
     id: "r19",
     title: "Double shuffle relations for $q$-analogues of multiple zeta values, their derivatives and the connection to multiple Eisenstein series",
     authors: ["bachmann"],
@@ -744,28 +859,15 @@ const REFERENCES = [
     journal: "RIMS Kôkyûroku, No. 2015, p. 22–43"
   },
   {
-    id: "r20",
-    title: "A short note on a conjecture of Okounkov about a $q$-analogue of multiple zeta values",
-    authors: ["bachmann", "kuehn"],
-    year: 2014,
-    type: "notes",
-    tags: ["q-analogues", "multiple zeta values", "Okounkov conjecture"],
-    language: "English",
-    links: [
-      { label: "arXiv", url: "http://arxiv.org/abs/1407.6796" }
-    ],
-    journal: "Preprint"
-  },
-  {
     id: "r21",
     title: "Multiple Eisenstein series and $q$-analogues of multiple zeta values",
     authors: ["bachmann"],
     year: 2015,
-    type: "book",
+    type: "thesis",
     tags: ["multiple Eisenstein series", "q-analogues", "multiple zeta values"],
     language: "English",
     links: [
-      { label: "Download", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/thesis_bachmann.pdf" }
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/thesis_bachmann.pdf" }
     ],
     journal: "PhD Thesis, University of Hamburg"
   },
@@ -774,13 +876,817 @@ const REFERENCES = [
     title: "Multiple Zeta-Werte und die Verbindung zu Modulformen durch Multiple Eisensteinreihen",
     authors: ["bachmann"],
     year: 2012,
-    type: "book",
+    type: "thesis",
     tags: ["multiple zeta values", "modular forms", "multiple Eisenstein series"],
     language: "German",
     links: [
-      { label: "Download", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/msc_henrik_bachmann.pdf" }
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/msc_henrik_bachmann.pdf" }
     ],
     journal: "Master's Thesis, University of Hamburg"
+  },
+  {
+    id: "s01",
+    title: "Variants of Multiple Eisenstein Series",
+    authors: ["bachmann"],
+    year: 2026,
+    type: "slides",
+    tags: ["multiple Eisenstein series"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/japanindia_bachmannvariantsofmes.pdf" }
+    ],
+    journal: "Sophia University, March 2026"
+  },
+  {
+    id: "s02",
+    title: "Multiple Zeta Values and Multiple Eisenstein Series",
+    authors: ["bachmann"],
+    year: 2025,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/tmu_talk.pdf" }
+    ],
+    journal: "Tokyo Metropolitan University, December 2025"
+  },
+  {
+    id: "s03",
+    title: "Recent development for multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2025,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "survey"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/elliptics_2025_henrikbachmann.pdf" }
+    ],
+    journal: "Bethe Center for Theoretical Physics, September 2025"
+  },
+  {
+    id: "s04",
+    title: "$\\mathrm{sl}_2$代数と多重アイゼンシュタイン級数について",
+    authors: ["bachmann"],
+    year: 2025,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "sl2-algebra"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmann_algebrasymposium2025.pdf" }
+    ],
+    journal: "第70回 代数学シンポジウム, August 2025"
+  },
+  {
+    id: "s05",
+    title: "$\\mathrm{sl}_2$-algebras and multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2025,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "sl2-algebra"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/shanghaitalkbachmann.pdf" }
+    ],
+    journal: "Tongji University, July 2025"
+  },
+  {
+    id: "s06",
+    title: "Recent developments and 12 open problems on multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2024,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "open problems", "survey"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/mes_openproblems_bachmann.pdf" }
+    ],
+    journal: "Tohoku University, December 2024"
+  },
+  {
+    id: "s07",
+    title: "Conjectures for formal multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2024,
+    type: "slides",
+    tags: ["formal multiple Eisenstein series", "conjectures"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/conjectures_formalmes.pdf" }
+    ],
+    journal: "Hamburg University, August 2024"
+  },
+  {
+    id: "s08",
+    title: "Formal multiple zeta values and their variants",
+    authors: ["bachmann"],
+    year: 2024,
+    type: "slides",
+    tags: ["formal multiple Eisenstein series", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmann-formalmzvandmes.pdf" }
+    ],
+    journal: "Anhui Normal University, June 2024"
+  },
+  {
+    id: "s09",
+    title: "Formal multiple Eisenstein series and their derivations",
+    authors: ["bachmann"],
+    year: 2023,
+    type: "slides",
+    tags: ["formal multiple Eisenstein series", "derivations"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/fmes_and_der_rims14thdec23_bachmann.pdf" }
+    ],
+    journal: "RIMS Kyoto, December 2023"
+  },
+  {
+    id: "s10",
+    title: "Formal quasimodular forms and formal multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2022,
+    type: "slides",
+    tags: ["formal multiple Eisenstein series", "quasimodular forms"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bielefeld_bachmann.pdf" }
+    ],
+    journal: "Bielefeld University, August 2022"
+  },
+  {
+    id: "s11",
+    title: "The Zoo of multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2022,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "survey"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/rims_zoo_of_mes_slides.pdf" }
+    ],
+    journal: "多重ゼータ値の諸相, RIMS Kyoto, May 2022"
+  },
+  {
+    id: "s12",
+    title: "Connecting modular forms and multiple zeta values via combinatorial multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2022,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "combinatorial", "modular forms", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/agzt_mzvandmf_combmes_bachmann.pdf" }
+    ],
+    journal: "Universität Hamburg, January 2022"
+  },
+  {
+    id: "s13",
+    title: "多重ゼータ値のq類似および形式的な二重アイゼンシュタイン空間の実現",
+    authors: ["bachmann"],
+    year: 2021,
+    type: "slides",
+    tags: ["q-analogues", "formal double Eisenstein space"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/nuant_20210730_bachmann.pdf" }
+    ],
+    journal: "解析数論セミナー, July 2021"
+  },
+  {
+    id: "s14",
+    title: "Formal multiple Eisenstein series and formal multiple zeta values",
+    authors: ["bachmann"],
+    year: 2021,
+    type: "slides",
+    tags: ["formal multiple Eisenstein series", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/kmzv_bachmann.pdf" }
+    ],
+    journal: "関西多重ゼータ研究会第54回, May 2021"
+  },
+  {
+    id: "s15",
+    title: "Formal double zeta space",
+    authors: ["bachmann"],
+    year: 2021,
+    type: "slides",
+    tags: ["formal double Eisenstein space", "double zeta values"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/formaldzs_バッハマン_月例報告会.pdf" }
+    ],
+    journal: "月例報告会, May 2021"
+  },
+  {
+    id: "s16",
+    title: "Multiple Eisenstein series and their Fourier coefficients",
+    authors: ["bachmann"],
+    year: 2020,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "Fourier expansion"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/mec.pdf" }
+    ],
+    journal: "Kyushu MZV Seminar, May 2020"
+  },
+  {
+    id: "s17",
+    title: "Combinatorial multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2020,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "combinatorial"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/cmes.pdf" }
+    ],
+    journal: "Kindai University, February 2020"
+  },
+  {
+    id: "s18",
+    title: "The double shuffle structure of certain $q$-analogues of multiple zeta values and the connection to modular forms",
+    authors: ["bachmann"],
+    year: 2016,
+    type: "slides",
+    tags: ["q-analogues", "double shuffle relations", "modular forms", "multiple Eisenstein series"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/qanalog_dsh_rims.pdf" }
+    ],
+    journal: "RIMS Kyoto, July 2016"
+  },
+  {
+    id: "s19",
+    title: "Multiple Eisenstein series and their Fourier expansion",
+    authors: ["bachmann"],
+    year: 2016,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "Fourier expansion"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/mes_fourier_27052016.pdf" }
+    ],
+    journal: "Nagoya University, May 2016"
+  },
+  {
+    id: "s20",
+    title: "Multiple Eisensteinreihen und $q$-Analoga von Multiplen Zeta-Werten",
+    authors: ["bachmann"],
+    year: 2015,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "q-analogues", "multiple zeta values"],
+    language: "German",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmann_disputation.pdf" }
+    ],
+    journal: "PhD Defense, Universität Hamburg, December 2015"
+  },
+  {
+    id: "s21",
+    title: "Multiple zeta values and regularised multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2015,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "regularization", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "http://www.math.uni-hamburg.de/home/bachmann/talks/pisa_may2015_bachmann.pdf" }
+    ],
+    journal: "CRM Pisa, May 2015"
+  },
+  {
+    id: "s22",
+    title: "Shuffle regularized multiple Eisenstein series and the Goncharov coproduct",
+    authors: ["bachmann"],
+    year: 2014,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "regularization", "Goncharov coproduct"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "http://www.math.uni-hamburg.de/home/bachmann/talks/bachmann_nap2014.pdf" }
+    ],
+    journal: "ICMAT Madrid, September 2014"
+  },
+  {
+    id: "s25",
+    title: "Multiple Eisenstein series, their Fourier expansions and multiple divisor functions",
+    authors: ["bachmann"],
+    year: 2013,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "Fourier expansion", "multiple divisor functions"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "http://www.math.uni-hamburg.de/home/bachmann/talks/kyushu_part1.pdf" }
+    ],
+    journal: "Kyushu University, November 2013"
+  },
+  {
+    id: "s27",
+    title: "Multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2012,
+    type: "slides",
+    tags: ["multiple Eisenstein series"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "http://www.math.uni-hamburg.de/home/bachmann/talks/multiEisen_Bristol.pdf" }
+    ],
+    journal: "University of Bristol, September 2012"
+  },
+  {
+    id: "b01",
+    title: "A generalization of formal multiple zeta values related to multiple Eisenstein series and multiple $q$-zeta values",
+    authors: ["burmester"],
+    year: 2024,
+    type: "paper",
+    tags: ["formal multiple Eisenstein series", "q-analogues", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://www.sciencedirect.com/science/article/pii/S0022314X24002221" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2307.02370" }
+    ],
+    journal: "J. Number Theory 269, 106–137 (2024)"
+  },
+  {
+    id: "b02",
+    title: "Balanced multiple $q$-zeta values",
+    authors: ["burmester"],
+    year: 2024,
+    type: "paper",
+    tags: ["q-analogues", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.1016/j.aim.2024.109487" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2303.09436" }
+    ],
+    journal: "Adv. Math. 439 (2024)"
+  },
+  {
+    id: "b03",
+    title: "A stabilizer interpretation of the (extended) linearized double shuffle Lie algebra",
+    authors: ["burmester", "yaddaden"],
+    year: 2025,
+    type: "preprint",
+    tags: ["double shuffle relations", "Lie algebra"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2603.05038" }
+    ],
+    journal: "Preprint"
+  },
+  {
+    id: "b04",
+    title: "An extension of the linearized double shuffle Lie algebra",
+    authors: ["burmester"],
+    year: 2025,
+    type: "preprint",
+    tags: ["double shuffle relations", "Lie algebra"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2508.05024" }
+    ],
+    journal: "Submitted"
+  },
+  {
+    id: "k02",
+    title: "Shuffle regularization for multiple Eisenstein series of level $N$",
+    authors: ["kanno"],
+    year: 2025,
+    type: "paper",
+    tags: ["multiple Eisenstein series", "regularization", "level N"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://link.springer.com/article/10.1007/s11139-025-01136-0" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2405.04770" }
+    ],
+    journal: "Ramanujan J. 67, 95 (2025)"
+  },
+  {
+    id: "k03",
+    title: "レベル$N$の多重Eisenstein級数と反復積分のGoncharov余積",
+    authors: ["kanno"],
+    year: 2024,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "level N", "Goncharov coproduct"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/2316-14.pdf" }
+    ],
+    journal: "RIMS Kôkyûroku, No. 2316 (2024)"
+  },
+  {
+    id: "k04",
+    title: "深さ無限の$t$-多重ゼータ値とレベル付き多重Eisenstein級数について",
+    authors: ["kanno"],
+    year: 2024,
+    type: "thesis",
+    tags: ["multiple Eisenstein series", "level N", "multiple zeta values"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1bE5gXztHcXFgRvZsk7eBRvOYlzxRLaCy/view" }
+    ],
+    journal: "Master's Thesis, Tohoku University"
+  },
+  {
+    id: "t01",
+    title: "Symmetric multiple Eisenstein series",
+    authors: ["tasaka", "sakugawa", "hara"],
+    year: 2025,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "symmetric"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2601.13626" }
+    ],
+    journal: "Preprint"
+  },
+  {
+    id: "t02",
+    title: "Hecke eigenform and double Eisenstein series",
+    authors: ["tasaka"],
+    year: 2020,
+    type: "paper",
+    tags: ["double Eisenstein series", "Hecke eigenforms", "modular forms"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.1090/proc/14680" },
+      { label: "arXiv", url: "http://arxiv.org/abs/1811.03887" }
+    ],
+    journal: "Proc. Amer. Math. Soc. 148(1), 53–58 (2020)"
+  },
+  {
+    id: "t03",
+    title: "Double zeta values, double Eisenstein series, and modular forms of level 2",
+    authors: ["tasaka", "kaneko"],
+    year: 2013,
+    type: "paper",
+    tags: ["double Eisenstein series", "double zeta values", "modular forms", "level N"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.1007/s00208-013-0930-5" },
+      { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/paper/Double Eisenstein series of level 2.pdf" }
+    ],
+    journal: "Math. Ann. 357(3), 1091–1118 (2013)"
+  },
+  {
+    id: "t04",
+    title: "Eisenstein series identities based on partial fraction decomposition",
+    authors: ["hirose", "sato", "tasaka"],
+    year: 2015,
+    type: "paper",
+    tags: ["Eisenstein series", "identities"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.1007/s11139-014-9639-7" },
+      { label: "arXiv", url: "https://arxiv.org/abs/1402.1585" }
+    ],
+    journal: "Ramanujan J. 38(3), 455–463 (2015)"
+  },
+  {
+    id: "t05",
+    title: "Multiple zeta values, multiple Eisenstein series, and period polynomials",
+    authors: ["tasaka"],
+    year: 2015,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "multiple zeta values", "period polynomials"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/paper/ANT2014.pdf" }
+    ],
+    journal: "RIMS Kôkyûroku Bessatsu B53, 199–218 (2015)"
+  },
+  {
+    id: "t06",
+    title: "On a conjecture for representations of integers as sums of squares and double shuffle relations",
+    authors: ["tasaka"],
+    year: 2014,
+    type: "paper",
+    tags: ["double shuffle relations", "Eisenstein series", "sums of squares"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.1007/s11139-013-9513-z" },
+      { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/paper/Representing integers.pdf" }
+    ],
+    journal: "Ramanujan J. 33(1), 1–21 (2014)"
+  },
+  {
+    id: "t07",
+    title: "Catalogue of modular relations for double zeta values",
+    authors: ["tasaka"],
+    year: 2023,
+    type: "notes",
+    tags: ["double Eisenstein series", "double zeta values", "modular forms", "relations"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2308.14382" }
+    ],
+    journal: "RIMS Kôkyûroku 2267, 100–121 (2023)"
+  },
+  {
+    id: "t08",
+    title: "Double Eisenstein Series for $\\Gamma_0(2)$",
+    authors: ["tasaka"],
+    year: 2011,
+    type: "notes",
+    tags: ["double Eisenstein series", "level N"],
+    language: "Japanese",
+    links: [],
+    journal: "第4回多重ゼータ研究集会報告集, pp. 23–32 (2011)"
+  },
+  {
+    id: "t09",
+    title: "2重Eisenstein級数とその周辺",
+    authors: ["tasaka"],
+    year: 2012,
+    type: "notes",
+    tags: ["double Eisenstein series"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/1806-20.pdf" }
+    ],
+    journal: "RIMS Kôkyûroku No. 1806, pp. 200–209 (2012)"
+  },
+  {
+    id: "t10",
+    title: "純奇多重ゼータ値の線形関係式と多重Eisenstein級数",
+    authors: ["tasaka"],
+    year: 2014,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "multiple zeta values", "relations"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "http://www.auemath.aichi-edu.ac.jp/teacher/ykishi/FSNT/13/005-Tasaka.pdf" }
+    ],
+    journal: "第8回福岡数論報告集, pp. 38–45 (2014)"
+  },
+  {
+    id: "t11",
+    title: "The algebra of multiple Eisenstein series and Goncharov's coproduct",
+    authors: ["tasaka"],
+    year: 2016,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "Goncharov coproduct"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1Te8gPVFBNkUzfaOcFKS50vOV06XnREGQ/view" }
+    ],
+    journal: "第22回整数論サマースクール報告集, pp. 887–890 (2016)"
+  },
+  {
+    id: "t12",
+    title: "多重ゼータ値のモジュラー現象",
+    authors: ["tasaka"],
+    year: 2018,
+    type: "notes",
+    tags: ["multiple zeta values", "modular forms", "multiple Eisenstein series"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/ss2018/proceedings/14.pdf" }
+    ],
+    journal: "第26回整数論サマースクール報告集, pp. 311–330 (2018)"
+  },
+  {
+    id: "gkz01",
+    title: "Double zeta values and modular forms",
+    authors: ["gangl", "kaneko", "zagier"],
+    year: 2006,
+    type: "paper",
+    tags: ["double Eisenstein series", "double zeta values", "modular forms", "period polynomials"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www2.math.kyushu-u.ac.jp/~mkaneko/papers/35Double_zeta_values.pdf" }
+    ],
+    journal: "Automorphic Forms and Zeta Functions, World Scientific, 71–106 (2006)"
+  },
+  {
+    id: "mk01",
+    title: "二重ゼータ値, 二重Eisenstein級数, およびモジュラー形式",
+    authors: ["kaneko"],
+    year: 2007,
+    type: "notes",
+    tags: ["double Eisenstein series", "double zeta values", "modular forms"],
+    language: "Japanese",
+    links: [
+      { label: "RIMS", url: "https://repository.kulib.kyoto-u.ac.jp/dspace/handle/2433/80859" }
+    ],
+    journal: "RIMS Kôkyûroku No. 1549 (2007)"
+  },
+  {
+    id: "mk02",
+    title: "Double zeta values and modular forms",
+    authors: ["kaneko"],
+    year: 2004,
+    type: "notes",
+    tags: ["double Eisenstein series", "double zeta values", "modular forms"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www2.math.kyushu-u.ac.jp/~mkaneko/papers/japan-korea-latex.pdf" }
+    ],
+    journal: "Japan-Korea Number Theory Seminar (2004)"
+  },
+  {
+    id: "mk03",
+    title: "多重ゼータ値と多重ベルヌーイ数 (多重ゼータ値と多重Eisenstein級数)",
+    authors: ["kaneko"],
+    year: 2008,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "multiple zeta values"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://www2.math.kyushu-u.ac.jp/~mkaneko/papers/alg-symp2008.pdf" }
+    ],
+    journal: "第53回代数学シンポジウム報告集 (2008)"
+  },
+  {
+    id: "ki01",
+    title: "Double Eisenstein series and modular forms of level 4",
+    authors: ["kina"],
+    year: 2024,
+    type: "paper",
+    tags: ["double Eisenstein series", "modular forms", "level N"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://link.springer.com/article/10.1007/s11139-024-00940-6" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2403.06917" }
+    ],
+    journal: "Ramanujan J. 65(4), 1651–1696 (2024)"
+  },
+  {
+    id: "ki02",
+    title: "Multiple $\\wp$-functions and their applications",
+    authors: ["kina", "kanno"],
+    year: 2025,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "Weierstrass p-function"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2507.14118" }
+    ],
+    journal: "Preprint"
+  },
+  {
+    id: "ki03",
+    title: "Multiple $\\wp$-function and associated multiple Eisenstein series",
+    authors: ["kina"],
+    year: 2026,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "Weierstrass p-function"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1eZom1UfiAJdsuXhdyg_3UDVKEDB3MbIW/view" }
+    ],
+    journal: "MFO Oberwolfach, February 2026"
+  },
+  {
+    id: "ki04",
+    title: "Double Eisenstein series and modular forms of level 4",
+    authors: ["kina"],
+    year: 2024,
+    type: "slides",
+    tags: ["double Eisenstein series", "modular forms", "level N"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1NDpFBmhfFtBYp6veGGphMZEGKWqilTI4/view" }
+    ],
+    journal: "36th Automorphic Forms Workshop, Oklahoma State University, May 2024"
+  },
+  {
+    id: "ki05",
+    title: "Double Eisenstein series and modular forms of level 4",
+    authors: ["kina"],
+    year: 2024,
+    type: "slides",
+    tags: ["double Eisenstein series", "modular forms", "level N"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/13e34I-esdZbZX0ciYFJ-QS0o8LZZkYx1/view" }
+    ],
+    journal: "第18回多重ゼータ研究集会 & 第64回関西多重ゼータ研究会, Kindai University, February 2024"
+  },
+  {
+    id: "ln01",
+    title: "Multiple zeta values (多重ゼータ値) — Lecture Notes",
+    authors: ["bachmann"],
+    year: 2025,
+    type: "lecture notes",
+    tags: ["multiple zeta values", "multiple Eisenstein series", "q-analogues", "modular forms", "survey"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/mzv_2025_lecture_notes_v25.pdf" },
+      { label: "Course page", url: "https://www.henrikbachmann.com/mzv2025.html" }
+    ],
+    journal: "Nagoya University, Spring 2025"
+  },
+  {
+    id: "yz01",
+    title: "Double shuffle relations of double zeta values and the double Eisenstein series at level $N$",
+    authors: ["yuan", "zhao"],
+    year: 2015,
+    type: "paper",
+    tags: ["double Eisenstein series", "double shuffle relations", "double zeta values", "level N"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/1401.6699" }
+    ],
+    journal: "J. London Math. Soc. (2) 92, 520–546 (2015)"
+  },
+  {
+    id: "blog01",
+    title: "多重Eisenstein級数についてのメモ",
+    authors: ["seki"],
+    year: 2026,
+    month: 2,
+    type: "blog",
+    tags: ["multiple Eisenstein series"],
+    language: "Japanese",
+    links: [
+      { label: "Blog", url: "https://integers.hatenablog.com/entry/2026/02/10/210439" }
+    ],
+    journal: "Blog post, February 2026"
+  },
+  {
+    id: "blog02",
+    title: "形式的二重Eisenstein級数の和公式, 制限付き和公式",
+    authors: ["maesaka"],
+    year: 2026,
+    month: 3,
+    type: "blog",
+    tags: ["formal multiple Eisenstein series", "relations"],
+    language: "Japanese",
+    links: [
+      { label: "Blog", url: "https://mathlog.info/articles/9uWvTJLkTr7jPI0AogLt" }
+    ],
+    journal: "Mathlog, March 2026"
+  },
+  {
+    id: "blog03",
+    title: "形式的多重Eisenstein級数の微分",
+    authors: ["maesaka"],
+    year: 2026,
+    month: 3,
+    type: "blog",
+    tags: ["formal multiple Eisenstein series", "derivations"],
+    language: "Japanese",
+    links: [
+      { label: "Blog", url: "https://mathlog.info/articles/6gOQ8cfMdWt6ZznilMTH" }
+    ],
+    journal: "Mathlog, March 2026"
+  },
+  {
+    id: "blog04",
+    title: "2が並んだ多重Eisenstein級数の母関数",
+    authors: ["maesaka"],
+    year: 2026,
+    month: 3,
+    type: "blog",
+    tags: ["multiple Eisenstein series"],
+    language: "Japanese",
+    links: [
+      { label: "Blog", url: "https://mathlog.info/articles/MJS27GvEPgvuKWomMuZ0" }
+    ],
+    journal: "Mathlog, March 2026"
+  },
+  {
+    id: "ct01",
+    title: "Ableitungen von Eisensteinreihen und Erzeugendenreihen von Multiplen Teilersummen",
+    authors: ["turan"],
+    year: 2021,
+    type: "thesis",
+    tags: ["Eisenstein series", "derivatives", "multiple divisor functions"],
+    language: "German",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachelorarbeit_turan.pdf" }
+    ],
+    journal: "Bachelor's Thesis, University of Hamburg"
+  },
+  {
+    id: "rs01",
+    title: "Quasi-shuffle algebras and stuffle regularized multiple Eisenstein series",
+    authors: ["skadborg"],
+    year: 2023,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "quasi-shuffle", "stuffle regularization"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/rasmusskadborg_quasishuffleandstuffleregmes.pdf" }
+    ],
+    journal: "GIS Project, Nagoya University"
+  },
+  {
+    id: "mk05",
+    title: "多重ゼータ値入門",
+    authors: ["kaneko"],
+    year: 2026,
+    type: "book",
+    tags: ["multiple zeta values", "double Eisenstein series", "modular forms"],
+    language: "Japanese",
+    links: [
+      { label: "Iwanami", url: "https://www.iwanami.co.jp/book/b10155812.html" }
+    ],
+    journal: "岩波数学叢書, Iwanami Shoten (2026)"
   }
 ];
 
@@ -795,12 +1701,141 @@ const REFERENCES = [
   const $$ = s => document.querySelectorAll(s);
   const authorMap = new Map(AUTHORS.map(a => [a.id, a]));
 
+  // ===== INTERNATIONALIZATION =====
+  const I18N = {
+    en: {
+      header_subtitle: 'References for',
+      header_title: 'Multiple Eisenstein Series',
+      nav_references: 'References',
+      nav_authors: 'Mathematicians',
+      filter_by_author: 'Filtering by author:',
+      clear: 'Clear',
+      label_type: 'Type:',
+      label_language: 'Language:',
+      label_sort: 'Sort:',
+      all_types: 'All types',
+      all_languages: 'All languages',
+      newest_first: 'Newest first',
+      oldest_first: 'Oldest first',
+      filter_by_topic: 'Filter by topic',
+      filter_by_topic_active: 'Filter by topic (active)',
+      no_results: 'No references match the current filters.',
+      created_by: 'Created by:',
+      last_updated: 'Last updated:',
+      references: 'references',
+      reference: 'reference',
+      appendix_by: 'Appendix by',
+      of: 'of',
+      entries: 'entries',
+    },
+    ja: {
+      header_subtitle: '文献リスト',
+      header_title: '多重アイゼンシュタイン級数',
+      nav_references: '文献',
+      nav_authors: '研究者',
+      filter_by_author: '著者で絞り込み:',
+      clear: 'クリア',
+      label_type: '種類:',
+      label_language: '言語:',
+      label_sort: '並べ替え:',
+      all_types: 'すべての種類',
+      all_languages: 'すべての言語',
+      newest_first: '新しい順',
+      oldest_first: '古い順',
+      filter_by_topic: 'トピックで絞り込み',
+      filter_by_topic_active: 'トピックで絞り込み (有効)',
+      no_results: '条件に一致する文献がありません。',
+      created_by: '作成者:',
+      last_updated: '最終更新:',
+      references: '件',
+      reference: '件',
+      appendix_by: '付録:',
+      of: '/',
+      entries: '件',
+    }
+  };
+
+  // Type names in Japanese
+  const TYPE_NAME = {
+    en: { paper: 'paper', preprint: 'preprint', book: 'book', thesis: 'thesis', notes: 'notes', slides: 'slides', 'lecture notes': 'lecture notes', blog: 'blog' },
+    ja: { paper: '論文', preprint: 'プレプリント', book: '書籍', thesis: '学位論文', notes: 'ノート', slides: 'スライド', 'lecture notes': '講義ノート', blog: 'ブログ' }
+  };
+
+  let currentLang = 'en';
+
+  function t(key) {
+    return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
+  }
+
+  function typeName(type) {
+    return (TYPE_NAME[currentLang] && TYPE_NAME[currentLang][type]) || type;
+  }
+
+  function applyI18n() {
+    $$('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (I18N[currentLang] && I18N[currentLang][key]) {
+        el.textContent = I18N[currentLang][key];
+      }
+    });
+  }
+
+  // Language toggle
+  $$('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentLang = btn.dataset.lang;
+      $$('.lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.documentElement.lang = currentLang === 'ja' ? 'ja' : 'en';
+      applyI18n();
+      populateDropdowns();
+      renderReferences();
+      renderAuthors();
+    });
+  });
+
+  // Language → flag emoji mapping
+  const LANG_FLAGS = {
+    'English': '\u{1F1EC}\u{1F1E7}',
+    'German': '\u{1F1E9}\u{1F1EA}',
+    'Japanese': '\u{1F1EF}\u{1F1F5}'
+  };
+
+  // Type → emoji mapping
+  const TYPE_EMOJI = {
+    'paper': '\u{1F4C4}',
+    'book': '\u{1F4D6}',
+    'preprint': '\u{1F4DD}',
+    'notes': '\u{1F5D2}\uFE0F',
+    'slides': '\u{1F4CA}',
+    'lecture notes': '\u{1F4DA}',
+    'thesis': '\u{1F393}',
+    'blog': '\u{1F310}'
+  };
+
+  function langWithFlag(lang) {
+    const flag = LANG_FLAGS[lang] || '';
+    return flag ? `${flag} ${lang}` : lang;
+  }
+
+  // --- State ---
+  let sortDesc = true;
+  let activeAuthorFilter = null; // author id or null
+
+  // --- Author HTML for reference list (clickable to filter) ---
+  function getAuthorName(a) {
+    return (currentLang === 'ja' && a.name_ja) ? a.name_ja : a.name;
+  }
+
+  function getAuthorAffiliation(a) {
+    return (currentLang === 'ja' && a.affiliation_ja) ? a.affiliation_ja : a.affiliation;
+  }
+
   function getAuthorHTML(id) {
     const a = authorMap.get(id);
     if (!a) return id;
-    return a.url
-      ? `<a href="${a.url}" target="_blank" rel="noopener">${a.name}</a>`
-      : a.name;
+    const displayName = getAuthorName(a);
+    return `<a class="author-filter-link" data-author-id="${a.id}" href="javascript:void(0)">${displayName}</a>`;
   }
 
   // --- Gather unique values ---
@@ -808,19 +1843,42 @@ const REFERENCES = [
   const allLangs = [...new Set(REFERENCES.map(r => r.language))].sort();
   const allTags  = [...new Set(REFERENCES.flatMap(r => r.tags))].sort();
 
-  // --- Populate dropdowns ---
+  // --- Populate dropdowns (called on init and language switch) ---
   const typeSelect = $('#filter-type');
   const langSelect = $('#filter-lang');
-  allTypes.forEach(t => {
-    const o = document.createElement('option');
-    o.value = t; o.textContent = t.charAt(0).toUpperCase() + t.slice(1);
-    typeSelect.appendChild(o);
-  });
-  allLangs.forEach(l => {
-    const o = document.createElement('option');
-    o.value = l; o.textContent = l;
-    langSelect.appendChild(o);
-  });
+
+  function populateDropdowns() {
+    // Preserve current selections
+    const curType = typeSelect.value;
+    const curLang = langSelect.value;
+
+    // Clear and repopulate type dropdown
+    typeSelect.innerHTML = '';
+    const oAll = document.createElement('option');
+    oAll.value = 'all'; oAll.textContent = t('all_types');
+    typeSelect.appendChild(oAll);
+    allTypes.forEach(tp => {
+      const o = document.createElement('option');
+      const emoji = TYPE_EMOJI[tp] || '';
+      o.value = tp; o.textContent = `${emoji} ${typeName(tp)}`;
+      typeSelect.appendChild(o);
+    });
+    typeSelect.value = curType;
+
+    // Clear and repopulate language dropdown
+    langSelect.innerHTML = '';
+    const oAllL = document.createElement('option');
+    oAllL.value = 'all'; oAllL.textContent = t('all_languages');
+    langSelect.appendChild(oAllL);
+    allLangs.forEach(l => {
+      const o = document.createElement('option');
+      o.value = l; o.textContent = langWithFlag(l);
+      langSelect.appendChild(o);
+    });
+    langSelect.value = curLang;
+  }
+
+  populateDropdowns();
 
   // --- Populate tag chips ---
   const tagRow = $('#tag-row');
@@ -836,8 +1894,15 @@ const REFERENCES = [
     tagRow.appendChild(btn);
   });
 
-  // --- State ---
-  let sortDesc = true;
+  // --- Tag section toggle ---
+  const tagToggle = $('#tag-toggle');
+  tagToggle.addEventListener('click', () => {
+    tagToggle.classList.toggle('open');
+    tagRow.classList.toggle('open');
+    const hasActive = tagRow.querySelector('.tag-chip.active');
+    const label = hasActive && !tagToggle.classList.contains('open') ? t('filter_by_topic_active') : t('filter_by_topic');
+    tagToggle.innerHTML = `<span class="arrow">&#9654;</span> ${label}`;
+  });
 
   // --- Sorting ---
   $('#sort-year-desc').addEventListener('click', () => {
@@ -856,6 +1921,32 @@ const REFERENCES = [
   typeSelect.addEventListener('change', renderReferences);
   langSelect.addEventListener('change', renderReferences);
 
+  // --- Author filter functions ---
+  function setAuthorFilter(authorId) {
+    activeAuthorFilter = authorId;
+    const a = authorMap.get(authorId);
+    const banner = $('#author-filter-banner');
+    $('#author-filter-name').textContent = a ? getAuthorName(a) : authorId;
+    banner.classList.add('visible');
+
+    // Switch to references view
+    $$('.nav-tab').forEach(t => t.classList.remove('active'));
+    $$('.nav-tab')[0].classList.add('active');
+    $$('.view-section').forEach(v => v.classList.remove('active'));
+    $('#view-references').classList.add('active');
+
+    renderReferences();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function clearAuthorFilter() {
+    activeAuthorFilter = null;
+    $('#author-filter-banner').classList.remove('visible');
+    renderReferences();
+  }
+
+  $('#clear-author-filter').addEventListener('click', clearAuthorFilter);
+
   // --- Render references ---
   function renderReferences() {
     const typeFilter = typeSelect.value;
@@ -866,10 +1957,19 @@ const REFERENCES = [
       if (typeFilter !== 'all' && r.type !== typeFilter) return false;
       if (langFilter !== 'all' && r.language !== langFilter) return false;
       if (activeTags.length > 0 && !activeTags.some(t => r.tags.includes(t))) return false;
+      if (activeAuthorFilter) {
+        const allAuthors = [...r.authors, ...(r.appendix || [])];
+        if (!allAuthors.includes(activeAuthorFilter)) return false;
+      }
       return true;
     });
 
-    refs.sort((a, b) => sortDesc ? b.year - a.year : a.year - b.year);
+    refs.sort((a, b) => {
+      const diff = sortDesc ? b.year - a.year : a.year - b.year;
+      if (diff !== 0) return diff;
+      const ma = a.month || 0, mb = b.month || 0;
+      return sortDesc ? mb - ma : ma - mb;
+    });
 
     const list = $('#ref-list');
     const empty = $('#empty-state');
@@ -885,31 +1985,45 @@ const REFERENCES = [
 
         const authorsHTML = r.authors.map(getAuthorHTML).join(', ');
         const appendixHTML = r.appendix
-          ? `, Appendix by ${r.appendix.map(getAuthorHTML).join(', ')}`
+          ? `, ${t('appendix_by')} ${r.appendix.map(getAuthorHTML).join(', ')}`
           : '';
 
         const linksHTML = r.links.map(l =>
           `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
         ).join('');
 
-        const tagsHTML = r.tags.map(t => `<span class="ref-tag">${t}</span>`).join('');
+        const flag = LANG_FLAGS[r.language] || '';
+
+        const typeEmoji = TYPE_EMOJI[r.type] || '';
 
         li.innerHTML = `
-          <div class="ref-number">[${i + 1}]</div>
-          <div class="ref-title">${r.title}</div>
-          <div class="ref-authors">${authorsHTML}${appendixHTML}</div>
-          <div class="ref-meta">${r.journal} · ${r.year}</div>
-          <div class="ref-links">
-            <span class="ref-type">${r.type}</span>
-            ${linksHTML}
+          <div class="ref-head">
+            <span class="ref-number">[${i + 1}]</span>
+            <span class="ref-title">${r.title}</span>
           </div>
-          <div class="ref-tags">${tagsHTML}</div>
+          <div class="ref-detail">
+            <span class="ref-authors">${authorsHTML}${appendixHTML}</span>
+            <span class="ref-dot">·</span>
+            <span class="ref-meta">${r.journal}, ${r.year}</span>
+            <span class="ref-dot">·</span>
+            <span class="ref-type" title="${r.type}">${flag} ${typeEmoji} ${typeName(r.type)}</span>
+            ${linksHTML ? '<span class="ref-dot">·</span>' : ''}
+            <span class="ref-links">${linksHTML}</span>
+          </div>
         `;
         list.appendChild(li);
       });
     }
 
-    $('#result-count').textContent = `${refs.length} of ${REFERENCES.length} entries`;
+    $('#result-count').textContent = `${refs.length} ${t('of')} ${REFERENCES.length} ${t('entries')}`;
+
+    // Attach author click handlers
+    list.querySelectorAll('.author-filter-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        setAuthorFilter(link.dataset.authorId);
+      });
+    });
 
     // Re-render KaTeX
     if (window.renderMathInElement) {
@@ -926,37 +2040,68 @@ const REFERENCES = [
   }
 
   // --- Render authors ---
-  function renderAuthors() {
-    const grid = $('#author-grid');
-    grid.innerHTML = '';
+  // Type display order: paper first, then the rest
+  const TYPE_ORDER = ['paper', 'preprint', 'book', 'thesis', 'notes', 'slides', 'lecture notes', 'blog'];
 
-    // Count publications per author
+  function renderAuthors() {
+    const list = $('#author-list');
+    list.innerHTML = '';
+
+    // Count publications per author, broken down by type
+    const pubByType = new Map();
     const pubCount = new Map();
     REFERENCES.forEach(r => {
-      r.authors.forEach(id => pubCount.set(id, (pubCount.get(id) || 0) + 1));
-      if (r.appendix) r.appendix.forEach(id => pubCount.set(id, (pubCount.get(id) || 0) + 1));
+      const allIds = [...r.authors, ...(r.appendix || [])];
+      allIds.forEach(id => {
+        pubCount.set(id, (pubCount.get(id) || 0) + 1);
+        if (!pubByType.has(id)) pubByType.set(id, new Map());
+        const m = pubByType.get(id);
+        m.set(r.type, (m.get(r.type) || 0) + 1);
+      });
     });
 
-    // Sort by publication count descending
-    const sorted = [...AUTHORS].sort((a, b) => (pubCount.get(b.id) || 0) - (pubCount.get(a.id) || 0));
+    // Sort alphabetically by family name (last word of name)
+    const sorted = [...AUTHORS]
+      .filter(a => (pubCount.get(a.id) || 0) > 0)
+      .sort((a, b) => {
+        const famA = a.name.split(' ').pop().toLowerCase();
+        const famB = b.name.split(' ').pop().toLowerCase();
+        return famA.localeCompare(famB);
+      });
 
     sorted.forEach(a => {
       const count = pubCount.get(a.id) || 0;
-      if (count === 0) return;
+      const types = pubByType.get(a.id) || new Map();
 
-      const card = document.createElement('div');
-      card.className = 'author-card';
+      // Build type breakdown string, papers first
+      const breakdown = TYPE_ORDER
+        .filter(t => types.has(t))
+        .map(t => `${TYPE_EMOJI[t] || ''}\u00A0${types.get(t)}`)
+        .join('  ');
 
+      const li = document.createElement('li');
+      li.className = 'author-item';
+
+      const displayName = getAuthorName(a);
+      const displayAff = getAuthorAffiliation(a);
       const nameHTML = a.url
-        ? `<a href="${a.url}" target="_blank" rel="noopener">${a.name}</a>`
-        : a.name;
+        ? `<a href="${a.url}" target="_blank" rel="noopener">${displayName}</a>`
+        : displayName;
 
-      card.innerHTML = `
-        <div class="author-name">${nameHTML}</div>
-        ${a.affiliation ? `<div class="author-affiliation">${a.affiliation}</div>` : ''}
-        <div class="author-pub-count">${count} reference${count !== 1 ? 's' : ''} in database</div>
+      li.innerHTML = `
+        <span class="author-name">${nameHTML}</span>
+        ${displayAff ? `<span class="author-dot">·</span><span class="author-affiliation">${displayAff}</span>` : ''}
+        <span class="author-dot">·</span>
+        <button class="author-show-refs" data-author-id="${a.id}">${count} ${t('references')} (${breakdown})</button>
       `;
-      grid.appendChild(card);
+      list.appendChild(li);
+    });
+
+    // Attach click handlers
+    list.querySelectorAll('.author-show-refs').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setAuthorFilter(btn.dataset.authorId);
+      });
     });
   }
 
