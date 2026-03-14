@@ -377,21 +377,27 @@
 
   .ref-links {
     display: inline-flex;
-    gap: 0.55rem;
+    gap: 0.35rem;
     flex-wrap: wrap;
     align-items: baseline;
   }
 
   .ref-links a {
-    font-size: 0.78rem;
-    color: var(--accent);
+    font-size: 0.72rem;
+    color: #1a7a5a;
     text-decoration: none;
-    transition: color var(--transition);
+    padding: 0.1rem 0.45rem;
+    border: 1px solid #b8d8c8;
+    border-radius: 3px;
+    background: #eef6f2;
+    transition: all var(--transition);
+    letter-spacing: 0.01em;
   }
 
   .ref-links a:hover {
-    color: var(--accent-hover);
-    text-decoration: underline;
+    background: #1a7a5a;
+    color: #fff;
+    border-color: #1a7a5a;
   }
 
   .ref-type {
@@ -784,7 +790,11 @@ const AUTHORS = [
   { id: "zhao", name: "Jianqiang Zhao", url: "", affiliation: "The Bishop's School", affiliation_ja: "" },
   { id: "turan", name: "Can Turan", url: "", affiliation: "University of Hamburg", affiliation_ja: "ハンブルク大学" },
   { id: "skadborg", name: "Rasmus Peter Skadborg", url: "", affiliation: "", affiliation_ja: "" },
-  { id: "yujinbo", name: "Yu Jinbo", name_ja: "余 錦波", url: "https://sites.google.com/view/yujinbo/home", affiliation: "Nagoya University", affiliation_ja: "名古屋大学" }
+  { id: "yujinbo", name: "Yu Jinbo", name_ja: "余 錦波", url: "https://sites.google.com/view/yujinbo/home", affiliation: "Nagoya University", affiliation_ja: "名古屋大学" },
+  { id: "twchang", name: "Ting-Wei Chang", url: "https://twchang.com/", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
+  { id: "sychen", name: "Song-Yun Chen", url: "", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
+  { id: "fjhuang", name: "Fei-Jun Huang", url: "", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
+  { id: "hctsui", name: "Hung-Chun Tsui", url: "", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" }
 ];
 
 // ===================================================================
@@ -797,6 +807,8 @@ const REFERENCES = [
     title: "Relations and Derivatives of Multiple Eisenstein Series",
     authors: ["bachmann", "kanno"],
     year: 2026,
+    month: 2,
+    day: 12,
     type: "preprint",
     tags: ["multiple Eisenstein series", "derivatives", "relations"],
     language: "English",
@@ -950,6 +962,7 @@ const REFERENCES = [
     title: "Derivatives of multiple Eisenstein series",
     authors: ["bachmann"],
     year: 2026,
+    month: 1,
     type: "notes",
     tags: ["multiple Eisenstein series", "derivatives"],
     language: "English",
@@ -1050,6 +1063,8 @@ const REFERENCES = [
     title: "Variants of Multiple Eisenstein Series",
     authors: ["bachmann"],
     year: 2026,
+    month: 3,
+    day: 3,
     type: "slides",
     tags: ["multiple Eisenstein series"],
     language: "English",
@@ -1693,6 +1708,8 @@ const REFERENCES = [
     title: "Multiple $\\wp$-function and associated multiple Eisenstein series",
     authors: ["kina"],
     year: 2026,
+    month: 2,
+    day: 15,
     type: "slides",
     tags: ["multiple Eisenstein series", "Weierstrass p-function"],
     language: "English",
@@ -1760,6 +1777,7 @@ const REFERENCES = [
     authors: ["seki"],
     year: 2026,
     month: 2,
+    day: 10,
     type: "blog",
     tags: ["multiple Eisenstein series"],
     language: "Japanese",
@@ -1774,6 +1792,7 @@ const REFERENCES = [
     authors: ["maesaka"],
     year: 2026,
     month: 3,
+    day: 11,
     type: "blog",
     tags: ["formal multiple Eisenstein series", "relations"],
     language: "Japanese",
@@ -1788,6 +1807,7 @@ const REFERENCES = [
     authors: ["maesaka"],
     year: 2026,
     month: 3,
+    day: 11,
     type: "blog",
     tags: ["formal multiple Eisenstein series", "derivations"],
     language: "Japanese",
@@ -1802,6 +1822,7 @@ const REFERENCES = [
     authors: ["maesaka"],
     year: 2026,
     month: 3,
+    day: 4,
     type: "blog",
     tags: ["multiple Eisenstein series"],
     language: "Japanese",
@@ -1841,6 +1862,8 @@ const REFERENCES = [
     title: "多重ゼータ値入門",
     authors: ["kaneko"],
     year: 2026,
+    month: 2,
+    day: 26,
     type: "book",
     tags: ["multiple zeta values", "double Eisenstein series", "modular forms"],
     language: "Japanese",
@@ -1876,6 +1899,20 @@ const REFERENCES = [
     journal: "MZV Lecture Series, Nagoya University, 2020"
   },
   {
+    id: "v03",
+    title: "A variant of the double shuffle relations and quasi modular forms",
+    authors: ["bachmann"],
+    year: 2020,
+    month: 12,
+    type: "video",
+    tags: ["double shuffle relations", "quasimodular forms", "multiple Eisenstein series"],
+    language: "English",
+    links: [
+      { label: "YouTube", url: "https://www.youtube.com/watch?v=bClTKe31uJw" }
+    ],
+    journal: "ACPMS Seminar, December 2020"
+  },
+  {
     id: "yj01",
     title: "Schur multiple Eisenstein series",
     authors: ["yujinbo"],
@@ -1908,6 +1945,7 @@ const REFERENCES = [
     authors: ["yujinbo"],
     year: 2026,
     month: 3,
+    day: 3,
     type: "poster",
     tags: ["Schur multiple Eisenstein series"],
     language: "English",
@@ -1915,6 +1953,34 @@ const REFERENCES = [
       { label: "PDF", url: "https://drive.google.com/file/d/1faAYpUr8WmgXv168wRlye6pOCQH2u65F/view" }
     ],
     journal: "Japan-India Workshop on L-functions and Multiple Zeta Functions, March 2026"
+  },
+  {
+    id: "ccht01",
+    title: "Algebra structures of multiple Eisenstein series in positive characteristic",
+    authors: ["twchang", "sychen", "fjhuang", "hctsui"],
+    year: 2026,
+    month: 3,
+    day: 10,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "positive characteristic", "function fields"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2603.10376" }
+    ],
+    journal: "Preprint"
+  },
+  {
+    id: "ccht02",
+    title: "On $\\star$-shuffle relations for multiple Eisenstein series of arbitrary rank in positive characteristic",
+    authors: ["twchang", "sychen", "fjhuang", "hctsui"],
+    year: 2025,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "positive characteristic", "shuffle relations", "function fields"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2504.18879" }
+    ],
+    journal: "Preprint"
   }
 ];
 
@@ -2240,7 +2306,9 @@ const REFERENCES = [
       const diff = sortDesc ? b.year - a.year : a.year - b.year;
       if (diff !== 0) return diff;
       const ma = a.month || 0, mb = b.month || 0;
-      return sortDesc ? mb - ma : ma - mb;
+      if (ma !== mb) return sortDesc ? mb - ma : ma - mb;
+      const da = a.day || 0, db = b.day || 0;
+      return sortDesc ? db - da : da - db;
     });
 
     const list = $('#ref-list');
