@@ -541,26 +541,25 @@
 
   /* ===== STATISTICS VIEW ===== */
   .stats-summary {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
     margin-bottom: 2rem;
+    font-size: 0.9rem;
+    line-height: 2;
   }
 
-  .stats-card {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0.9rem;
-    background: var(--bg-alt);
-    border: 1px solid var(--border-light);
-    border-radius: 3px;
-    font-size: 0.88rem;
+  .stats-total {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
   }
 
-  .stats-card .stats-emoji { font-size: 1.1rem; }
-  .stats-card .stats-count { font-weight: 600; color: var(--text); }
-  .stats-card .stats-label { color: var(--text-muted); }
+  .stats-total strong { font-weight: 600; }
+
+  .stats-type-line {
+    color: var(--text-muted);
+  }
+
+  .stats-type-line .stats-emoji { margin-right: 0.15rem; }
+  .stats-type-line .stats-count { font-weight: 600; color: var(--text); }
 
   .stats-chart-title {
     font-size: 0.92rem;
@@ -784,7 +783,8 @@ const AUTHORS = [
   { id: "yuan", name: "Huafeng Yuan", url: "", affiliation: "", affiliation_ja: "" },
   { id: "zhao", name: "Jianqiang Zhao", url: "", affiliation: "The Bishop's School", affiliation_ja: "" },
   { id: "turan", name: "Can Turan", url: "", affiliation: "University of Hamburg", affiliation_ja: "ハンブルク大学" },
-  { id: "skadborg", name: "Rasmus Peter Skadborg", url: "", affiliation: "", affiliation_ja: "" }
+  { id: "skadborg", name: "Rasmus Peter Skadborg", url: "", affiliation: "", affiliation_ja: "" },
+  { id: "yujinbo", name: "Yu Jinbo", name_ja: "余 錦波", url: "https://sites.google.com/view/yujinbo/home", affiliation: "Nagoya University", affiliation_ja: "名古屋大学" }
 ];
 
 // ===================================================================
@@ -1874,6 +1874,47 @@ const REFERENCES = [
       { label: "YouTube", url: "https://www.youtube.com/watch?v=0IfomwIXJZo" }
     ],
     journal: "MZV Lecture Series, Nagoya University, 2020"
+  },
+  {
+    id: "yj01",
+    title: "Schur multiple Eisenstein series",
+    authors: ["yujinbo"],
+    year: 2025,
+    type: "notes",
+    tags: ["Schur multiple Eisenstein series"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.math.sci.hokudai.ac.jp/~wakate/mcyr/2025/pdf/Yu%20Jinbo.pdf" }
+    ],
+    journal: "北海道大学数学講究録 189, 149–158 (2025)"
+  },
+  {
+    id: "yj02",
+    title: "Schur multiple Eisenstein series and quasimodular forms",
+    authors: ["yujinbo"],
+    year: 2026,
+    month: 1,
+    type: "slides",
+    tags: ["Schur multiple Eisenstein series", "quasimodular forms"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1w8HG1AszCgp75CbF2bJU_tmfH3oBNq6t/view" }
+    ],
+    journal: "RIMS Conference, Kyoto University, January 2026"
+  },
+  {
+    id: "yj03",
+    title: "Schur multiple Eisenstein series",
+    authors: ["yujinbo"],
+    year: 2026,
+    month: 3,
+    type: "poster",
+    tags: ["Schur multiple Eisenstein series"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1faAYpUr8WmgXv168wRlye6pOCQH2u65F/view" }
+    ],
+    journal: "Japan-India Workshop on L-functions and Multiple Zeta Functions, March 2026"
   }
 ];
 
@@ -1954,8 +1995,8 @@ const REFERENCES = [
 
   // Type names in Japanese
   const TYPE_NAME = {
-    en: { paper: 'paper', preprint: 'preprint', book: 'book', thesis: 'thesis', notes: 'notes', slides: 'slides', 'lecture notes': 'lecture notes', blog: 'blog', video: 'video' },
-    ja: { paper: '論文', preprint: 'プレプリント', book: '書籍', thesis: '学位論文', notes: 'ノート', slides: 'スライド', 'lecture notes': '講義ノート', blog: 'ブログ', video: '動画' }
+    en: { paper: 'paper', preprint: 'preprint', book: 'book', thesis: 'thesis', notes: 'notes', slides: 'slides', 'lecture notes': 'lecture notes', blog: 'blog post', video: 'video', poster: 'poster' },
+    ja: { paper: '論文', preprint: 'プレプリント', book: '書籍', thesis: '学位論文', notes: 'ノート', slides: 'スライド', 'lecture notes': '講義ノート', blog: 'ブログ記事', video: '動画', poster: 'ポスター' }
   };
 
   let currentLang = 'en';
@@ -2015,7 +2056,8 @@ const REFERENCES = [
     'lecture notes': '\u{1F4DA}',
     'thesis': '\u{1F393}',
     'blog': '\u{1F310}',
-    'video': '\u{1F3AC}'
+    'video': '\u{1F3AC}',
+    'poster': '\u{1F4CC}'
   };
 
   function langWithFlag(lang) {
@@ -2285,7 +2327,7 @@ const REFERENCES = [
 
   // --- Render authors ---
   // Type display order: paper first, then the rest
-  const TYPE_ORDER = ['paper', 'preprint', 'book', 'thesis', 'notes', 'slides', 'lecture notes', 'blog', 'video'];
+  const TYPE_ORDER = ['paper', 'preprint', 'book', 'thesis', 'notes', 'slides', 'lecture notes', 'blog', 'video', 'poster'];
 
   function renderAuthors() {
     const list = $('#author-list');
@@ -2370,7 +2412,8 @@ const REFERENCES = [
     'slides': '#4a9ec2',
     'lecture notes': '#3ab88a',
     'blog': '#d46a8a',
-    'video': '#6a8ad4'
+    'video': '#6a8ad4',
+    'poster': '#d4a24a'
   };
 
   function renderStats() {
@@ -2378,7 +2421,7 @@ const REFERENCES = [
     const chart = $('#stats-chart');
     const legend = $('#stats-legend');
 
-    // --- Summary cards ---
+    // --- Summary list ---
     const typeCounts = new Map();
     REFERENCES.forEach(r => typeCounts.set(r.type, (typeCounts.get(r.type) || 0) + 1));
 
@@ -2386,11 +2429,22 @@ const REFERENCES = [
       return REFERENCES.some(r => r.authors.includes(a.id) || (r.appendix || []).includes(a.id));
     }).length;
 
-    let summaryHTML = `<div class="stats-card"><span class="stats-count">${REFERENCES.length}</span><span class="stats-label">${t('total_entries')}</span></div>`;
-    summaryHTML += `<div class="stats-card"><span class="stats-count">${authorCount}</span><span class="stats-label">${t('total_authors')}</span></div>`;
+    // English plural helper
+    function plural(count, singular) {
+      if (currentLang === 'ja') return singular; // Japanese doesn't pluralize
+      // types that don't change in plural
+      const unchanged = ['notes', 'slides', 'lecture notes'];
+      if (unchanged.includes(singular)) return singular;
+      if (count === 1) return singular;
+      if (singular === 'thesis') return 'theses';
+      return singular + 's';
+    }
+
+    let summaryHTML = `<div class="stats-total"><strong>${REFERENCES.length}</strong> ${t('total_entries')} · <strong>${authorCount}</strong> ${t('total_authors')}</div>`;
 
     TYPE_ORDER.filter(tp => typeCounts.has(tp)).forEach(tp => {
-      summaryHTML += `<div class="stats-card"><span class="stats-emoji">${TYPE_EMOJI[tp] || ''}</span><span class="stats-count">${typeCounts.get(tp)}</span><span class="stats-label">${typeName(tp)}</span></div>`;
+      const c = typeCounts.get(tp);
+      summaryHTML += `<div class="stats-type-line"><span class="stats-emoji">${TYPE_EMOJI[tp] || ''}</span> <span class="stats-count">${c}</span> ${plural(c, typeName(tp))}</div>`;
     });
     summary.innerHTML = summaryHTML;
 
