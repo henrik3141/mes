@@ -545,6 +545,14 @@
     text-decoration: none;
   }
 
+  .visitor-count {
+    font-size: 0.75rem;
+    color: var(--border);
+    margin-top: 0.4rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.03em;
+  }
+
   /* ===== STATISTICS VIEW ===== */
   .stats-summary {
     margin-bottom: 2rem;
@@ -755,10 +763,36 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <p><span data-i18n="created_by">Created by:</span> <a href="https://www.henrikbachmann.com/">Henrik Bachmann</a></p>
-    <p><span data-i18n="last_updated">Last updated:</span> March 2026</p>
+    <p><span data-i18n="last_updated">Last updated:</span> 14th March 2026</p>
+    <p class="visitor-count" id="visitor-count"></p>
   </footer>
 
 </div>
+
+<!-- GoatCounter -->
+<script>
+(function() {
+  const GC_CODE = 'mes';
+  
+  // Load GoatCounter tracking script
+  const s = document.createElement('script');
+  s.async = true;
+  s.dataset.goatcounter = `https://${GC_CODE}.goatcounter.com/count`;
+  s.src = '//gc.zgo.at/count.js';
+  document.body.appendChild(s);
+
+  // Fetch total pageview count for display
+  fetch(`https://${GC_CODE}.goatcounter.com/counter/TOTAL.json`)
+    .then(r => r.json())
+    .then(data => {
+      const el = document.getElementById('visitor-count');
+      if (el && data.count) {
+        el.textContent = `Visitors: ${Number(data.count).toLocaleString()}`;
+      }
+    })
+    .catch(() => {});
+})();
+</script>
 
 <!-- ==================== INLINE DATABASE ==================== -->
 <script>
@@ -2128,7 +2162,13 @@ const REFERENCES = [
 
   function langWithFlag(lang) {
     const flag = LANG_FLAGS[lang] || '';
-    return flag ? `${flag} ${lang}` : lang;
+    const LANG_NAMES_JA = {
+      'English': '英語',
+      'German': 'ドイツ語',
+      'Japanese': '日本語'
+    };
+    const displayName = (currentLang === 'ja' && LANG_NAMES_JA[lang]) ? LANG_NAMES_JA[lang] : lang;
+    return flag ? `${flag} ${displayName}` : displayName;
   }
 
   // --- State ---
