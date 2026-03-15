@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Henriks MZV 辞書 — Vocabulary for Kaneko's 多重ゼータ値入門</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  startup: {
+    typeset: false,
+    ready() {
+      MathJax.startup.defaultReady();
+      MathJax.typesetPromise();
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -260,13 +274,14 @@ header .source {
 /* Formula card special styling */
 .card[data-type="formula"] { border-left: 3px solid var(--tag-formula); }
 .formula-display {
-  font-family: 'Source Serif 4', serif;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: var(--ink);
   text-align: center;
-  padding: 0.6rem 0;
-  letter-spacing: 0.02em;
+  padding: 0.4rem 0;
+  overflow-x: auto;
 }
+.formula-display mjx-container { margin: 0 !important; }
+.formula-display mjx-container[display="true"] { margin: 0.3rem 0 !important; }
 .formula-reading {
   font-family: 'Noto Serif JP', serif;
   font-size: 0.95rem;
@@ -979,67 +994,67 @@ const entries = [
   // ─── Formula Reading (数式の読み方) ───
   // From Kaneko's book
   {word:"kᵣ ≧ 2",type:"formula",ch:"1.1",
-    formula:"k<sub>r</sub> ≧ 2",
+    formula:"$k_r \\geqq 2$",
     reading:"ケーアール は にいじょう",
     romaji:"kē-āru wa ni-ijō",
-    english:"kᵣ is greater than or equal to 2 (kᵣ ≥ 2)",
+    english:"kᵣ is greater than or equal to 2",
     note:"以上（いじょう）includes equality. ≧ and ≥ are both used; ≧ is the Japanese convention."},
   {word:"kᵣ > 2",type:"formula",ch:"—",
-    formula:"k<sub>r</sub> > 2",
+    formula:"$k_r > 2$",
     reading:"ケーアール は により <ruby>大<rt>おお</rt></ruby>きい",
     romaji:"kē-āru wa ni yori ōkii",
     english:"kᵣ is strictly greater than 2",
     note:"For strict inequality: 〜より大きい. Formal: 大なり (dainari). In talks both are used."},
   {word:"|k| := k₁+⋯+kᵣ",type:"formula",ch:"1.1",
-    formula:"|<b>k</b>| := k<sub>1</sub> + ⋯ + k<sub>r</sub>",
+    formula:"$|\\mathbf{k}| := k_1 + \\cdots + k_r$",
     reading:"ケーの<ruby>絶<rt>ぜっ</rt></ruby><ruby>対<rt>たい</rt></ruby><ruby>値<rt>ち</rt></ruby> を ケーいち たす ⋯ たす ケーアール と<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する",
     romaji:"kē no zettaichi wo kē-ichi tasu … tasu kē-āru to teigi suru",
     english:"Define |k| as k₁ + ⋯ + kᵣ",
-    note:":= is read as ～と定義する (to teigi suru). Some say ～と定める (to sadameru) or ～とおく (to oku)."},
+    note:"$:=$ is read as ～と定義する (to teigi suru). Some say ～と定める (to sadameru) or ～とおく (to oku)."},
   {word:"0 < m₁ < ⋯ < mᵣ",type:"formula",ch:"1.1",
-    formula:"0 < m<sub>1</sub> < ⋯ < m<sub>r</sub>",
+    formula:"$0 < m_1 < \\cdots < m_r$",
     reading:"ゼロ <ruby>小<rt>しょう</rt></ruby>なり エムいち <ruby>小<rt>しょう</rt></ruby>なり ⋯ <ruby>小<rt>しょう</rt></ruby>なり エムアール",
     romaji:"zero shōnari emu-ichi shōnari … shōnari emu-āru",
     english:"0 < m₁ < ⋯ < mᵣ (chained strict inequality)",
     note:"小なり (shōnari) = 'less than'. In talks you can also say ゼロからエムアールまで順に大きくなる."},
   {word:"Σ (summation)",type:"formula",ch:"1.1",
-    formula:"∑<sub>0&lt;m₁&lt;⋯&lt;mᵣ</sub> 1/(m₁<sup>k₁</sup>⋯mᵣ<sup>kᵣ</sup>)",
+    formula:"$$\\sum_{0 < m_1 < \\cdots < m_r} \\frac{1}{m_1^{k_1} \\cdots m_r^{k_r}}$$",
     reading:"ゼロ <ruby>小<rt>しょう</rt></ruby>なり エムいち <ruby>小<rt>しょう</rt></ruby>なり ⋯ <ruby>小<rt>しょう</rt></ruby>なり エムアール にわたる<ruby>和<rt>わ</rt></ruby>、エムいちのケーいち<ruby>乗<rt>じょう</rt></ruby> かける ⋯ かける エムアールのケーアール<ruby>乗<rt>じょう</rt></ruby> <ruby>分<rt>ぶん</rt></ruby>の いち",
     romaji:"… ni wataru wa, emu-ichi no kē-ichi-jō kakeru … kakeru emu-āru no kē-āru-jō bun no ichi",
-    english:"Sum over 0<m₁<⋯<mᵣ of 1/(m₁^k₁ ⋯ mᵣ^kᵣ)",
+    english:"Sum over 0 < m₁ < ⋯ < mᵣ of 1/(m₁^k₁ ⋯ mᵣ^kᵣ)",
     note:"〜にわたる和 = 'sum over'. Fractions: A分のB = B/A (denominator first!). Powers: Aの n乗 = Aⁿ."},
   {word:"1/n² (fractions)",type:"formula",ch:"—",
-    formula:"1 / n<sup>2</sup>",
+    formula:"$$\\frac{1}{n^2}$$",
     reading:"エヌの<ruby>二<rt>に</rt></ruby><ruby>乗<rt>じょう</rt></ruby><ruby>分<rt>ぶん</rt></ruby>の いち",
     romaji:"enu no ni-jō bun no ichi",
     english:"1 over n squared",
     note:"Japanese reads fractions bottom-up: 分母 (denominator) first, then 分の, then 分子 (numerator). This is the opposite of English!"},
   {word:"2^(k-2)",type:"formula",ch:"1.2",
-    formula:"2<sup>k−2</sup>",
+    formula:"$2^{k-2}$",
     reading:"にの ケーマイナスに<ruby>乗<rt>じょう</rt></ruby>",
     romaji:"ni no kē-mainasu-ni-jō",
     english:"2 to the power of k−2",
     note:"〜乗 (jō) = 'to the power of'. Square = 二乗, cube = 三乗."},
-  {word:"dim_ℚ 𝒵ₖ ≦ dₖ",type:"formula",ch:"1.2",
-    formula:"dim<sub>ℚ</sub> 𝒵<sub>k</sub> ≦ d<sub>k</sub>",
+  {word:"dim 𝒵ₖ ≦ dₖ",type:"formula",ch:"1.2",
+    formula:"$\\dim_{\\mathbb{Q}} \\mathcal{Z}_k \\leqq d_k$",
     reading:"キューじょうの ゼットケーの<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby> は ディーケー<ruby>以<rt>い</rt></ruby><ruby>下<rt>か</rt></ruby>",
     romaji:"kyū-jō no zetto-kē no jigen wa dī-kē ika",
     english:"The ℚ-dimension of 𝒵ₖ is at most dₖ",
     note:"以下 (ika) = 'at most / ≤'. Also: 小なりイコール (shōnari-ikōru)."},
   {word:"ζ(1,2) = ζ(3)",type:"formula",ch:"1.2",
-    formula:"ζ(1, 2) = ζ(3)",
+    formula:"$\\zeta(1,2) = \\zeta(3)$",
     reading:"ゼータ いち に イコール ゼータ さん",
     romaji:"zēta ichi ni ikōru zēta san",
-    english:"zeta(1,2) equals zeta(3)",
+    english:"zeta(1,2) equals zeta(3) — Euler's relation",
     note:"MZV arguments are read as a comma-separated list of numbers. This is Euler's famous relation."},
   {word:"(k-2 choose r-1)",type:"formula",ch:"1.2",
-    formula:"<span style='font-size:1.5em'>(</span><sup style='position:relative;top:-0.3em'>k−2</sup><sub style='position:relative;top:0.3em'>r−1</sub><span style='font-size:1.5em'>)</span>",
+    formula:"$$\\binom{k-2}{r-1}$$",
     reading:"ケーマイナスに の うち アールマイナスいち を<ruby>選<rt>えら</rt></ruby>ぶ<ruby>組<rt>く</rt></ruby>み<ruby>合<rt>あ</rt></ruby>わせ",
     romaji:"kē-mainasu-ni no uchi āru-mainasu-ichi wo erabu kumiawase",
     english:"binomial coefficient (k−2 choose r−1)",
-    note:"二項係数 (nikō keisū). Also read as: ケーマイナスにシーアールマイナスいち using the C notation."},
+    note:"二項係数 (nikō keisū). Also read as: ケーマイナスにシーアールマイナスいち using the $C$ notation."},
   {word:"dₖ = dₖ₋₂ + dₖ₋₃",type:"formula",ch:"1.2",
-    formula:"d<sub>k</sub> = d<sub>k−2</sub> + d<sub>k−3</sub>",
+    formula:"$d_k = d_{k-2} + d_{k-3}$",
     reading:"ディーケー イコール ディーケーマイナスに たす ディーケーマイナスさん",
     romaji:"dī-kē ikōru dī-kē-mainasu-ni tasu dī-kē-mainasu-san",
     english:"dₖ = dₖ₋₂ + dₖ₋₃ (Padovan recurrence)",
@@ -1047,55 +1062,55 @@ const entries = [
 
   // General seminar patterns
   {word:"n → ∞",type:"formula",ch:"—",
-    formula:"n → ∞",
+    formula:"$n \\to \\infty$",
     reading:"エヌ を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>大<rt>だい</rt></ruby>にとばす",
     romaji:"enu wo mugen-dai ni tobasu",
     english:"as n tends to infinity",
-    note:"Also: nを無限に飛ばす, n→∞のとき, n無限大の極限で. In formal writing: nが限りなく大きくなるとき."},
+    note:"Also: $n$を無限に飛ばす, $n \\to \\infty$のとき, $n$無限大の極限で. In formal writing: $n$が限りなく大きくなるとき."},
   {word:"∈ (belongs to)",type:"formula",ch:"—",
-    formula:"x ∈ S",
+    formula:"$x \\in S$",
     reading:"エックス は エスに<ruby>属<rt>ぞく</rt></ruby>する",
     romaji:"ekkusu wa esu ni zoku suru",
     english:"x belongs to S / x is an element of S",
     note:"属する (zoku suru) = to belong to. Also: エスの元 (esu no gen) = element of S."},
   {word:"⊂ (subset)",type:"formula",ch:"—",
-    formula:"A ⊂ B",
+    formula:"$A \\subset B$",
     reading:"エー は ビーの<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>集<rt>しゅう</rt></ruby><ruby>合<rt>ごう</rt></ruby>",
     romaji:"ē wa bī no bubun-shūgō",
     english:"A is a subset of B",
     note:"部分集合 (bubun shūgō) = subset. Also: AはBに含まれる (A wa B ni fukumareru)."},
   {word:"∀ (for all)",type:"formula",ch:"—",
-    formula:"∀ k ≧ 1",
+    formula:"$\\forall \\, k \\geqq 1$",
     reading:"すべての ケー ≧ いち に<ruby>対<rt>たい</rt></ruby>し",
     romaji:"subete no kē ichi-ijō ni taishi",
     english:"for all k ≥ 1",
     note:"すべての (subete no) = for all / for every. Also: 任意の (nin'i no) = arbitrary."},
   {word:"∃ (there exists)",type:"formula",ch:"—",
-    formula:"∃ n ∈ ℕ",
+    formula:"$\\exists \\, n \\in \\mathbb{N}$",
     reading:"ある<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby> エヌ が<ruby>存<rt>そん</rt></ruby><ruby>在<rt>ざい</rt></ruby>して",
     romaji:"aru shizen-sū enu ga sonzai shite",
     english:"there exists a natural number n",
     note:"存在する (sonzai suru) = to exist. Also: ある〜が存在して (aru ~ ga sonzai shite)."},
   {word:"⟹ (implies)",type:"formula",ch:"—",
-    formula:"P ⟹ Q",
+    formula:"$P \\Longrightarrow Q$",
     reading:"ピー ならば キュー",
     romaji:"pī naraba kyū",
     english:"P implies Q",
     note:"ならば (naraba) = if…then / implies. Written form: PはQを意味する."},
   {word:"⟺ (iff)",type:"formula",ch:"—",
-    formula:"P ⟺ Q",
+    formula:"$P \\Longleftrightarrow Q$",
     reading:"ピー と キュー は<ruby>同<rt>どう</rt></ruby><ruby>値<rt>ち</rt></ruby>",
     romaji:"pī to kyū wa dōchi",
     english:"P if and only if Q",
     note:"同値 (dōchi) = equivalent. Also: PとQは必要十分 (hitsuyō-jūbun)."},
   {word:"∫ (integral)",type:"formula",ch:"—",
-    formula:"∫<sub>0</sub><sup>1</sup> f(x) dx",
+    formula:"$$\\int_0^1 f(x)\\,dx$$",
     reading:"ゼロから いちまで エフエックス ディーエックス の<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby>",
     romaji:"zero kara ichi made efu-ekkusu dī-ekkusu no sekibun",
     english:"integral of f(x)dx from 0 to 1",
     note:"積分 (sekibun) = integral. AからBまで = from A to B."},
   {word:"⊕ (direct sum)",type:"formula",ch:"1.2",
-    formula:"⊕<sub>k≧0</sub> 𝒵<sub>k</sub>",
+    formula:"$$\\bigoplus_{k \\geqq 0} \\mathcal{Z}_k$$",
     reading:"ケー ≧ ゼロ にわたる ゼットケーの<ruby>直<rt>ちょく</rt></ruby><ruby>和<rt>わ</rt></ruby>",
     romaji:"kē zero-ijō ni wataru zetto-kē no chokuwa",
     english:"direct sum of 𝒵ₖ over k ≥ 0",
@@ -1108,6 +1123,12 @@ const entries = [
 let activeFilter = 'all';
 let searchTerm = '';
 let chapterFilter = 'all';
+
+function typesetMath() {
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise().catch(err => console.log('MathJax error:', err));
+  }
+}
 
 function renderCards() {
   const container = document.getElementById('cards');
@@ -1173,6 +1194,7 @@ function renderCards() {
       </div>
     </div>`;
   }).join('');
+  typesetMath();
 }
 
 document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1323,6 +1345,7 @@ function showQuestion() {
       </div>`;
 
     area.innerHTML = cardHTML;
+    typesetMath();
     document.getElementById('flashContainer').addEventListener('click', () => {
       document.getElementById('flashcard').classList.add('flipped');
       document.getElementById('flashBtns').classList.remove('flash-hidden');
@@ -1362,6 +1385,7 @@ function showQuestion() {
         </div>
       </div>`;
     area.innerHTML = cardHTML;
+    typesetMath();
 
   } else {
     // Multiple choice
@@ -1408,6 +1432,7 @@ function showQuestion() {
         <div class="mc-options">${optionHTML}</div>
       </div>`;
     area.innerHTML = cardHTML;
+    typesetMath();
   }
 }
 
@@ -1524,6 +1549,7 @@ function showResults() {
       ${wrongHTML}
       <button class="start-btn" onclick="resetQuiz()">Try Again</button>
     </div>`;
+  typesetMath();
 }
 
 window.resetQuiz = function() {
