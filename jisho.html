@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henriks MZV 辞書 — Vocabulary for Kaneko's 多重ゼータ値入門</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a1a;
+  --paper: #f7f3ed;
+  --accent: #2b3a37;
+  --accent-light: #4a6b66;
+  --accent-faint: rgba(43,58,55,0.07);
+  --subtle: #c5bfb3;
+  --card-bg: #fffdf8;
+  --tag-noun: #2d5a7b;
+  --tag-verb: #6b4c8a;
+  --tag-grammar: #4a7c59;
+  --tag-noun-bg: #e8f0f6;
+  --tag-verb-bg: #f0e8f6;
+  --tag-grammar-bg: #e8f4eb;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  --correct: #2e7d32;
+  --correct-bg: #e8f5e9;
+  --wrong: #c62828;
+  --wrong-bg: #fce4ec;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  text-align: center;
+  padding: 2.8rem 1.5rem 2rem;
+  border-bottom: 1px solid var(--subtle);
+  background: linear-gradient(180deg, #faf6ef 0%, var(--paper) 100%);
+}
+header h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+header h1 .latin {
+  font-family: 'Source Serif 4', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--ink);
+  display: block;
+  letter-spacing: 0.02em;
+  margin-top: 0.35rem;
+}
+header .subtitle {
+  font-size: 0.85rem;
+  color: #777;
+  font-weight: 300;
+  margin-top: 0.5rem;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+header .source {
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 0.8rem;
+  font-style: italic;
+  font-family: 'Source Serif 4', serif;
+}
+
+/* ── Tab Navigation ── */
+.tab-bar {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  border-bottom: 2px solid var(--subtle);
+}
+.tab-btn {
+  flex: 1;
+  padding: 0.8rem 0.5rem;
+  background: none;
+  border: none;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+.tab-btn:hover { color: var(--accent-light); }
+.tab-btn.active { color: var(--accent); }
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* ── Panels ── */
+.panel { display: none; max-width: 860px; margin: 0 auto; }
+.panel.active { display: block; }
+
+/* ── Dictionary Panel ── */
+.filter-bar {
+  padding: 1.2rem 1.5rem 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+.filter-bar label {
+  font-size: 0.75rem;
+  color: #888;
+  margin-right: 0.2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.filter-btn {
+  border: 1px solid var(--subtle);
+  background: transparent;
+  color: #666;
+  padding: 0.25rem 0.75rem;
+  border-radius: 2px;
+  font-size: 0.78rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover { border-color: var(--accent-light); color: var(--accent); }
+.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.search-box {
+  border: 1px solid var(--subtle);
+  background: var(--card-bg);
+  padding: 0.3rem 0.75rem;
+  border-radius: 2px;
+  font-size: 0.82rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  width: 200px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-box:focus { border-color: var(--accent-light); }
+
+.chapter-filter {
+  border: 1px solid var(--subtle);
+  background: var(--card-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-size: 0.78rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  outline: none;
+  cursor: pointer;
+}
+
+.page-info {
+  padding: 0.3rem 1.5rem;
+  font-size: 0.73rem;
+  color: #aaa;
+  text-align: right;
+}
+
+/* ── Cards ── */
+.cards { padding: 0.5rem 1.5rem 3rem; }
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 3px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 0.7rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+  position: relative;
+}
+.card:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06); }
+
+.word-japanese {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.word-japanese ruby rt { font-size: 0.5em; font-weight: 400; color: #888; }
+
+.word-english {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0.1rem;
+}
+
+.word-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.4rem; }
+
+.tag {
+  font-size: 0.65rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: 2px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.tag-noun { background: var(--tag-noun-bg); color: var(--tag-noun); }
+.tag-verb { background: var(--tag-verb-bg); color: var(--tag-verb); }
+.tag-grammar { background: var(--tag-grammar-bg); color: var(--tag-grammar); }
+
+.jisho-link {
+  font-size: 0.7rem;
+  color: var(--accent-light);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--accent-light);
+}
+.jisho-link:hover { color: var(--accent); }
+
+.chapter-badge {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  font-size: 0.63rem;
+  color: #bbb;
+  font-weight: 300;
+}
+
+.example {
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+.example-label {
+  font-size: 0.63rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+.example-ja {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.88rem;
+  color: var(--ink);
+  line-height: 1.9;
+}
+.example-en {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.8rem;
+  color: #777;
+  font-style: italic;
+  margin-top: 0.1rem;
+}
+
+/* ── Quiz Panel ── */
+.quiz-setup {
+  padding: 1.5rem;
+  text-align: center;
+}
+.quiz-setup h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.quiz-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.quiz-opt-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: flex-start;
+  background: var(--card-bg);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 3px;
+  padding: 1rem 1.2rem;
+  min-width: 200px;
+}
+.quiz-opt-group legend {
+  font-size: 0.72rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+.quiz-opt-group label {
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.quiz-opt-group input[type="radio"],
+.quiz-opt-group input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+.start-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 2rem;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.start-btn:hover { background: var(--accent-light); }
+
+/* Quiz area */
+.quiz-area { padding: 1rem 1.5rem 3rem; display: none; }
+
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  color: #888;
+}
+.quiz-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(0,0,0,0.06);
+  border-radius: 2px;
+  margin: 0 0.8rem;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s;
+  border-radius: 2px;
+}
+
+.quiz-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 4px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.quiz-prompt-label {
+  font-size: 0.68rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.8rem;
+}
+
+.quiz-prompt-word {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+.quiz-prompt-word ruby rt { font-size: 0.45em; color: #999; font-weight: 400; }
+
+.quiz-prompt-sub {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+/* Multiple choice */
+.mc-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 500px;
+}
+.mc-btn {
+  background: var(--paper);
+  border: 1.5px solid var(--subtle);
+  border-radius: 3px;
+  padding: 0.7rem 0.8rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  line-height: 1.5;
+}
+.mc-btn:hover:not(.mc-locked) { border-color: var(--accent-light); color: var(--accent); }
+.mc-btn.mc-correct { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); }
+.mc-btn.mc-wrong { background: var(--wrong-bg); border-color: var(--wrong); color: var(--wrong); }
+.mc-btn.mc-locked { cursor: default; opacity: 0.6; }
+.mc-btn.mc-locked.mc-correct { opacity: 1; }
+
+/* Fill-in-the-blank */
+.fib-sentence {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.1rem;
+  line-height: 2;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  max-width: 560px;
+}
+.fib-sentence .blank {
+  display: inline-block;
+  border-bottom: 2px solid var(--accent);
+  min-width: 80px;
+  color: var(--accent);
+  font-weight: 700;
+  padding: 0 0.2rem;
+}
+.fib-translation {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.85rem;
+  color: #888;
+  font-style: italic;
+  text-align: left;
+  max-width: 560px;
+  margin-bottom: 1.2rem;
+}
+
+/* Flashcard */
+.flashcard-container {
+  perspective: 800px;
+  width: 100%;
+  max-width: 420px;
+  height: 220px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+.flashcard {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+.flashcard.flipped { transform: rotateY(180deg); }
+.flashcard-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 4px;
+  padding: 1.5rem;
+  background: var(--card-bg);
+}
+.flashcard-back { transform: rotateY(180deg); }
+.flashcard-hint {
+  font-size: 0.7rem;
+  color: #bbb;
+  margin-top: 0.5rem;
+}
+
+.quiz-next-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+.quiz-next-btn:hover { background: var(--accent-light); }
+
+/* Quiz results */
+.quiz-results {
+  text-align: center;
+  padding: 2rem;
+}
+.quiz-results h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.4rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.quiz-score {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0.5rem 0;
+}
+.quiz-score-sub {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+.quiz-wrong-list {
+  text-align: left;
+  max-width: 480px;
+  margin: 0 auto 1.5rem;
+}
+.quiz-wrong-item {
+  background: var(--wrong-bg);
+  border-radius: 3px;
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+}
+.quiz-wrong-item .qw-word {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 700;
+}
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--subtle);
+  font-size: 0.73rem;
+  color: #aaa;
+  line-height: 1.8;
+}
+footer a { color: var(--accent-light); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #bbb;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  header h1 { font-size: 1.7rem; }
+  .card { padding: 1rem 1rem; }
+  .word-japanese { font-size: 1.25rem; }
+  .cards { padding: 0.5rem 1rem 3rem; }
+  .search-box { width: 100%; }
+  .mc-options { grid-template-columns: 1fr; }
+  .quiz-card { padding: 1.2rem; }
+  .quiz-prompt-word { font-size: 1.5rem; }
+  .tab-btn { font-size: 0.78rem; padding: 0.7rem 0.3rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Henriks MZV 辞書
+    <span class="latin">A Vocabulary Guide for Multiple Zeta Values</span>
+  </h1>
+  <p class="subtitle">
+    Mathematical Japanese vocabulary from Kaneko Masanobu's book on multiple zeta values. For JLPT N4/N3 learners in number theory.
+  </p>
+  <p class="source">Source: 金子昌信『多重ゼータ値入門』— まえがき + Chapter 1 (§1.1–1.2)</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="dict">辞書 Dictionary</button>
+  <button class="tab-btn" data-tab="quiz">テスト Quiz</button>
+</div>
+
+<!-- ════════ DICTIONARY PANEL ════════ -->
+<div class="panel active" id="panel-dict">
+  <div class="filter-bar">
+    <label>Filter:</label>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="noun">Nouns</button>
+    <button class="filter-btn" data-filter="verb">Verbs</button>
+    <button class="filter-btn" data-filter="grammar">Grammar</button>
+    <select class="chapter-filter" id="chapterFilter">
+      <option value="all">All sections</option>
+      <option value="前">まえがき</option>
+      <option value="1.1">§1.1</option>
+      <option value="1.2">§1.2</option>
+    </select>
+    <input type="text" class="search-box" placeholder="Search JP / EN..." id="searchBox">
+  </div>
+  <div class="page-info" id="pageInfo"></div>
+  <div class="cards" id="cards"></div>
+</div>
+
+<!-- ════════ QUIZ PANEL ════════ -->
+<div class="panel" id="panel-quiz">
+  <div class="quiz-setup" id="quizSetup">
+    <h2>テスト — Vocabulary Quiz</h2>
+    <div class="quiz-options">
+      <div class="quiz-opt-group">
+        <legend>Mode</legend>
+        <label><input type="radio" name="qmode" value="mc" checked> Multiple Choice</label>
+        <label><input type="radio" name="qmode" value="flash"> Flashcard</label>
+      </div>
+      <div class="quiz-opt-group">
+        <legend>Direction</legend>
+        <label><input type="radio" name="qdir" value="random" checked> Random (JP↔EN)</label>
+        <label><input type="radio" name="qdir" value="jp2en"> JP → EN</label>
+        <label><input type="radio" name="qdir" value="en2jp"> EN → JP</label>
+      </div>
+      <div class="quiz-opt-group">
+        <legend>Type filter</legend>
+        <label><input type="checkbox" name="qtype" value="noun" checked> Nouns</label>
+        <label><input type="checkbox" name="qtype" value="verb" checked> Verbs</label>
+        <label><input type="checkbox" name="qtype" value="grammar" checked> Grammar</label>
+      </div>
+      <div class="quiz-opt-group">
+        <legend>Questions</legend>
+        <label><input type="radio" name="qcount" value="10" checked> 10</label>
+        <label><input type="radio" name="qcount" value="20"> 20</label>
+        <label><input type="radio" name="qcount" value="all"> All</label>
+      </div>
+    </div>
+    <label style="font-size:0.82rem;color:#666;display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-bottom:1rem;">
+      <input type="checkbox" id="fibToggle" checked style="accent-color:var(--accent);">
+      Include fill-in-the-blank sentences (mixed in with MC)
+    </label>
+    <button class="start-btn" id="startQuiz">Start Quiz</button>
+  </div>
+  <div class="quiz-area" id="quizArea"></div>
+</div>
+
+<footer>
+  <p>Henriks MZV 辞書 — For foreign researchers reading Japanese math literature</p>
+  <p>Word links go to <a href="https://jisho.org" target="_blank">jisho.org</a>. Data stored as JSON — easy to extend.</p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════
+//  VOCABULARY DATA
+// ══════════════════════════════════════════════
+const entries = [
+  // ─── まえがき (Preface) ───
+  {word:"入門書",ruby:"<ruby>入<rt>にゅう</rt></ruby><ruby>門<rt>もん</rt></ruby><ruby>書<rt>しょ</rt></ruby>",english:"introductory book; primer",type:"noun",jisho:"入門書",ch:"前",
+    ej:"<ruby>本<rt>ほん</rt></ruby><ruby>書<rt>しょ</rt></ruby>は<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>の<ruby>入<rt>にゅう</rt></ruby><ruby>門<rt>もん</rt></ruby><ruby>書<rt>しょ</rt></ruby>である．",
+    ee:"This book is a primer on multiple zeta values."},
+  {word:"関数",ruby:"<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"function",type:"noun",jisho:"関数",ch:"前",
+    ej:"Riemann ゼータ<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>正<rt>せい</rt></ruby>の<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby>における<ruby>値<rt>あたい</rt></ruby>",
+    ee:"The values of the Riemann zeta function at positive integers."},
+  {word:"整数",ruby:"<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"integer",type:"noun",jisho:"整数",ch:"前",
+    ej:"<ruby>正<rt>せい</rt></ruby>の<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby>における<ruby>値<rt>あたい</rt></ruby>を<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby><ruby>和<rt>わ</rt></ruby>に<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby><ruby>化<rt>か</rt></ruby>した",
+    ee:"Generalized the values at positive integers to multiple sums."},
+  {word:"実数",ruby:"<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"real number",type:"noun",jisho:"実数",ch:"前",
+    ej:"<ruby>簡<rt>かん</rt></ruby><ruby>単<rt>たん</rt></ruby>な<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>で<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>される<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby>のことである．",
+    ee:"They are real numbers defined by simple infinite series."},
+  {word:"研究",ruby:"<ruby>研<rt>けん</rt></ruby><ruby>究<rt>きゅう</rt></ruby>",english:"research",type:"noun",jisho:"研究",ch:"前",
+    ej:"その<ruby>研<rt>けん</rt></ruby><ruby>究<rt>きゅう</rt></ruby>は<ruby>古<rt>ふる</rt></ruby>く Euler にまで<ruby>遡<rt>さかのぼ</rt></ruby>ることができる．",
+    ee:"The research can be traced back to Euler."},
+  {word:"数論",ruby:"<ruby>数<rt>すう</rt></ruby><ruby>論<rt>ろん</rt></ruby>",english:"number theory",type:"noun",jisho:"数論",ch:"前",
+    ej:"<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>論<rt>ろん</rt></ruby>，<ruby>数<rt>すう</rt></ruby><ruby>論<rt>ろん</rt></ruby><ruby>幾<rt>き</rt></ruby><ruby>何<rt>か</rt></ruby>のみならず<ruby>結<rt>むす</rt></ruby>び<ruby>目<rt>め</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>論<rt>ろん</rt></ruby>とも<ruby>関<rt>かん</rt></ruby><ruby>連<rt>れん</rt></ruby>して",
+    ee:"Related not only to number theory and arithmetic geometry, but also to knot theory."},
+  {word:"関係式",ruby:"<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"relation; identity (formula)",type:"noun",jisho:"関係式",ch:"前",
+    ej:"<ruby>豊<rt>ほう</rt></ruby><ruby>富<rt>ふ</rt></ruby>な<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>が<ruby>導<rt>みちび</rt></ruby>かれること",
+    ee:"The fact that rich relations can be derived."},
+  {word:"積分表示",ruby:"<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>",english:"integral representation",type:"noun",jisho:"積分表示",ch:"前",
+    ej:"よい<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>をもつこと",
+    ee:"Having a good integral representation."},
+  {word:"級数表示",ruby:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>",english:"series representation",type:"noun",jisho:"級数",ch:"前",
+    ej:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>と<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>が<ruby>織<rt>お</rt></ruby>りなす「<ruby>複<rt>ふく</rt></ruby>シャッフル<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>」",
+    ee:"The 'double shuffle relation' woven by the series and integral representations."},
+  {word:"正規化",ruby:"<ruby>正<rt>せい</rt></ruby><ruby>規<rt>き</rt></ruby><ruby>化<rt>か</rt></ruby>",english:"regularization; normalization",type:"noun",jisho:"正規化",ch:"前",
+    ej:"<ruby>正<rt>せい</rt></ruby><ruby>規<rt>き</rt></ruby><ruby>化<rt>か</rt></ruby>，「<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby>−<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>」<ruby>等<rt>とう</rt></ruby><ruby>式<rt>しき</rt></ruby>と<ruby>複<rt>ふく</rt></ruby>シャッフル<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>の<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby><ruby>化<rt>か</rt></ruby>",
+    ee:"Regularization, the 'integral–series' equation, and generalization of double shuffle relations."},
+  {word:"有限",ruby:"<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby>",english:"finite",type:"noun",jisho:"有限",ch:"前",
+    ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>の「<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>類<rt>るい</rt></ruby><ruby>似<rt>じ</rt></ruby>」について<ruby>述<rt>の</rt></ruby>べる．",
+    ee:"We discuss the 'finite analogue' of multiple zeta values."},
+  {word:"剰余",ruby:"<ruby>剰<rt>じょう</rt></ruby><ruby>余<rt>よ</rt></ruby>",english:"remainder; residue (mod p)",type:"noun",jisho:"剰余",ch:"前",
+    ej:"もとの<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>を<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby>で<ruby>打<rt>う</rt></ruby>ち<ruby>切<rt>き</rt></ruby>ったものの<ruby>剰<rt>じょう</rt></ruby><ruby>余<rt>よ</rt></ruby>",
+    ee:"The remainder of the original series truncated to a finite sum."},
+  {word:"対称",ruby:"<ruby>対<rt>たい</rt></ruby><ruby>称<rt>しょう</rt></ruby>",english:"symmetric; symmetry",type:"noun",jisho:"対称",ch:"前",
+    ej:"「<ruby>対<rt>たい</rt></ruby><ruby>称<rt>しょう</rt></ruby><ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>」との<ruby>間<rt>あいだ</rt></ruby>に<ruby>顕<rt>けん</rt></ruby><ruby>著<rt>ちょ</rt></ruby>な<ruby>平<rt>へい</rt></ruby><ruby>行<rt>こう</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby>",
+    ee:"A remarkable parallel relationship with 'symmetric multiple zeta values'."},
+  {word:"基本予想",ruby:"<ruby>基<rt>き</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>",english:"fundamental conjecture",type:"noun",jisho:"基本",ch:"前",
+    ej:"それを<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>として<ruby>定<rt>てい</rt></ruby><ruby>式<rt>しき</rt></ruby><ruby>化<rt>か</rt></ruby>したのが「<ruby>基<rt>き</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>」である．",
+    ee:"Formulating this as a conjecture is what is called the 'fundamental conjecture'."},
+  {word:"証明",ruby:"<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>",english:"proof",type:"noun",jisho:"証明",ch:"前",
+    ej:"<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>については<ruby>本<rt>ほん</rt></ruby><ruby>章<rt>しょう</rt></ruby>および<ruby>次<rt>じ</rt></ruby><ruby>章<rt>しょう</rt></ruby>の<ruby>章<rt>しょう</rt></ruby><ruby>末<rt>まつ</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>にスケッチを<ruby>載<rt>の</rt></ruby>せておいた．",
+    ee:"A sketch of the proof is included in the chapter-end problems."},
+  {word:"分野",ruby:"<ruby>分<rt>ぶん</rt></ruby><ruby>野<rt>や</rt></ruby>",english:"field (of study); area",type:"noun",jisho:"分野",ch:"前",
+    ej:"<ruby>広<rt>ひろ</rt></ruby>い<ruby>数<rt>すう</rt></ruby><ruby>学<rt>がく</rt></ruby>や<ruby>物<rt>ぶつ</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>野<rt>や</rt></ruby>に<ruby>背<rt>はい</rt></ruby><ruby>景<rt>けい</rt></ruby>をもつ",
+    ee:"Having a background in wide areas of mathematics and physics."},
+  {word:"目標",ruby:"<ruby>目<rt>もく</rt></ruby><ruby>標<rt>ひょう</rt></ruby>",english:"goal; objective",type:"noun",jisho:"目標",ch:"前",
+    ej:"<ruby>丁<rt>てい</rt></ruby><ruby>寧<rt>ねい</rt></ruby>に<ruby>紹<rt>しょう</rt></ruby><ruby>介<rt>かい</rt></ruby>することを<ruby>前<rt>ぜん</rt></ruby><ruby>半<rt>はん</rt></ruby>の<ruby>目<rt>もく</rt></ruby><ruby>標<rt>ひょう</rt></ruby>とする．",
+    ee:"The goal of the first half is to carefully introduce [these relations]."},
+  // ─── まえがき Verbs ───
+  {word:"一般化する",ruby:"<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby><ruby>化<rt>か</rt></ruby>する",english:"to generalize",type:"verb",jisho:"一般化",ch:"前",
+    ej:"<ruby>正<rt>せい</rt></ruby>の<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby>における<ruby>値<rt>あたい</rt></ruby>を<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby><ruby>和<rt>わ</rt></ruby>に<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby><ruby>化<rt>か</rt></ruby>した",
+    ee:"Generalized the values at positive integers to multiple sums."},
+  {word:"遡る",ruby:"<ruby>遡<rt>さかのぼ</rt></ruby>る",english:"to go back to; to trace back",type:"verb",jisho:"遡る",ch:"前",
+    ej:"その<ruby>研<rt>けん</rt></ruby><ruby>究<rt>きゅう</rt></ruby>は<ruby>古<rt>ふる</rt></ruby>く Euler にまで<ruby>遡<rt>さかのぼ</rt></ruby>ることができる．",
+    ee:"The research can be traced back to Euler."},
+  {word:"進展する",ruby:"<ruby>進<rt>しん</rt></ruby><ruby>展<rt>てん</rt></ruby>する",english:"to progress; to advance",type:"verb",jisho:"進展",ch:"前",
+    ej:"<ruby>爆<rt>ばく</rt></ruby><ruby>発<rt>はつ</rt></ruby><ruby>的<rt>てき</rt></ruby>に<ruby>研<rt>けん</rt></ruby><ruby>究<rt>きゅう</rt></ruby>が<ruby>進<rt>しん</rt></ruby><ruby>展<rt>てん</rt></ruby>し，<ruby>今<rt>いま</rt></ruby>もなお<ruby>発<rt>はっ</rt></ruby><ruby>展<rt>てん</rt></ruby>しつつある．",
+    ee:"Research has progressed explosively and continues to develop."},
+  {word:"紹介する",ruby:"<ruby>紹<rt>しょう</rt></ruby><ruby>介<rt>かい</rt></ruby>する",english:"to introduce; to present",type:"verb",jisho:"紹介する",ch:"前",
+    ej:"<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby><ruby>族<rt>ぞく</rt></ruby>を<ruby>丁<rt>てい</rt></ruby><ruby>寧<rt>ねい</rt></ruby>に<ruby>紹<rt>しょう</rt></ruby><ruby>介<rt>かい</rt></ruby>する",
+    ee:"To carefully introduce the family of relations."},
+  {word:"解説する",ruby:"<ruby>解<rt>かい</rt></ruby><ruby>説<rt>せつ</rt></ruby>する",english:"to explain; to give an exposition",type:"verb",jisho:"解説する",ch:"前",
+    ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>の<ruby>基<rt>き</rt></ruby><ruby>礎<rt>そ</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>事<rt>じ</rt></ruby><ruby>項<rt>こう</rt></ruby>を<ruby>解<rt>かい</rt></ruby><ruby>説<rt>せつ</rt></ruby>する．",
+    ee:"We explain the fundamental topics of multiple zeta values."},
+  {word:"導く",ruby:"<ruby>導<rt>みちび</rt></ruby>く",english:"to derive; to lead",type:"verb",jisho:"導く",ch:"前",
+    ej:"そこから<ruby>豊<rt>ほう</rt></ruby><ruby>富<rt>ふ</rt></ruby>な<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>が<ruby>導<rt>みちび</rt></ruby>かれる．",
+    ee:"Rich relations can be derived from it."},
+  {word:"定式化する",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>式<rt>しき</rt></ruby><ruby>化<rt>か</rt></ruby>する",english:"to formulate",type:"verb",jisho:"定式化",ch:"前",
+    ej:"それを<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>として<ruby>定<rt>てい</rt></ruby><ruby>式<rt>しき</rt></ruby><ruby>化<rt>か</rt></ruby>したのが「<ruby>基<rt>き</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>」である．",
+    ee:"Formulating this as a conjecture is what is called the 'fundamental conjecture'."},
+
+  // ─── Chapter 1 §1.1 ───
+  {word:"多重ゼータ値",ruby:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>",english:"multiple zeta value (MZV)",type:"noun",jisho:"多重ゼータ値",ch:"1.1",
+    ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
+    ee:"We define the multiple zeta value by an infinite series."},
+  {word:"無限級数",ruby:"<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"infinite series",type:"noun",jisho:"無限級数",ch:"1.1",
+    ej:"ζ(<i>k</i><sub>1</sub>,…,<i>k<sub>r</sub></i>) を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
+    ee:"We define ζ(k₁,…,kᵣ) by an infinite series."},
+  {word:"有理数体",ruby:"<ruby>有<rt>ゆう</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>体<rt>たい</rt></ruby>",english:"field of rational numbers (ℚ)",type:"noun",jisho:"有理数",ch:"1.1",
+    ej:"<ruby>有<rt>ゆう</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>体<rt>たい</rt></ruby> ℚ <ruby>上<rt>じょう</rt></ruby>，<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>で<ruby>張<rt>は</rt></ruby>られるベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>を<ruby>導<rt>どう</rt></ruby><ruby>入<rt>にゅう</rt></ruby>する．",
+    ee:"Over ℚ, we introduce the vector space spanned by MZVs."},
+  {word:"代数",ruby:"<ruby>代<rt>だい</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"algebra",type:"noun",jisho:"代数",ch:"1.1",
+    ej:"そのベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>が ℚ <ruby>代<rt>だい</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>構<rt>こう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>をもつ．",
+    ee:"That vector space has the structure of a ℚ-algebra."},
+  {word:"構造",ruby:"<ruby>構<rt>こう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>",english:"structure",type:"noun",jisho:"構造",ch:"1.1",
+    ej:"ℚ <ruby>代<rt>だい</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>構<rt>こう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>をもつ．",
+    ee:"It has the structure of a ℚ-algebra."},
+  {word:"部分空間",ruby:"<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>",english:"subspace",type:"noun",jisho:"部分空間",ch:"1.1",
+    ej:"「<ruby>重<rt>おも</rt></ruby>さ」ごとに<ruby>決<rt>き</rt></ruby>まる<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>の<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>",
+    ee:"The dimension of the subspace determined by each weight."},
+  {word:"次元",ruby:"<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>",english:"dimension",type:"noun",jisho:"次元",ch:"1.1",
+    ej:"<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>顕<rt>けん</rt></ruby><ruby>著<rt>ちょ</rt></ruby>な<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>を<ruby>述<rt>の</rt></ruby>べる．",
+    ee:"We state remarkable conjectures concerning the dimension."},
+  {word:"予想",ruby:"<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>",english:"conjecture",type:"noun",jisho:"予想",ch:"1.1",
+    ej:"<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>顕<rt>けん</rt></ruby><ruby>著<rt>ちょ</rt></ruby>な<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>",
+    ee:"Remarkable conjectures concerning the dimension."},
+  {word:"級数",ruby:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"series",type:"noun",jisho:"級数",ch:"1.1",
+    ej:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>による<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>",
+    ee:"Definition by series."},
+  {word:"定義",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>",english:"definition",type:"noun",jisho:"定義",ch:"1.1",
+    ej:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby> 1.1　<ruby>与<rt>あた</rt></ruby>えられたいくつかの<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して…",
+    ee:"Definition 1.1: For given natural numbers …"},
+  {word:"自然数",ruby:"<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"natural number",type:"noun",jisho:"自然数",ch:"1.1",
+    ej:"<ruby>与<rt>あた</rt></ruby>えられた<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby> <i>k</i><sub>1</sub>,…,<i>k<sub>r</sub></i>",
+    ee:"Given natural numbers k₁, …, kᵣ."},
+  {word:"変数",ruby:"<ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"variable",type:"noun",jisho:"変数",ch:"1.1",
+    ej:"<ruby>和<rt>わ</rt></ruby>の<ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby> <i>m<sub>i</sub></i> たちも<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>である．",
+    ee:"The summation variables mᵢ are also natural numbers."},
+  {word:"成分",ruby:"<ruby>成<rt>せい</rt></ruby><ruby>分<rt>ぶん</rt></ruby>",english:"component; entry",type:"noun",jisho:"成分",ch:"1.1",
+    ej:"<ruby>成<rt>せい</rt></ruby><ruby>分<rt>ぶん</rt></ruby> <i>k<sub>i</sub></i> の<ruby>順<rt>じゅん</rt></ruby><ruby>序<rt>じょ</rt></ruby>が<ruby>違<rt>ちが</rt></ruby>うと<ruby>値<rt>あたい</rt></ruby>は<ruby>異<rt>こと</rt></ruby>なる．",
+    ee:"When the order of components differs, the values differ."},
+  {word:"順序",ruby:"<ruby>順<rt>じゅん</rt></ruby><ruby>序<rt>じょ</rt></ruby>",english:"order (ordering)",type:"noun",jisho:"順序",ch:"1.1",
+    ej:"<ruby>成<rt>せい</rt></ruby><ruby>分<rt>ぶん</rt></ruby>の<ruby>順<rt>じゅん</rt></ruby><ruby>序<rt>じょ</rt></ruby>が<ruby>違<rt>ちが</rt></ruby>うと<ruby>値<rt>あたい</rt></ruby>は<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby>に<ruby>異<rt>こと</rt></ruby>なる．",
+    ee:"When the order of components differs, the values generally differ."},
+  {word:"値",ruby:"<ruby>値<rt>あたい</rt></ruby>",english:"value",type:"noun",jisho:"値",ch:"1.1",
+    ej:"ζ(2,3) と ζ(3,2) は<ruby>異<rt>こと</rt></ruby>なる<ruby>値<rt>あたい</rt></ruby>をもつ．",
+    ee:"ζ(2,3) and ζ(3,2) have different values."},
+  {word:"重さ",ruby:"<ruby>重<rt>おも</rt></ruby>さ",english:"weight",type:"noun",jisho:"重さ",ch:"1.1",
+    ej:"|<b>k</b>| := <i>k</i><sub>1</sub>+⋯+<i>k<sub>r</sub></i> を<ruby>重<rt>おも</rt></ruby>さ (weight) という．",
+    ee:"|k| := k₁+⋯+kᵣ is called the weight."},
+  {word:"深さ",ruby:"<ruby>深<rt>ふか</rt></ruby>さ",english:"depth",type:"noun",jisho:"深さ",ch:"1.1",
+    ej:"dep(<b>k</b>) := <i>r</i> を<ruby>深<rt>ふか</rt></ruby>さ (depth) という．",
+    ee:"dep(k) := r is called the depth."},
+  {word:"収束",ruby:"<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>",english:"convergence",type:"noun",jisho:"収束",ch:"1.1",
+    ej:"<i>k<sub>r</sub></i> ≧ 2 であれば<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>して<ruby>一<rt>ひと</rt></ruby>つの<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby>を<ruby>定<rt>さだ</rt></ruby>める．",
+    ee:"If kᵣ ≥ 2, it converges and determines a real number."},
+  {word:"発散",ruby:"<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>",english:"divergence",type:"noun",jisho:"発散",ch:"1.1",
+    ej:"<i>k<sub>r</sub></i> = 1 のときは<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>する．",
+    ee:"When kᵣ = 1, it diverges."},
+  {word:"命題",ruby:"<ruby>命<rt>めい</rt></ruby><ruby>題<rt>だい</rt></ruby>",english:"proposition",type:"noun",jisho:"命題",ch:"1.1",
+    ej:"<ruby>命<rt>めい</rt></ruby><ruby>題<rt>だい</rt></ruby> 1.2　(1.1)の<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>は <i>k<sub>r</sub></i> ≧ 2 であれば<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>する．",
+    ee:"Proposition 1.2: The series (1.1) converges if kᵣ ≥ 2."},
+  {word:"許容的",ruby:"<ruby>許<rt>きょ</rt></ruby><ruby>容<rt>よう</rt></ruby><ruby>的<rt>てき</rt></ruby>",english:"admissible",type:"noun",jisho:"許容",ch:"1.1",
+    ej:"<ruby>許<rt>きょ</rt></ruby><ruby>容<rt>よう</rt></ruby><ruby>的<rt>てき</rt></ruby> (admissible) もしくは<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>インデックスという．",
+    ee:"Called admissible or a convergent index."},
+  {word:"文献",ruby:"<ruby>文<rt>ぶん</rt></ruby><ruby>献<rt>けん</rt></ruby>",english:"literature; reference",type:"noun",jisho:"文献",ch:"1.1",
+    ej:"<ruby>文<rt>ぶん</rt></ruby><ruby>献<rt>けん</rt></ruby>によってはこの<ruby>右<rt>みぎ</rt></ruby><ruby>辺<rt>へん</rt></ruby>を ζ(<i>k<sub>r</sub></i>,…,<i>k</i><sub>1</sub>) と<ruby>書<rt>か</rt></ruby>いている．",
+    ee:"Some references write the RHS as ζ(kᵣ, …, k₁)."},
+  {word:"右辺",ruby:"<ruby>右<rt>みぎ</rt></ruby><ruby>辺<rt>へん</rt></ruby>",english:"right-hand side (RHS)",type:"noun",jisho:"右辺",ch:"1.1",
+    ej:"この<ruby>右<rt>みぎ</rt></ruby><ruby>辺<rt>へん</rt></ruby>は <i>m</i> によらない．",
+    ee:"This right-hand side does not depend on m."},
+  {word:"注意",ruby:"<ruby>注<rt>ちゅう</rt></ruby><ruby>意<rt>い</rt></ruby>",english:"remark; caution",type:"noun",jisho:"注意",ch:"1.1",
+    ej:"<ruby>注<rt>ちゅう</rt></ruby><ruby>意<rt>い</rt></ruby>が<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>である．",
+    ee:"Caution is needed."},
+  {word:"和",ruby:"<ruby>和<rt>わ</rt></ruby>",english:"sum; summation",type:"noun",jisho:"和",ch:"1.1",
+    ej:"<ruby>和<rt>わ</rt></ruby>の<ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby> <i>m<sub>i</sub></i> たちも<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>である．",
+    ee:"The summation variables mᵢ are also natural numbers."},
+  {word:"有限和",ruby:"<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>和<rt>わ</rt></ruby>",english:"finite sum",type:"noun",jisho:"有限",ch:"1.1",
+    ej:"ここに <i>a</i>(<i>m</i>) は<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>和<rt>わ</rt></ruby>である．",
+    ee:"Here a(m) is a finite sum."},
+  {word:"定数倍",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>倍<rt>ばい</rt></ruby>",english:"constant multiple",type:"noun",jisho:"定数",ch:"1.1",
+    ej:"<i>m<sup>ε</sup></i> の<ruby>定<rt>てい</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>倍<rt>ばい</rt></ruby>で<ruby>押<rt>お</rt></ruby>さえられる．",
+    ee:"Bounded by a constant multiple of mᵉ."},
+  {word:"不等式",ruby:"<ruby>不<rt>ふ</rt></ruby><ruby>等<rt>とう</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"inequality",type:"noun",jisho:"不等式",ch:"1.1",
+    ej:"この<ruby>不<rt>ふ</rt></ruby><ruby>等<rt>とう</rt></ruby><ruby>式<rt>しき</rt></ruby>に<ruby>注<rt>ちゅう</rt></ruby><ruby>意<rt>い</rt></ruby>すると",
+    ee:"Noting this inequality, …"},
+  {word:"調和級数",ruby:"<ruby>調<rt>ちょう</rt></ruby><ruby>和<rt>わ</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"harmonic series",type:"noun",jisho:"調和級数",ch:"1.1",
+    ej:"<ruby>調<rt>ちょう</rt></ruby><ruby>和<rt>わ</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>が<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>するというよく<ruby>知<rt>し</rt></ruby>られた<ruby>事<rt>じ</rt></ruby><ruby>実<rt>じつ</rt></ruby>",
+    ee:"The well-known fact that the harmonic series diverges."},
+  {word:"複素変数",ruby:"<ruby>複<rt>ふく</rt></ruby><ruby>素<rt>そ</rt></ruby><ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"complex variable",type:"noun",jisho:"複素",ch:"1.1",
+    ej:"<ruby>成<rt>せい</rt></ruby><ruby>分<rt>ぶん</rt></ruby>を<ruby>複<rt>ふく</rt></ruby><ruby>素<rt>そ</rt></ruby><ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby>にした<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ「<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>」",
+    ee:"The multiple zeta 'function' with complex variables as components."},
+  {word:"絶対収束域",ruby:"<ruby>絶<rt>ぜっ</rt></ruby><ruby>対<rt>たい</rt></ruby><ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby><ruby>域<rt>いき</rt></ruby>",english:"region of absolute convergence",type:"noun",jisho:"絶対収束",ch:"1.1",
+    ej:"このときの<ruby>右<rt>みぎ</rt></ruby><ruby>辺<rt>へん</rt></ruby>の<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>絶<rt>ぜっ</rt></ruby><ruby>対<rt>たい</rt></ruby><ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby><ruby>域<rt>いき</rt></ruby>は…",
+    ee:"The region of absolute convergence of the series on the RHS is…"},
+  {word:"章",ruby:"<ruby>章<rt>しょう</rt></ruby>",english:"chapter",type:"noun",jisho:"章",ch:"1.1",
+    ej:"この<ruby>章<rt>しょう</rt></ruby>では，<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>を<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
+    ee:"In this chapter, we define multiple zeta values."},
+
+  // §1.1 verbs
+  {word:"定義する",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する",english:"to define",type:"verb",jisho:"定義する",ch:"1.1",
+    ej:"ζ(<i>k</i><sub>1</sub>,…,<i>k<sub>r</sub></i>) を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
+    ee:"We define ζ(k₁,…,kᵣ) by an infinite series."},
+  {word:"導入する",ruby:"<ruby>導<rt>どう</rt></ruby><ruby>入<rt>にゅう</rt></ruby>する",english:"to introduce (a concept)",type:"verb",jisho:"導入する",ch:"1.1",
+    ej:"ベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>を<ruby>導<rt>どう</rt></ruby><ruby>入<rt>にゅう</rt></ruby>する．",
+    ee:"We introduce a vector space."},
+  {word:"張る",ruby:"<ruby>張<rt>は</rt></ruby>る",english:"to span (a vector space)",type:"verb",jisho:"張る",ch:"1.1",
+    ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>で<ruby>張<rt>は</rt></ruby>られるベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>",
+    ee:"The vector space spanned by MZVs."},
+  {word:"述べる",ruby:"<ruby>述<rt>の</rt></ruby>べる",english:"to state; to describe",type:"verb",jisho:"述べる",ch:"1.1",
+    ej:"<ruby>顕<rt>けん</rt></ruby><ruby>著<rt>ちょ</rt></ruby>な<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>などを<ruby>述<rt>の</rt></ruby>べる．",
+    ee:"We state remarkable conjectures."},
+  {word:"異なる",ruby:"<ruby>異<rt>こと</rt></ruby>なる",english:"to differ; to be different",type:"verb",jisho:"異なる",ch:"1.1",
+    ej:"ζ(2,3) と ζ(3,2) は<ruby>異<rt>こと</rt></ruby>なる<ruby>値<rt>あたい</rt></ruby>をもつ．",
+    ee:"ζ(2,3) and ζ(3,2) have different values."},
+  {word:"略す",ruby:"<ruby>略<rt>りゃく</rt></ruby>す",english:"to abbreviate",type:"verb",jisho:"略す",ch:"1.1",
+    ej:"しばしば MZV と<ruby>略<rt>りゃく</rt></ruby>してよばれる．",
+    ee:"Often abbreviated as MZV."},
+  {word:"与える",ruby:"<ruby>与<rt>あた</rt></ruby>える",english:"to give (passive: given)",type:"verb",jisho:"与える",ch:"1.1",
+    ej:"<ruby>与<rt>あた</rt></ruby>えられたいくつかの<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して",
+    ee:"For given natural numbers, …"},
+  {word:"収束する",ruby:"<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>する",english:"to converge",type:"verb",jisho:"収束",ch:"1.1",
+    ej:"<i>k<sub>r</sub></i> ≧ 2 であれば<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>して<ruby>一<rt>ひと</rt></ruby>つの<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby>を<ruby>定<rt>さだ</rt></ruby>める．",
+    ee:"If kᵣ ≥ 2, it converges and determines a real number."},
+  {word:"発散する",ruby:"<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>する",english:"to diverge",type:"verb",jisho:"発散",ch:"1.1",
+    ej:"<i>k<sub>r</sub></i> = 1 のときは<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>する．",
+    ee:"When kᵣ = 1, it diverges."},
+  {word:"成り立つ",ruby:"<ruby>成<rt>な</rt></ruby>り<ruby>立<rt>た</rt></ruby>つ",english:"to hold (of a formula/theorem)",type:"verb",jisho:"成り立つ",ch:"1.1",
+    ej:"が<ruby>成<rt>な</rt></ruby>り<ruby>立<rt>た</rt></ruby>つから，",
+    ee:"Since [the inequality] holds, …"},
+  {word:"帰着する",ruby:"<ruby>帰<rt>き</rt></ruby><ruby>着<rt>ちゃく</rt></ruby>する",english:"to reduce to; to come down to",type:"verb",jisho:"帰着",ch:"1.1",
+    ej:"やはり<ruby>調<rt>ちょう</rt></ruby><ruby>和<rt>わ</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>に<ruby>帰<rt>き</rt></ruby><ruby>着<rt>ちゃく</rt></ruby>する．",
+    ee:"It also reduces to the divergence of the harmonic series."},
+
+  // ─── Chapter 1 §1.2 ───
+  {word:"円周率",ruby:"<ruby>円<rt>えん</rt></ruby><ruby>周<rt>しゅう</rt></ruby><ruby>率<rt>りつ</rt></ruby>",english:"pi (π); the ratio of circumference",type:"noun",jisho:"円周率",ch:"1.2",
+    ej:"<ruby>円<rt>えん</rt></ruby><ruby>周<rt>しゅう</rt></ruby><ruby>率<rt>りつ</rt></ruby>のべきの<ruby>有<rt>ゆう</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>倍<rt>ばい</rt></ruby>である．",
+    ee:"It is a rational multiple of a power of π."},
+  {word:"二項係数",ruby:"<ruby>二<rt>に</rt></ruby><ruby>項<rt>こう</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"binomial coefficient",type:"noun",jisho:"二項係数",ch:"1.2",
+    ej:"<ruby>個<rt>こ</rt></ruby><ruby>数<rt>すう</rt></ruby>は<ruby>二<rt>に</rt></ruby><ruby>項<rt>こう</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>数<rt>すう</rt></ruby>に<ruby>等<rt>ひと</rt></ruby>しい．",
+    ee:"The count equals a binomial coefficient."},
+  {word:"総数",ruby:"<ruby>総<rt>そう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"total number",type:"noun",jisho:"総数",ch:"1.2",
+    ej:"<ruby>重<rt>おも</rt></ruby>さ <i>k</i> の<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>の<ruby>総<rt>そう</rt></ruby><ruby>数<rt>すう</rt></ruby>は 2<sup><i>k</i>−2</sup> である．",
+    ee:"The total number of weight-k MZVs is 2^(k−2)."},
+  {word:"関係",ruby:"<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby>",english:"relation; relationship",type:"noun",jisho:"関係",ch:"1.2",
+    ej:"Euler による<ruby>有<rt>ゆう</rt></ruby><ruby>名<rt>めい</rt></ruby>な<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby> ζ(1,2)=ζ(3)",
+    ee:"Euler's famous relation ζ(1,2)=ζ(3)."},
+  {word:"数列",ruby:"<ruby>数<rt>すう</rt></ruby><ruby>列<rt>れつ</rt></ruby>",english:"sequence (of numbers)",type:"noun",jisho:"数列",ch:"1.2",
+    ej:"<ruby>数<rt>すう</rt></ruby><ruby>列<rt>れつ</rt></ruby> <i>d<sub>k</sub></i> を<ruby>次<rt>つぎ</rt></ruby>の<ruby>漸<rt>ぜん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>式<rt>しき</rt></ruby>で<ruby>定<rt>さだ</rt></ruby>める．",
+    ee:"We define the sequence dₖ by the following recurrence."},
+  {word:"漸化式",ruby:"<ruby>漸<rt>ぜん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"recurrence relation",type:"noun",jisho:"漸化式",ch:"1.2",
+    ej:"<ruby>次<rt>つぎ</rt></ruby>の<ruby>漸<rt>ぜん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>式<rt>しき</rt></ruby>で<ruby>定<rt>さだ</rt></ruby>める (Padovan <ruby>数<rt>すう</rt></ruby><ruby>列<rt>れつ</rt></ruby>とよばれている)．",
+    ee:"Defined by the following recurrence (called the Padovan sequence)."},
+  {word:"母関数",ruby:"<ruby>母<rt>ぼ</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"generating function",type:"noun",jisho:"母関数",ch:"1.2",
+    ej:"<ruby>形<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby><ruby>的<rt>てき</rt></ruby>べき<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>による<ruby>母<rt>ぼ</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>形<rt>かたち</rt></ruby>で<ruby>書<rt>か</rt></ruby>くと",
+    ee:"Writing in the form of a generating function via formal power series."},
+  {word:"定理",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>理<rt>り</rt></ruby>",english:"theorem",type:"noun",jisho:"定理",ch:"1.2",
+    ej:"<ruby>定<rt>てい</rt></ruby><ruby>理<rt>り</rt></ruby> 1.8 (Goncharov) すべての <i>k</i> に<ruby>対<rt>たい</rt></ruby>し dim<sub>ℚ</sub> 𝒵<sub><i>k</i></sub> ≦ <i>d<sub>k</sub></i>",
+    ee:"Theorem 1.8 (Goncharov): For all k, dim_ℚ 𝒵ₖ ≤ dₖ."},
+  {word:"線形関係式",ruby:"<ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"linear relation",type:"noun",jisho:"線形",ch:"1.2",
+    ej:"<ruby>異<rt>こと</rt></ruby>なる<ruby>重<rt>おも</rt></ruby>さの<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>に<ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>はないであろうと<ruby>信<rt>しん</rt></ruby>じられている．",
+    ee:"It is believed there are no linear relations among MZVs of different weights."},
+  {word:"独立",ruby:"<ruby>独<rt>どく</rt></ruby><ruby>立<rt>りつ</rt></ruby>",english:"independent; independence",type:"noun",jisho:"独立",ch:"1.2",
+    ej:"ζ(5) と ζ(2,3) が ℚ <ruby>上<rt>じょう</rt></ruby><ruby>独<rt>どく</rt></ruby><ruby>立<rt>りつ</rt></ruby>であることを<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>する",
+    ee:"To prove that ζ(5) and ζ(2,3) are independent over ℚ."},
+  {word:"評価",ruby:"<ruby>評<rt>ひょう</rt></ruby><ruby>価<rt>か</rt></ruby>",english:"estimate; bound",type:"noun",jisho:"評価",ch:"1.2",
+    ej:"<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>の<ruby>下<rt>した</rt></ruby>からの<ruby>評<rt>ひょう</rt></ruby><ruby>価<rt>か</rt></ruby>",
+    ee:"A lower bound on the dimension."},
+
+  // §1.2 verbs
+  {word:"書く",ruby:"<ruby>書<rt>か</rt></ruby>く",english:"to write (a formula)",type:"verb",jisho:"書く",ch:"1.2",
+    ej:"<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>全<rt>ぜん</rt></ruby><ruby>体<rt>たい</rt></ruby> ℝ の<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby> ℚ ベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>を 𝒵<sub><i>k</i></sub> と<ruby>書<rt>か</rt></ruby>く．",
+    ee:"We write the sub-ℚ-vector space of ℝ as 𝒵ₖ."},
+  {word:"数える",ruby:"<ruby>数<rt>かぞ</rt></ruby>える",english:"to count",type:"verb",jisho:"数える",ch:"1.2",
+    ej:"<ruby>各<rt>かく</rt></ruby><ruby>重<rt>おも</rt></ruby>さ，<ruby>深<rt>ふか</rt></ruby>さにいくつの<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>があるかを<ruby>数<rt>かぞ</rt></ruby>えると",
+    ee:"Counting how many MZVs there are for each weight and depth, …"},
+  {word:"等しい",ruby:"<ruby>等<rt>ひと</rt></ruby>しい",english:"to be equal",type:"verb",jisho:"等しい",ch:"1.2",
+    ej:"<ruby>個<rt>こ</rt></ruby><ruby>数<rt>すう</rt></ruby>は<ruby>二<rt>に</rt></ruby><ruby>項<rt>こう</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>数<rt>すう</rt></ruby>に<ruby>等<rt>ひと</rt></ruby>しい．",
+    ee:"The count equals the binomial coefficient."},
+  {word:"信じる",ruby:"<ruby>信<rt>しん</rt></ruby>じる",english:"to believe (conjectured to be true)",type:"verb",jisho:"信じる",ch:"1.2",
+    ej:"<ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>はないであろうと<ruby>信<rt>しん</rt></ruby>じられている．",
+    ee:"It is believed that there are no linear relations."},
+  {word:"証明する",ruby:"<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>する",english:"to prove",type:"verb",jisho:"証明する",ch:"1.2",
+    ej:"<ruby>混<rt>こん</rt></ruby><ruby>合<rt>ごう</rt></ruby> Tate モチーフの<ruby>理<rt>り</rt></ruby><ruby>論<rt>ろん</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いて<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>した．",
+    ee:"Proved using the theory of mixed Tate motives."},
+
+  // ─── Grammar patterns ───
+  {word:"ただし",ruby:"ただし",english:"provided that; where",type:"grammar",jisho:"ただし",ch:"1.1",
+    ej:"<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby> <i>k</i><sub>1</sub>,…,<i>k<sub>r</sub></i>，ただし <i>k<sub>r</sub></i> ≧ 2，に<ruby>対<rt>たい</rt></ruby>して",
+    ee:"For natural numbers k₁,…,kᵣ, where kᵣ ≥ 2."},
+  {word:"に対して",ruby:"に<ruby>対<rt>たい</rt></ruby>して",english:"for; with respect to",type:"grammar",jisho:"に対して",ch:"1.1",
+    ej:"<ruby>与<rt>あた</rt></ruby>えられた<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して，<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>を<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
+    ee:"For given natural numbers, we define the MZV."},
+  {word:"によって",ruby:"によって",english:"by means of; depending on",type:"grammar",jisho:"によって",ch:"1.1",
+    ej:"<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
+    ee:"We define [it] by means of an infinite series."},
+  {word:"一般に",ruby:"<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby>に",english:"in general; generally",type:"grammar",jisho:"一般に",ch:"1.1",
+    ej:"<ruby>順<rt>じゅん</rt></ruby><ruby>序<rt>じょ</rt></ruby>が<ruby>違<rt>ちが</rt></ruby>うと<ruby>値<rt>あたい</rt></ruby>は<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby>に<ruby>異<rt>こと</rt></ruby>なる．",
+    ee:"When the order differs, the values generally differ."},
+  {word:"に関する",ruby:"に<ruby>関<rt>かん</rt></ruby>する",english:"concerning; regarding",type:"grammar",jisho:"に関する",ch:"1.1",
+    ej:"<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>",
+    ee:"A conjecture concerning the dimension."},
+  {word:"〜ごとに",ruby:"〜ごとに",english:"for each ~; per ~",type:"grammar",jisho:"ごとに",ch:"1.1",
+    ej:"<ruby>重<rt>おも</rt></ruby>さごとに<ruby>決<rt>き</rt></ruby>まる<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>",
+    ee:"The subspace determined for each weight."},
+  {word:"すなわち",ruby:"すなわち",english:"namely; that is to say",type:"grammar",jisho:"すなわち",ch:"1.2",
+    ej:"<ruby>深<rt>ふか</rt></ruby>さ <i>r</i>=1 の<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>はすなわち Riemann ゼータ<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>値<rt>あたい</rt></ruby>に<ruby>他<rt>ほか</rt></ruby>ならない．",
+    ee:"Depth r=1 MZVs are namely nothing other than values of the Riemann zeta function."},
+  {word:"〜に他ならない",ruby:"〜に<ruby>他<rt>ほか</rt></ruby>ならない",english:"is nothing other than ~",type:"grammar",jisho:"他ならない",ch:"1.2",
+    ej:"Riemann ゼータ<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>正<rt>せい</rt></ruby><ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>点<rt>てん</rt></ruby>での<ruby>値<rt>あたい</rt></ruby>に<ruby>他<rt>ほか</rt></ruby>ならない．",
+    ee:"It is nothing other than the value at positive integer points of the Riemann zeta function."},
+  {word:"であろう",ruby:"であろう",english:"probably is; is expected to be (conjecture language)",type:"grammar",jisho:"であろう",ch:"1.2",
+    ej:"<ruby>和<rt>わ</rt></ruby>は<ruby>直<rt>ちょく</rt></ruby><ruby>和<rt>わ</rt></ruby>であろう．",
+    ee:"The sum is probably a direct sum (i.e., conjectured to be)."},
+];
+
+// ══════════════════════════════════════════════
+//  DICTIONARY RENDERING
+// ══════════════════════════════════════════════
+let activeFilter = 'all';
+let searchTerm = '';
+let chapterFilter = 'all';
+
+function renderCards() {
+  const container = document.getElementById('cards');
+  const info = document.getElementById('pageInfo');
+  const seen = new Set();
+
+  const filtered = entries.filter(e => {
+    // dedup by word
+    if (seen.has(e.word)) return false;
+    seen.add(e.word);
+    const matchType = activeFilter === 'all' || e.type === activeFilter;
+    const matchCh = chapterFilter === 'all' || e.ch === chapterFilter;
+    const matchSearch = searchTerm === '' ||
+      e.word.includes(searchTerm) ||
+      e.english.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      e.ruby.replace(/<[^>]*>/g,'').includes(searchTerm);
+    return matchType && matchCh && matchSearch;
+  });
+
+  info.textContent = `${filtered.length} entries`;
+
+  if (!filtered.length) {
+    container.innerHTML = '<div class="empty-state">No matching entries found.</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(e => {
+    const tagClass = `tag-${e.type}`;
+    const typeLabel = e.type.charAt(0).toUpperCase()+e.type.slice(1);
+    const jUrl = `https://jisho.org/search/${encodeURIComponent(e.jisho)}`;
+    return `<div class="card" data-type="${e.type}">
+      <span class="chapter-badge">${e.ch==='前'?'まえがき':'§'+e.ch}</span>
+      <div class="word-japanese">${e.ruby}</div>
+      <div class="word-english">${e.english}</div>
+      <div class="word-meta">
+        <span class="tag ${tagClass}">${typeLabel}</span>
+        <a class="jisho-link" href="${jUrl}" target="_blank" rel="noopener">→ jisho.org</a>
+      </div>
+      <div class="example">
+        <div class="example-label">Example</div>
+        <div class="example-ja">${e.ej}</div>
+        <div class="example-en">${e.ee}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    renderCards();
+  });
+});
+document.getElementById('searchBox').addEventListener('input', e => { searchTerm = e.target.value.trim(); renderCards(); });
+document.getElementById('chapterFilter').addEventListener('change', e => { chapterFilter = e.target.value; renderCards(); });
+renderCards();
+
+// ══════════════════════════════════════════════
+//  TAB NAVIGATION
+// ══════════════════════════════════════════════
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ══════════════════════════════════════════════
+//  QUIZ ENGINE
+// ══════════════════════════════════════════════
+document.getElementById('startQuiz').addEventListener('click', startQuiz);
+
+function getUniqueEntries(types) {
+  const seen = new Set();
+  return entries.filter(e => {
+    if (seen.has(e.word)) return false;
+    seen.add(e.word);
+    return types.includes(e.type);
+  });
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+let quizState = {};
+
+function startQuiz() {
+  const mode = document.querySelector('input[name="qmode"]:checked').value;
+  const dir = document.querySelector('input[name="qdir"]:checked').value;
+  const types = [...document.querySelectorAll('input[name="qtype"]:checked')].map(c=>c.value);
+  const countVal = document.querySelector('input[name="qcount"]:checked').value;
+  const includeFib = document.getElementById('fibToggle').checked;
+
+  if (!types.length) { alert('Select at least one word type.'); return; }
+
+  const pool = getUniqueEntries(types);
+  if (pool.length < 4) { alert('Need at least 4 entries. Select more types.'); return; }
+
+  const count = countVal === 'all' ? pool.length : Math.min(parseInt(countVal), pool.length);
+  const questions = shuffle(pool).slice(0, count);
+
+  quizState = { mode, dir, questions, pool, current: 0, score: 0, wrong: [], includeFib };
+
+  document.getElementById('quizSetup').style.display = 'none';
+  const area = document.getElementById('quizArea');
+  area.style.display = 'block';
+  showQuestion();
+}
+
+function showQuestion() {
+  const {mode, dir, questions, pool, current, includeFib} = quizState;
+  const area = document.getElementById('quizArea');
+
+  if (current >= questions.length) {
+    showResults();
+    return;
+  }
+
+  const q = questions[current];
+  const progress = `${current+1} / ${questions.length}`;
+  const pct = ((current)/questions.length*100).toFixed(0);
+
+  // decide direction for this question
+  let thisDir = dir;
+  if (dir === 'random') thisDir = Math.random() < 0.5 ? 'jp2en' : 'en2jp';
+
+  // decide if this is a fill-in-blank question (30% chance if enabled and mode is mc)
+  const isFib = includeFib && mode === 'mc' && Math.random() < 0.3;
+
+  let cardHTML = '';
+
+  if (mode === 'flash') {
+    // Flashcard mode
+    const front = thisDir === 'jp2en' ? q.ruby : `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`;
+    const back = thisDir === 'jp2en'
+      ? `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`
+      : q.ruby;
+
+    cardHTML = `
+      <div class="quiz-progress">
+        <span>${progress}</span>
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+        <span>Score: ${quizState.score}</span>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-prompt-label">${thisDir==='jp2en'?'What does this mean?':'How do you say this in Japanese?'}</div>
+        <div class="flashcard-container" id="flashContainer">
+          <div class="flashcard" id="flashcard">
+            <div class="flashcard-face">${front}<div class="flashcard-hint">Tap to reveal</div></div>
+            <div class="flashcard-face flashcard-back">${back}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.6rem;margin-top:0.5rem;" id="flashBtns" class="flash-hidden">
+          <button class="quiz-next-btn" style="background:var(--wrong);" onclick="flashAnswer(false)">✕ Didn't know</button>
+          <button class="quiz-next-btn" style="background:var(--correct);" onclick="flashAnswer(true)">✓ Knew it</button>
+        </div>
+      </div>`;
+
+    area.innerHTML = cardHTML;
+    document.getElementById('flashContainer').addEventListener('click', () => {
+      document.getElementById('flashcard').classList.add('flipped');
+      document.getElementById('flashBtns').classList.remove('flash-hidden');
+    });
+
+  } else if (isFib) {
+    // Fill-in-the-blank
+    const sentence = q.ej;
+    const plain = q.word;
+    // try to find word in the example sentence (strip ruby for matching)
+    const sentencePlain = sentence.replace(/<ruby>([^<]*)<rt>[^<]*<\/rt><\/ruby>/g,'$1').replace(/<[^>]*>/g,'');
+    let blankSentence = sentence;
+    // Replace the word in the ruby sentence with a blank
+    // Simple approach: replace the ruby-tagged version
+    const wordPlain = plain.replace(/<[^>]*>/g,'');
+    if (sentencePlain.includes(wordPlain)) {
+      // Build a regex-safe version and blank it
+      blankSentence = blankSentenceFromRuby(sentence, wordPlain);
+    }
+
+    // Get 3 wrong answers
+    const wrongs = shuffle(pool.filter(e => e.word !== q.word)).slice(0,3);
+    const options = shuffle([q, ...wrongs]);
+
+    cardHTML = `
+      <div class="quiz-progress">
+        <span>${progress}</span>
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+        <span>Score: ${quizState.score}</span>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-prompt-label">Fill in the blank</div>
+        <div class="fib-sentence">${blankSentence}</div>
+        <div class="fib-translation">${q.ee}</div>
+        <div class="mc-options">
+          ${options.map((o,i) => `<button class="mc-btn" data-idx="${i}" data-correct="${o.word===q.word}" onclick="mcAnswer(this,'${esc(q.word)}')">${o.ruby}</button>`).join('')}
+        </div>
+      </div>`;
+    area.innerHTML = cardHTML;
+
+  } else {
+    // Multiple choice
+    const wrongs = shuffle(pool.filter(e => e.word !== q.word)).slice(0,3);
+    const options = shuffle([q, ...wrongs]);
+
+    const prompt = thisDir === 'jp2en'
+      ? `<div class="quiz-prompt-word">${q.ruby}</div>`
+      : `<div class="quiz-prompt-sub" style="font-size:1.15rem;font-style:normal;color:var(--ink);">${q.english}</div>`;
+
+    const optionHTML = options.map((o,i) => {
+      const label = thisDir === 'jp2en' ? o.english : o.ruby;
+      return `<button class="mc-btn" data-idx="${i}" data-correct="${o.word===q.word}" onclick="mcAnswer(this,'${esc(q.word)}')">${label}</button>`;
+    }).join('');
+
+    cardHTML = `
+      <div class="quiz-progress">
+        <span>${progress}</span>
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+        <span>Score: ${quizState.score}</span>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-prompt-label">${thisDir==='jp2en'?'What does this mean?':'Choose the Japanese word'}</div>
+        ${prompt}
+        <div class="mc-options">${optionHTML}</div>
+      </div>`;
+    area.innerHTML = cardHTML;
+  }
+}
+
+function blankSentenceFromRuby(html, word) {
+  // Remove the word from the HTML by finding ruby sequences that spell it
+  // Strategy: walk character by character through `word`, consuming ruby tags or plain text
+  let result = html;
+  let searchStr = '';
+  let segments = [];
+
+  // Parse all ruby and text segments
+  const re = /(<ruby>[^<]*<rt>[^<]*<\/rt><\/ruby>)|([^<]+)|(<[^>]*>)/g;
+  let m;
+  let allSegs = [];
+  while ((m = re.exec(html)) !== null) {
+    if (m[1]) {
+      // ruby tag - extract base char
+      const base = m[1].replace(/<ruby>([^<]*)<rt>[^<]*<\/rt><\/ruby>/,'$1');
+      allSegs.push({html: m[1], text: base});
+    } else if (m[2]) {
+      // plain text
+      for (const ch of m[2]) {
+        allSegs.push({html: ch, text: ch});
+      }
+    } else {
+      allSegs.push({html: m[3], text: ''});
+    }
+  }
+
+  // Find the word in the text stream
+  const textStream = allSegs.map(s=>s.text).join('');
+  const idx = textStream.indexOf(word);
+  if (idx === -1) return html; // can't find, return as-is
+
+  // Map text position to segment index
+  let pos = 0;
+  let startSeg = -1, endSeg = -1;
+  for (let i = 0; i < allSegs.length; i++) {
+    const len = allSegs[i].text.length;
+    if (startSeg === -1 && pos + len > idx) startSeg = i;
+    if (pos + len >= idx + word.length && endSeg === -1) { endSeg = i; break; }
+    pos += len;
+  }
+
+  if (startSeg === -1 || endSeg === -1) return html;
+
+  // Replace those segments with blank
+  const before = allSegs.slice(0,startSeg).map(s=>s.html).join('');
+  const after = allSegs.slice(endSeg+1).map(s=>s.html).join('');
+  return before + '<span class="blank">???</span>' + after;
+}
+
+function esc(s) { return s.replace(/'/g,"\\'"); }
+
+function mcAnswer(btn, correctWord) {
+  const isCorrect = btn.dataset.correct === 'true';
+  const allBtns = btn.parentElement.querySelectorAll('.mc-btn');
+
+  allBtns.forEach(b => {
+    b.classList.add('mc-locked');
+    if (b.dataset.correct === 'true') b.classList.add('mc-correct');
+  });
+
+  if (isCorrect) {
+    quizState.score++;
+  } else {
+    btn.classList.add('mc-wrong');
+    const q = quizState.questions[quizState.current];
+    quizState.wrong.push(q);
+  }
+
+  setTimeout(() => {
+    quizState.current++;
+    showQuestion();
+  }, 900);
+}
+
+window.flashAnswer = function(knew) {
+  if (knew) {
+    quizState.score++;
+  } else {
+    quizState.wrong.push(quizState.questions[quizState.current]);
+  }
+  quizState.current++;
+  showQuestion();
+};
+
+// Style for flash-hidden
+const style = document.createElement('style');
+style.textContent = '.flash-hidden { visibility: hidden; }';
+document.head.appendChild(style);
+
+function showResults() {
+  const {questions, score, wrong} = quizState;
+  const pct = Math.round(score/questions.length*100);
+  const area = document.getElementById('quizArea');
+
+  let emoji = pct >= 90 ? '🎉' : pct >= 70 ? '👍' : pct >= 50 ? '📖' : '💪';
+  let msg = pct >= 90 ? 'Excellent!' : pct >= 70 ? 'Good job!' : pct >= 50 ? 'Keep studying!' : 'Review these words!';
+
+  let wrongHTML = '';
+  if (wrong.length) {
+    wrongHTML = `<div class="quiz-wrong-list">
+      <div style="font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Review these:</div>
+      ${wrong.map(w => `<div class="quiz-wrong-item"><span class="qw-word">${w.ruby}</span> — ${w.english}</div>`).join('')}
+    </div>`;
+  }
+
+  area.innerHTML = `
+    <div class="quiz-results">
+      <h2>${emoji} ${msg}</h2>
+      <div class="quiz-score">${score} / ${questions.length}</div>
+      <div class="quiz-score-sub">${pct}% correct</div>
+      ${wrongHTML}
+      <button class="start-btn" onclick="resetQuiz()">Try Again</button>
+    </div>`;
+}
+
+window.resetQuiz = function() {
+  document.getElementById('quizArea').style.display = 'none';
+  document.getElementById('quizSetup').style.display = 'block';
+};
+
+window.mcAnswer = mcAnswer;
+</script>
+</body>
+</html>
