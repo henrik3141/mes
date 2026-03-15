@@ -486,10 +486,10 @@ header .source {
 .flashcard-container {
   perspective: 800px;
   width: 100%;
-  max-width: 420px;
-  height: 220px;
+  max-width: 480px;
+  height: 250px;
   cursor: pointer;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .flashcard {
   width: 100%;
@@ -513,12 +513,67 @@ header .source {
   padding: 1.5rem;
   background: var(--card-bg);
 }
-.flashcard-back { transform: rotateY(180deg); }
+.flashcard-face .flash-word {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+.flashcard-face .flash-word ruby rt {
+  font-size: 0.5em;
+  font-weight: 400;
+  color: #888;
+}
+.flashcard-face .flash-answer {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1.2rem;
+  text-align: center;
+  line-height: 1.6;
+}
+.flashcard-back { transform: rotateY(180deg); position: relative; overflow: hidden; }
 .flashcard-hint {
   font-size: 0.7rem;
   color: #bbb;
   margin-top: 0.5rem;
 }
+
+/* Clickable left/right zones on flipped card */
+.flash-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 2;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0.7rem;
+  transition: background 0.15s;
+  border-radius: 4px;
+}
+.flash-zone-left {
+  left: 0;
+  border-right: 1px dashed rgba(0,0,0,0.06);
+}
+.flash-zone-right {
+  right: 0;
+}
+.flash-zone:hover { background: rgba(0,0,0,0.03); }
+.flash-zone-left:hover { background: rgba(198,40,40,0.06); }
+.flash-zone-right:hover { background: rgba(46,125,50,0.06); }
+.flash-zone-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+.flash-zone:hover .flash-zone-label { opacity: 1; }
+.flash-zone-left .flash-zone-label { color: var(--wrong); }
+.flash-zone-right .flash-zone-label { color: var(--correct); }
 
 .quiz-next-btn {
   background: var(--accent);
@@ -1308,19 +1363,22 @@ function showQuestion() {
 
     if (isFormula) {
       if (thisDir === 'jp2en') {
-        front = `<div style="font-size:1.3rem;">${q.formula}</div>`;
-        back = `<div style="font-family:'Noto Serif JP',serif;font-size:1rem;line-height:1.8;">${q.reading}</div><div style="font-family:'Source Serif 4',serif;font-size:0.85rem;color:#777;font-style:italic;margin-top:0.3rem;">${q.english}</div>`;
+        front = `<div class="flash-word">${q.formula}</div>`;
+        back = `<div class="flash-word" style="font-size:1.1rem;font-weight:400;">${q.reading}</div><div class="flash-answer" style="color:#777;font-style:italic;margin-top:0.3rem;">${q.english}</div>`;
         promptLabel = 'How do you read this formula in Japanese?';
       } else {
-        front = `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`;
-        back = `<div style="font-size:1.3rem;">${q.formula}</div><div style="font-family:'Noto Serif JP',serif;font-size:0.9rem;color:var(--accent);margin-top:0.3rem;">${q.reading}</div>`;
+        front = `<div class="flash-answer">${q.english}</div>`;
+        back = `<div class="flash-word">${q.formula}</div><div class="flash-word" style="font-size:1rem;font-weight:400;color:var(--accent);margin-top:0.3rem;">${q.reading}</div>`;
         promptLabel = 'What formula does this describe?';
       }
     } else {
-      front = thisDir === 'jp2en' ? q.ruby : `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`;
-      back = thisDir === 'jp2en'
-        ? `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`
-        : q.ruby;
+      if (thisDir === 'jp2en') {
+        front = `<div class="flash-word">${q.ruby}</div>`;
+        back = `<div class="flash-answer">${q.english}</div>`;
+      } else {
+        front = `<div class="flash-answer">${q.english}</div>`;
+        back = `<div class="flash-word">${q.ruby}</div>`;
+      }
       promptLabel = thisDir==='jp2en'?'What does this mean?':'How do you say this in Japanese?';
     }
 
@@ -1335,20 +1393,42 @@ function showQuestion() {
         <div class="flashcard-container" id="flashContainer">
           <div class="flashcard" id="flashcard">
             <div class="flashcard-face">${front}<div class="flashcard-hint">Tap to reveal</div></div>
-            <div class="flashcard-face flashcard-back">${back}</div>
+            <div class="flashcard-face flashcard-back">
+              ${back}
+              <div class="flash-zone flash-zone-left" id="flashZoneLeft">
+                <span class="flash-zone-label">✕ Didn't know</span>
+              </div>
+              <div class="flash-zone flash-zone-right" id="flashZoneRight">
+                <span class="flash-zone-label">✓ Knew it</span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div style="display:flex;gap:0.6rem;margin-top:0.5rem;" id="flashBtns" class="flash-hidden">
-          <button class="quiz-next-btn" style="background:var(--wrong);" onclick="flashAnswer(false)">✕ Didn't know</button>
-          <button class="quiz-next-btn" style="background:var(--correct);" onclick="flashAnswer(true)">✓ Knew it</button>
         </div>
       </div>`;
 
     area.innerHTML = cardHTML;
     typesetMath();
-    document.getElementById('flashContainer').addEventListener('click', () => {
-      document.getElementById('flashcard').classList.add('flipped');
-      document.getElementById('flashBtns').classList.remove('flash-hidden');
+
+    const flashcard = document.getElementById('flashcard');
+    const container = document.getElementById('flashContainer');
+
+    // First click: flip the card
+    container.addEventListener('click', function handler(e) {
+      // Don't flip if clicking on the zones (card is already flipped)
+      if (flashcard.classList.contains('flipped')) return;
+      flashcard.classList.add('flipped');
+    });
+
+    // Zone clicks: answer after flipped
+    document.getElementById('flashZoneLeft').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!flashcard.classList.contains('flipped')) return;
+      flashAnswer(false);
+    });
+    document.getElementById('flashZoneRight').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!flashcard.classList.contains('flipped')) return;
+      flashAnswer(true);
     });
 
   } else if (isFib) {
@@ -1519,11 +1599,6 @@ window.flashAnswer = function(knew) {
   quizState.current++;
   showQuestion();
 };
-
-// Style for flash-hidden
-const style = document.createElement('style');
-style.textContent = '.flash-hidden { visibility: hidden; }';
-document.head.appendChild(style);
 
 function showResults() {
   const {questions, score, wrong} = quizState;
