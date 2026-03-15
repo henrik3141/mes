@@ -20,6 +20,8 @@
   --tag-noun-bg: #e8f0f6;
   --tag-verb-bg: #f0e8f6;
   --tag-grammar-bg: #e8f4eb;
+  --tag-formula: #8a6b2d;
+  --tag-formula-bg: #f6f0e0;
   --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
   --correct: #2e7d32;
   --correct-bg: #e8f5e9;
@@ -44,21 +46,12 @@ header {
 }
 header h1 {
   font-family: 'Noto Serif JP', serif;
-  font-size: 2.2rem;
+  font-size: 1.7rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: var(--accent);
 }
-header h1 .latin {
-  font-family: 'Source Serif 4', serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1rem;
-  color: var(--ink);
-  display: block;
-  letter-spacing: 0.02em;
-  margin-top: 0.35rem;
-}
+header h1 ruby rt { font-size: 0.5em; font-weight: 400; color: #888; }
 header .subtitle {
   font-size: 0.85rem;
   color: #777;
@@ -218,6 +211,7 @@ header .source {
 .tag-noun { background: var(--tag-noun-bg); color: var(--tag-noun); }
 .tag-verb { background: var(--tag-verb-bg); color: var(--tag-verb); }
 .tag-grammar { background: var(--tag-grammar-bg); color: var(--tag-grammar); }
+.tag-formula { background: var(--tag-formula-bg); color: var(--tag-formula); }
 
 .jisho-link {
   font-size: 0.7rem;
@@ -261,6 +255,34 @@ header .source {
   color: #777;
   font-style: italic;
   margin-top: 0.1rem;
+}
+
+/* Formula card special styling */
+.card[data-type="formula"] { border-left: 3px solid var(--tag-formula); }
+.formula-display {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1.3rem;
+  color: var(--ink);
+  text-align: center;
+  padding: 0.6rem 0;
+  letter-spacing: 0.02em;
+}
+.formula-reading {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.95rem;
+  color: var(--accent);
+  text-align: center;
+  padding: 0.3rem 0 0.1rem;
+  line-height: 1.8;
+}
+.formula-reading ruby rt { font-size: 0.55em; color: #888; font-weight: 400; }
+.formula-romaji {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.78rem;
+  color: #999;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 0.3rem;
 }
 
 /* ── Quiz Panel ── */
@@ -556,7 +578,7 @@ footer a:hover { text-decoration: underline; }
 }
 
 @media (max-width: 600px) {
-  header h1 { font-size: 1.7rem; }
+  header h1 { font-size: 1.4rem; }
   .card { padding: 1rem 1rem; }
   .word-japanese { font-size: 1.25rem; }
   .cards { padding: 0.5rem 1rem 3rem; }
@@ -571,11 +593,9 @@ footer a:hover { text-decoration: underline; }
 <body>
 
 <header>
-  <h1>Henriks MZV 辞書
-    <span class="latin">A Vocabulary Guide for Multiple Zeta Values</span>
-  </h1>
+  <h1>Henriks MZV <ruby>辞<rt>じ</rt></ruby><ruby>書<rt>しょ</rt></ruby></h1>
   <p class="subtitle">
-    Mathematical Japanese vocabulary from Kaneko Masanobu's book on multiple zeta values. For JLPT N4/N3 learners in number theory.
+    Mathematical Japanese vocabulary from Prof. Kaneko's book on multiple zeta values. For Japanese learners in number theory.
   </p>
   <p class="source">Source: 金子昌信『多重ゼータ値入門』— まえがき + Chapter 1 (§1.1–1.2)</p>
 </header>
@@ -593,11 +613,13 @@ footer a:hover { text-decoration: underline; }
     <button class="filter-btn" data-filter="noun">Nouns</button>
     <button class="filter-btn" data-filter="verb">Verbs</button>
     <button class="filter-btn" data-filter="grammar">Grammar</button>
+    <button class="filter-btn" data-filter="formula">数式 Formula</button>
     <select class="chapter-filter" id="chapterFilter">
       <option value="all">All sections</option>
       <option value="前">まえがき</option>
       <option value="1.1">§1.1</option>
       <option value="1.2">§1.2</option>
+      <option value="—">General</option>
     </select>
     <input type="text" class="search-box" placeholder="Search JP / EN..." id="searchBox">
   </div>
@@ -626,12 +648,20 @@ footer a:hover { text-decoration: underline; }
         <label><input type="checkbox" name="qtype" value="noun" checked> Nouns</label>
         <label><input type="checkbox" name="qtype" value="verb" checked> Verbs</label>
         <label><input type="checkbox" name="qtype" value="grammar" checked> Grammar</label>
+        <label><input type="checkbox" name="qtype" value="formula" checked> Formula</label>
       </div>
       <div class="quiz-opt-group">
         <legend>Questions</legend>
         <label><input type="radio" name="qcount" value="10" checked> 10</label>
         <label><input type="radio" name="qcount" value="20"> 20</label>
         <label><input type="radio" name="qcount" value="all"> All</label>
+      </div>
+      <div class="quiz-opt-group">
+        <legend>Sections</legend>
+        <label><input type="checkbox" name="qsection" value="前" checked> まえがき</label>
+        <label><input type="checkbox" name="qsection" value="1.1" checked> §1.1</label>
+        <label><input type="checkbox" name="qsection" value="1.2" checked> §1.2</label>
+        <label><input type="checkbox" name="qsection" value="—" checked> General</label>
       </div>
     </div>
     <label style="font-size:0.82rem;color:#666;display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-bottom:1rem;">
@@ -653,6 +683,10 @@ footer a:hover { text-decoration: underline; }
 //  VOCABULARY DATA
 // ══════════════════════════════════════════════
 const entries = [
+  // ─── Key term ───
+  {word:"多重ゼータ値",ruby:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>",english:"multiple zeta value (MZV)",type:"noun",jisho:"多重ゼータ値",ch:"1.1",
+    ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
+    ee:"We define the multiple zeta value by an infinite series."},
   // ─── まえがき (Preface) ───
   {word:"入門書",ruby:"<ruby>入<rt>にゅう</rt></ruby><ruby>門<rt>もん</rt></ruby><ruby>書<rt>しょ</rt></ruby>",english:"introductory book; primer",type:"noun",jisho:"入門書",ch:"前",
     ej:"<ruby>本<rt>ほん</rt></ruby><ruby>書<rt>しょ</rt></ruby>は<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>の<ruby>入<rt>にゅう</rt></ruby><ruby>門<rt>もん</rt></ruby><ruby>書<rt>しょ</rt></ruby>である．",
@@ -941,6 +975,131 @@ const entries = [
   {word:"であろう",ruby:"であろう",english:"probably is; is expected to be (conjecture language)",type:"grammar",jisho:"であろう",ch:"1.2",
     ej:"<ruby>和<rt>わ</rt></ruby>は<ruby>直<rt>ちょく</rt></ruby><ruby>和<rt>わ</rt></ruby>であろう．",
     ee:"The sum is probably a direct sum (i.e., conjectured to be)."},
+
+  // ─── Formula Reading (数式の読み方) ───
+  // From Kaneko's book
+  {word:"kᵣ ≧ 2",type:"formula",ch:"1.1",
+    formula:"k<sub>r</sub> ≧ 2",
+    reading:"ケーアール は にいじょう",
+    romaji:"kē-āru wa ni-ijō",
+    english:"kᵣ is greater than or equal to 2 (kᵣ ≥ 2)",
+    note:"以上（いじょう）includes equality. ≧ and ≥ are both used; ≧ is the Japanese convention."},
+  {word:"kᵣ > 2",type:"formula",ch:"—",
+    formula:"k<sub>r</sub> > 2",
+    reading:"ケーアール は により <ruby>大<rt>おお</rt></ruby>きい",
+    romaji:"kē-āru wa ni yori ōkii",
+    english:"kᵣ is strictly greater than 2",
+    note:"For strict inequality: 〜より大きい. Formal: 大なり (dainari). In talks both are used."},
+  {word:"|k| := k₁+⋯+kᵣ",type:"formula",ch:"1.1",
+    formula:"|<b>k</b>| := k<sub>1</sub> + ⋯ + k<sub>r</sub>",
+    reading:"ケーの<ruby>絶<rt>ぜっ</rt></ruby><ruby>対<rt>たい</rt></ruby><ruby>値<rt>ち</rt></ruby> を ケーいち たす ⋯ たす ケーアール と<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する",
+    romaji:"kē no zettaichi wo kē-ichi tasu … tasu kē-āru to teigi suru",
+    english:"Define |k| as k₁ + ⋯ + kᵣ",
+    note:":= is read as ～と定義する (to teigi suru). Some say ～と定める (to sadameru) or ～とおく (to oku)."},
+  {word:"0 < m₁ < ⋯ < mᵣ",type:"formula",ch:"1.1",
+    formula:"0 < m<sub>1</sub> < ⋯ < m<sub>r</sub>",
+    reading:"ゼロ <ruby>小<rt>しょう</rt></ruby>なり エムいち <ruby>小<rt>しょう</rt></ruby>なり ⋯ <ruby>小<rt>しょう</rt></ruby>なり エムアール",
+    romaji:"zero shōnari emu-ichi shōnari … shōnari emu-āru",
+    english:"0 < m₁ < ⋯ < mᵣ (chained strict inequality)",
+    note:"小なり (shōnari) = 'less than'. In talks you can also say ゼロからエムアールまで順に大きくなる."},
+  {word:"Σ (summation)",type:"formula",ch:"1.1",
+    formula:"∑<sub>0&lt;m₁&lt;⋯&lt;mᵣ</sub> 1/(m₁<sup>k₁</sup>⋯mᵣ<sup>kᵣ</sup>)",
+    reading:"ゼロ <ruby>小<rt>しょう</rt></ruby>なり エムいち <ruby>小<rt>しょう</rt></ruby>なり ⋯ <ruby>小<rt>しょう</rt></ruby>なり エムアール にわたる<ruby>和<rt>わ</rt></ruby>、エムいちのケーいち<ruby>乗<rt>じょう</rt></ruby> かける ⋯ かける エムアールのケーアール<ruby>乗<rt>じょう</rt></ruby> <ruby>分<rt>ぶん</rt></ruby>の いち",
+    romaji:"… ni wataru wa, emu-ichi no kē-ichi-jō kakeru … kakeru emu-āru no kē-āru-jō bun no ichi",
+    english:"Sum over 0<m₁<⋯<mᵣ of 1/(m₁^k₁ ⋯ mᵣ^kᵣ)",
+    note:"〜にわたる和 = 'sum over'. Fractions: A分のB = B/A (denominator first!). Powers: Aの n乗 = Aⁿ."},
+  {word:"1/n² (fractions)",type:"formula",ch:"—",
+    formula:"1 / n<sup>2</sup>",
+    reading:"エヌの<ruby>二<rt>に</rt></ruby><ruby>乗<rt>じょう</rt></ruby><ruby>分<rt>ぶん</rt></ruby>の いち",
+    romaji:"enu no ni-jō bun no ichi",
+    english:"1 over n squared",
+    note:"Japanese reads fractions bottom-up: 分母 (denominator) first, then 分の, then 分子 (numerator). This is the opposite of English!"},
+  {word:"2^(k-2)",type:"formula",ch:"1.2",
+    formula:"2<sup>k−2</sup>",
+    reading:"にの ケーマイナスに<ruby>乗<rt>じょう</rt></ruby>",
+    romaji:"ni no kē-mainasu-ni-jō",
+    english:"2 to the power of k−2",
+    note:"〜乗 (jō) = 'to the power of'. Square = 二乗, cube = 三乗."},
+  {word:"dim_ℚ 𝒵ₖ ≦ dₖ",type:"formula",ch:"1.2",
+    formula:"dim<sub>ℚ</sub> 𝒵<sub>k</sub> ≦ d<sub>k</sub>",
+    reading:"キューじょうの ゼットケーの<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby> は ディーケー<ruby>以<rt>い</rt></ruby><ruby>下<rt>か</rt></ruby>",
+    romaji:"kyū-jō no zetto-kē no jigen wa dī-kē ika",
+    english:"The ℚ-dimension of 𝒵ₖ is at most dₖ",
+    note:"以下 (ika) = 'at most / ≤'. Also: 小なりイコール (shōnari-ikōru)."},
+  {word:"ζ(1,2) = ζ(3)",type:"formula",ch:"1.2",
+    formula:"ζ(1, 2) = ζ(3)",
+    reading:"ゼータ いち に イコール ゼータ さん",
+    romaji:"zēta ichi ni ikōru zēta san",
+    english:"zeta(1,2) equals zeta(3)",
+    note:"MZV arguments are read as a comma-separated list of numbers. This is Euler's famous relation."},
+  {word:"(k-2 choose r-1)",type:"formula",ch:"1.2",
+    formula:"<span style='font-size:1.5em'>(</span><sup style='position:relative;top:-0.3em'>k−2</sup><sub style='position:relative;top:0.3em'>r−1</sub><span style='font-size:1.5em'>)</span>",
+    reading:"ケーマイナスに の うち アールマイナスいち を<ruby>選<rt>えら</rt></ruby>ぶ<ruby>組<rt>く</rt></ruby>み<ruby>合<rt>あ</rt></ruby>わせ",
+    romaji:"kē-mainasu-ni no uchi āru-mainasu-ichi wo erabu kumiawase",
+    english:"binomial coefficient (k−2 choose r−1)",
+    note:"二項係数 (nikō keisū). Also read as: ケーマイナスにシーアールマイナスいち using the C notation."},
+  {word:"dₖ = dₖ₋₂ + dₖ₋₃",type:"formula",ch:"1.2",
+    formula:"d<sub>k</sub> = d<sub>k−2</sub> + d<sub>k−3</sub>",
+    reading:"ディーケー イコール ディーケーマイナスに たす ディーケーマイナスさん",
+    romaji:"dī-kē ikōru dī-kē-mainasu-ni tasu dī-kē-mainasu-san",
+    english:"dₖ = dₖ₋₂ + dₖ₋₃ (Padovan recurrence)",
+    note:"Subscripts read as one unit with the variable name. たす = plus."},
+
+  // General seminar patterns
+  {word:"n → ∞",type:"formula",ch:"—",
+    formula:"n → ∞",
+    reading:"エヌ を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>大<rt>だい</rt></ruby>にとばす",
+    romaji:"enu wo mugen-dai ni tobasu",
+    english:"as n tends to infinity",
+    note:"Also: nを無限に飛ばす, n→∞のとき, n無限大の極限で. In formal writing: nが限りなく大きくなるとき."},
+  {word:"∈ (belongs to)",type:"formula",ch:"—",
+    formula:"x ∈ S",
+    reading:"エックス は エスに<ruby>属<rt>ぞく</rt></ruby>する",
+    romaji:"ekkusu wa esu ni zoku suru",
+    english:"x belongs to S / x is an element of S",
+    note:"属する (zoku suru) = to belong to. Also: エスの元 (esu no gen) = element of S."},
+  {word:"⊂ (subset)",type:"formula",ch:"—",
+    formula:"A ⊂ B",
+    reading:"エー は ビーの<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>集<rt>しゅう</rt></ruby><ruby>合<rt>ごう</rt></ruby>",
+    romaji:"ē wa bī no bubun-shūgō",
+    english:"A is a subset of B",
+    note:"部分集合 (bubun shūgō) = subset. Also: AはBに含まれる (A wa B ni fukumareru)."},
+  {word:"∀ (for all)",type:"formula",ch:"—",
+    formula:"∀ k ≧ 1",
+    reading:"すべての ケー ≧ いち に<ruby>対<rt>たい</rt></ruby>し",
+    romaji:"subete no kē ichi-ijō ni taishi",
+    english:"for all k ≥ 1",
+    note:"すべての (subete no) = for all / for every. Also: 任意の (nin'i no) = arbitrary."},
+  {word:"∃ (there exists)",type:"formula",ch:"—",
+    formula:"∃ n ∈ ℕ",
+    reading:"ある<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby> エヌ が<ruby>存<rt>そん</rt></ruby><ruby>在<rt>ざい</rt></ruby>して",
+    romaji:"aru shizen-sū enu ga sonzai shite",
+    english:"there exists a natural number n",
+    note:"存在する (sonzai suru) = to exist. Also: ある〜が存在して (aru ~ ga sonzai shite)."},
+  {word:"⟹ (implies)",type:"formula",ch:"—",
+    formula:"P ⟹ Q",
+    reading:"ピー ならば キュー",
+    romaji:"pī naraba kyū",
+    english:"P implies Q",
+    note:"ならば (naraba) = if…then / implies. Written form: PはQを意味する."},
+  {word:"⟺ (iff)",type:"formula",ch:"—",
+    formula:"P ⟺ Q",
+    reading:"ピー と キュー は<ruby>同<rt>どう</rt></ruby><ruby>値<rt>ち</rt></ruby>",
+    romaji:"pī to kyū wa dōchi",
+    english:"P if and only if Q",
+    note:"同値 (dōchi) = equivalent. Also: PとQは必要十分 (hitsuyō-jūbun)."},
+  {word:"∫ (integral)",type:"formula",ch:"—",
+    formula:"∫<sub>0</sub><sup>1</sup> f(x) dx",
+    reading:"ゼロから いちまで エフエックス ディーエックス の<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby>",
+    romaji:"zero kara ichi made efu-ekkusu dī-ekkusu no sekibun",
+    english:"integral of f(x)dx from 0 to 1",
+    note:"積分 (sekibun) = integral. AからBまで = from A to B."},
+  {word:"⊕ (direct sum)",type:"formula",ch:"1.2",
+    formula:"⊕<sub>k≧0</sub> 𝒵<sub>k</sub>",
+    reading:"ケー ≧ ゼロ にわたる ゼットケーの<ruby>直<rt>ちょく</rt></ruby><ruby>和<rt>わ</rt></ruby>",
+    romaji:"kē zero-ijō ni wataru zetto-kē no chokuwa",
+    english:"direct sum of 𝒵ₖ over k ≥ 0",
+    note:"直和 (chokuwa) = direct sum. 直積 (chokuseki) = direct product."},
 ];
 
 // ══════════════════════════════════════════════
@@ -978,9 +1137,29 @@ function renderCards() {
   container.innerHTML = filtered.map(e => {
     const tagClass = `tag-${e.type}`;
     const typeLabel = e.type.charAt(0).toUpperCase()+e.type.slice(1);
+    const chLabel = e.ch==='前'?'まえがき': e.ch==='—'?'General' : '§'+e.ch;
+
+    if (e.type === 'formula') {
+      return `<div class="card" data-type="formula">
+        <span class="chapter-badge">${chLabel}</span>
+        <div class="word-meta" style="margin-bottom:0.5rem;">
+          <span class="tag tag-formula">Formula</span>
+        </div>
+        <div class="formula-display">${e.formula}</div>
+        <div class="example-label" style="text-align:center;margin-top:0.5rem;">How to read</div>
+        <div class="formula-reading">${e.reading}</div>
+        <div class="formula-romaji">${e.romaji}</div>
+        <div class="word-english" style="text-align:center;margin:0.3rem 0;">${e.english}</div>
+        <div class="example" style="margin-top:0.6rem;">
+          <div class="example-label">Note</div>
+          <div class="example-en" style="font-style:normal;color:#666;font-size:0.78rem;">${e.note}</div>
+        </div>
+      </div>`;
+    }
+
     const jUrl = `https://jisho.org/search/${encodeURIComponent(e.jisho)}`;
     return `<div class="card" data-type="${e.type}">
-      <span class="chapter-badge">${e.ch==='前'?'まえがき':'§'+e.ch}</span>
+      <span class="chapter-badge">${chLabel}</span>
       <div class="word-japanese">${e.ruby}</div>
       <div class="word-english">${e.english}</div>
       <div class="word-meta">
@@ -1025,12 +1204,23 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 // ══════════════════════════════════════════════
 document.getElementById('startQuiz').addEventListener('click', startQuiz);
 
-function getUniqueEntries(types) {
+function getUniqueEntries(types, sections) {
   const seen = new Set();
   return entries.filter(e => {
     if (seen.has(e.word)) return false;
     seen.add(e.word);
-    return types.includes(e.type);
+    return types.includes(e.type) && (!sections || sections.includes(e.ch));
+  }).map(e => {
+    // Normalize formula entries for quiz compatibility
+    if (e.type === 'formula') {
+      return {
+        ...e,
+        ruby: e.formula,
+        english: e.english,
+        ej: null // no fill-in-blank for formulas
+      };
+    }
+    return e;
   });
 }
 
@@ -1046,13 +1236,15 @@ function startQuiz() {
   const mode = document.querySelector('input[name="qmode"]:checked').value;
   const dir = document.querySelector('input[name="qdir"]:checked').value;
   const types = [...document.querySelectorAll('input[name="qtype"]:checked')].map(c=>c.value);
+  const sections = [...document.querySelectorAll('input[name="qsection"]:checked')].map(c=>c.value);
   const countVal = document.querySelector('input[name="qcount"]:checked').value;
   const includeFib = document.getElementById('fibToggle').checked;
 
   if (!types.length) { alert('Select at least one word type.'); return; }
+  if (!sections.length) { alert('Select at least one section.'); return; }
 
-  const pool = getUniqueEntries(types);
-  if (pool.length < 4) { alert('Need at least 4 entries. Select more types.'); return; }
+  const pool = getUniqueEntries(types, sections);
+  if (pool.length < 4) { alert('Need at least 4 entries. Broaden your type/section selection.'); return; }
 
   const count = countVal === 'all' ? pool.length : Math.min(parseInt(countVal), pool.length);
   const questions = shuffle(pool).slice(0, count);
@@ -1083,16 +1275,32 @@ function showQuestion() {
   if (dir === 'random') thisDir = Math.random() < 0.5 ? 'jp2en' : 'en2jp';
 
   // decide if this is a fill-in-blank question (30% chance if enabled and mode is mc)
-  const isFib = includeFib && mode === 'mc' && Math.random() < 0.3;
+  const isFib = includeFib && mode === 'mc' && q.ej && Math.random() < 0.3;
 
   let cardHTML = '';
 
   if (mode === 'flash') {
     // Flashcard mode
-    const front = thisDir === 'jp2en' ? q.ruby : `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`;
-    const back = thisDir === 'jp2en'
-      ? `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`
-      : q.ruby;
+    const isFormula = q.type === 'formula';
+    let front, back, promptLabel;
+
+    if (isFormula) {
+      if (thisDir === 'jp2en') {
+        front = `<div style="font-size:1.3rem;">${q.formula}</div>`;
+        back = `<div style="font-family:'Noto Serif JP',serif;font-size:1rem;line-height:1.8;">${q.reading}</div><div style="font-family:'Source Serif 4',serif;font-size:0.85rem;color:#777;font-style:italic;margin-top:0.3rem;">${q.english}</div>`;
+        promptLabel = 'How do you read this formula in Japanese?';
+      } else {
+        front = `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`;
+        back = `<div style="font-size:1.3rem;">${q.formula}</div><div style="font-family:'Noto Serif JP',serif;font-size:0.9rem;color:var(--accent);margin-top:0.3rem;">${q.reading}</div>`;
+        promptLabel = 'What formula does this describe?';
+      }
+    } else {
+      front = thisDir === 'jp2en' ? q.ruby : `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`;
+      back = thisDir === 'jp2en'
+        ? `<span style="font-family:'Source Serif 4',serif;font-size:1.1rem;">${q.english}</span>`
+        : q.ruby;
+      promptLabel = thisDir==='jp2en'?'What does this mean?':'How do you say this in Japanese?';
+    }
 
     cardHTML = `
       <div class="quiz-progress">
@@ -1101,7 +1309,7 @@ function showQuestion() {
         <span>Score: ${quizState.score}</span>
       </div>
       <div class="quiz-card">
-        <div class="quiz-prompt-label">${thisDir==='jp2en'?'What does this mean?':'How do you say this in Japanese?'}</div>
+        <div class="quiz-prompt-label">${promptLabel}</div>
         <div class="flashcard-container" id="flashContainer">
           <div class="flashcard" id="flashcard">
             <div class="flashcard-face">${front}<div class="flashcard-hint">Tap to reveal</div></div>
@@ -1160,12 +1368,31 @@ function showQuestion() {
     const wrongs = shuffle(pool.filter(e => e.word !== q.word)).slice(0,3);
     const options = shuffle([q, ...wrongs]);
 
-    const prompt = thisDir === 'jp2en'
-      ? `<div class="quiz-prompt-word">${q.ruby}</div>`
-      : `<div class="quiz-prompt-sub" style="font-size:1.15rem;font-style:normal;color:var(--ink);">${q.english}</div>`;
+    const isFormula = q.type === 'formula';
+    let prompt, mcLabel, promptLabel;
+
+    if (isFormula) {
+      if (thisDir === 'jp2en') {
+        prompt = `<div class="quiz-prompt-word" style="font-family:'Source Serif 4',serif;font-size:1.4rem;">${q.formula}</div>`;
+        promptLabel = 'How do you read this formula?';
+      } else {
+        prompt = `<div class="quiz-prompt-sub" style="font-size:1.15rem;font-style:normal;color:var(--ink);">${q.english}</div>`;
+        promptLabel = 'Which formula does this describe?';
+      }
+    } else {
+      prompt = thisDir === 'jp2en'
+        ? `<div class="quiz-prompt-word">${q.ruby}</div>`
+        : `<div class="quiz-prompt-sub" style="font-size:1.15rem;font-style:normal;color:var(--ink);">${q.english}</div>`;
+      promptLabel = thisDir==='jp2en'?'What does this mean?':'Choose the Japanese word';
+    }
 
     const optionHTML = options.map((o,i) => {
-      const label = thisDir === 'jp2en' ? o.english : o.ruby;
+      let label;
+      if (isFormula) {
+        label = thisDir === 'jp2en' ? o.english : o.formula || o.ruby;
+      } else {
+        label = thisDir === 'jp2en' ? o.english : o.ruby;
+      }
       return `<button class="mc-btn" data-idx="${i}" data-correct="${o.word===q.word}" onclick="mcAnswer(this,'${esc(q.word)}')">${label}</button>`;
     }).join('');
 
@@ -1176,7 +1403,7 @@ function showQuestion() {
         <span>Score: ${quizState.score}</span>
       </div>
       <div class="quiz-card">
-        <div class="quiz-prompt-label">${thisDir==='jp2en'?'What does this mean?':'Choose the Japanese word'}</div>
+        <div class="quiz-prompt-label">${promptLabel}</div>
         ${prompt}
         <div class="mc-options">${optionHTML}</div>
       </div>`;
@@ -1285,7 +1512,7 @@ function showResults() {
   if (wrong.length) {
     wrongHTML = `<div class="quiz-wrong-list">
       <div style="font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Review these:</div>
-      ${wrong.map(w => `<div class="quiz-wrong-item"><span class="qw-word">${w.ruby}</span> — ${w.english}</div>`).join('')}
+      ${wrong.map(w => `<div class="quiz-wrong-item"><span class="qw-word">${w.type==='formula'?w.formula:w.ruby}</span> — ${w.english}</div>`).join('')}
     </div>`;
   }
 
