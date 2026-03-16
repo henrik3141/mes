@@ -845,7 +845,7 @@ footer a:hover { text-decoration: underline; }
       <option value="1.3">§1.3</option>
       <option value="—">General</option>
     </select>
-    <input type="text" class="search-box" placeholder="Search JP / EN..." id="searchBox">
+    <input type="text" class="search-box" placeholder="Search words, examples..." id="searchBox">
   </div>
   <div class="page-info" id="pageInfo"></div>
   <div class="cards" id="cards"></div>
@@ -1070,20 +1070,20 @@ footer a:hover { text-decoration: underline; }
 // ══════════════════════════════════════════════
 const entries = [
   // ─── Key term ───
-  {word:"多重ゼータ値",ruby:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>",english:"multiple zeta value (MZV)",type:"noun",jisho:"多重ゼータ値",ch:"1.1",
+  {word:"多重ゼータ値",ruby:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>",english:"multiple zeta value (MZV)",type:"noun",jisho:"多重ゼータ値",ch:"1.1",gen:true,
     ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
     ee:"We define the multiple zeta value by an infinite series."},
   // ─── まえがき (Preface) ───
   {word:"入門書",ruby:"<ruby>入<rt>にゅう</rt></ruby><ruby>門<rt>もん</rt></ruby><ruby>書<rt>しょ</rt></ruby>",english:"introductory book; primer",type:"noun",jisho:"入門書",ch:"前",
     ej:"<ruby>本<rt>ほん</rt></ruby><ruby>書<rt>しょ</rt></ruby>は<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>の<ruby>入<rt>にゅう</rt></ruby><ruby>門<rt>もん</rt></ruby><ruby>書<rt>しょ</rt></ruby>である．",
     ee:"This book is a primer on multiple zeta values."},
-  {word:"関数",ruby:"<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"function",type:"noun",jisho:"関数",ch:"前",
+  {word:"関数",ruby:"<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"function",type:"noun",jisho:"関数",ch:"前",gen:true,
     ej:"Riemann ゼータ<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>正<rt>せい</rt></ruby>の<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby>における<ruby>値<rt>あたい</rt></ruby>",
     ee:"The values of the Riemann zeta function at positive integers."},
-  {word:"整数",ruby:"<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"integer",type:"noun",jisho:"整数",ch:"前",
+  {word:"整数",ruby:"<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"integer",type:"noun",jisho:"整数",ch:"前",gen:true,
     ej:"<ruby>正<rt>せい</rt></ruby>の<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby>における<ruby>値<rt>あたい</rt></ruby>を<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby><ruby>和<rt>わ</rt></ruby>に<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby><ruby>化<rt>か</rt></ruby>した",
     ee:"Generalized the values at positive integers to multiple sums."},
-  {word:"実数",ruby:"<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"real number",type:"noun",jisho:"実数",ch:"前",
+  {word:"実数",ruby:"<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"real number",type:"noun",jisho:"実数",ch:"前",gen:true,
     ej:"<ruby>簡<rt>かん</rt></ruby><ruby>単<rt>たん</rt></ruby>な<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>で<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>される<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby>のことである．",
     ee:"They are real numbers defined by simple infinite series."},
   {word:"研究",ruby:"<ruby>研<rt>けん</rt></ruby><ruby>究<rt>きゅう</rt></ruby>",english:"research",type:"noun",jisho:"研究",ch:"前",
@@ -1092,31 +1092,31 @@ const entries = [
   {word:"数論",ruby:"<ruby>数<rt>すう</rt></ruby><ruby>論<rt>ろん</rt></ruby>",english:"number theory",type:"noun",jisho:"数論",ch:"前",
     ej:"<ruby>整<rt>せい</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>論<rt>ろん</rt></ruby>，<ruby>数<rt>すう</rt></ruby><ruby>論<rt>ろん</rt></ruby><ruby>幾<rt>き</rt></ruby><ruby>何<rt>か</rt></ruby>のみならず<ruby>結<rt>むす</rt></ruby>び<ruby>目<rt>め</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>論<rt>ろん</rt></ruby>とも<ruby>関<rt>かん</rt></ruby><ruby>連<rt>れん</rt></ruby>して",
     ee:"Related not only to number theory and arithmetic geometry, but also to knot theory."},
-  {word:"関係式",ruby:"<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"relation; identity (formula)",type:"noun",jisho:"関係式",ch:"前",
+  {word:"関係式",ruby:"<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"relation; identity (formula)",type:"noun",jisho:"関係式",ch:"前",gen:true,
     ej:"<ruby>豊<rt>ほう</rt></ruby><ruby>富<rt>ふ</rt></ruby>な<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>が<ruby>導<rt>みちび</rt></ruby>かれること",
     ee:"The fact that rich relations can be derived."},
-  {word:"積分表示",ruby:"<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>",english:"integral representation",type:"noun",jisho:"積分表示",ch:"前",
+  {word:"積分表示",ruby:"<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>",english:"integral representation",type:"noun",jisho:"積分表示",ch:"前",gen:true,
     ej:"よい<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>をもつこと",
     ee:"Having a good integral representation."},
-  {word:"級数表示",ruby:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>",english:"series representation",type:"noun",jisho:"級数",ch:"前",
+  {word:"級数表示",ruby:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>",english:"series representation",type:"noun",jisho:"級数",ch:"前",gen:true,
     ej:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>と<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>表<rt>ひょう</rt></ruby><ruby>示<rt>じ</rt></ruby>が<ruby>織<rt>お</rt></ruby>りなす「<ruby>複<rt>ふく</rt></ruby>シャッフル<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>」",
     ee:"The 'double shuffle relation' woven by the series and integral representations."},
-  {word:"正規化",ruby:"<ruby>正<rt>せい</rt></ruby><ruby>規<rt>き</rt></ruby><ruby>化<rt>か</rt></ruby>",english:"regularization; normalization",type:"noun",jisho:"正規化",ch:"前",
+  {word:"正規化",ruby:"<ruby>正<rt>せい</rt></ruby><ruby>規<rt>き</rt></ruby><ruby>化<rt>か</rt></ruby>",english:"regularization; normalization",type:"noun",jisho:"正規化",ch:"前",gen:true,
     ej:"<ruby>正<rt>せい</rt></ruby><ruby>規<rt>き</rt></ruby><ruby>化<rt>か</rt></ruby>，「<ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby>−<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>」<ruby>等<rt>とう</rt></ruby><ruby>式<rt>しき</rt></ruby>と<ruby>複<rt>ふく</rt></ruby>シャッフル<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>の<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby><ruby>化<rt>か</rt></ruby>",
     ee:"Regularization, the 'integral–series' equation, and generalization of double shuffle relations."},
-  {word:"有限",ruby:"<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby>",english:"finite",type:"noun",jisho:"有限",ch:"前",
+  {word:"有限",ruby:"<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby>",english:"finite",type:"noun",jisho:"有限",ch:"前",gen:true,
     ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>の「<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>類<rt>るい</rt></ruby><ruby>似<rt>じ</rt></ruby>」について<ruby>述<rt>の</rt></ruby>べる．",
     ee:"We discuss the 'finite analogue' of multiple zeta values."},
   {word:"剰余",ruby:"<ruby>剰<rt>じょう</rt></ruby><ruby>余<rt>よ</rt></ruby>",english:"remainder; residue (mod p)",type:"noun",jisho:"剰余",ch:"前",
     ej:"もとの<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>を<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby>で<ruby>打<rt>う</rt></ruby>ち<ruby>切<rt>き</rt></ruby>ったものの<ruby>剰<rt>じょう</rt></ruby><ruby>余<rt>よ</rt></ruby>",
     ee:"The remainder of the original series truncated to a finite sum."},
-  {word:"対称",ruby:"<ruby>対<rt>たい</rt></ruby><ruby>称<rt>しょう</rt></ruby>",english:"symmetric; symmetry",type:"noun",jisho:"対称",ch:"前",
+  {word:"対称",ruby:"<ruby>対<rt>たい</rt></ruby><ruby>称<rt>しょう</rt></ruby>",english:"symmetric; symmetry",type:"noun",jisho:"対称",ch:"前",gen:true,
     ej:"「<ruby>対<rt>たい</rt></ruby><ruby>称<rt>しょう</rt></ruby><ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>」との<ruby>間<rt>あいだ</rt></ruby>に<ruby>顕<rt>けん</rt></ruby><ruby>著<rt>ちょ</rt></ruby>な<ruby>平<rt>へい</rt></ruby><ruby>行<rt>こう</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby>",
     ee:"A remarkable parallel relationship with 'symmetric multiple zeta values'."},
-  {word:"基本予想",ruby:"<ruby>基<rt>き</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>",english:"fundamental conjecture",type:"noun",jisho:"基本",ch:"前",
+  {word:"基本予想",ruby:"<ruby>基<rt>き</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>",english:"fundamental conjecture",type:"noun",jisho:"基本",ch:"前",gen:true,
     ej:"それを<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>として<ruby>定<rt>てい</rt></ruby><ruby>式<rt>しき</rt></ruby><ruby>化<rt>か</rt></ruby>したのが「<ruby>基<rt>き</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>」である．",
     ee:"Formulating this as a conjecture is what is called the 'fundamental conjecture'."},
-  {word:"証明",ruby:"<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>",english:"proof",type:"noun",jisho:"証明",ch:"前",
+  {word:"証明",ruby:"<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>",english:"proof",type:"noun",jisho:"証明",ch:"前",gen:true,
     ej:"<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>については<ruby>本<rt>ほん</rt></ruby><ruby>章<rt>しょう</rt></ruby>および<ruby>次<rt>じ</rt></ruby><ruby>章<rt>しょう</rt></ruby>の<ruby>章<rt>しょう</rt></ruby><ruby>末<rt>まつ</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>にスケッチを<ruby>載<rt>の</rt></ruby>せておいた．",
     ee:"A sketch of the proof is included in the chapter-end problems."},
   {word:"分野",ruby:"<ruby>分<rt>ぶん</rt></ruby><ruby>野<rt>や</rt></ruby>",english:"field (of study); area",type:"noun",jisho:"分野",ch:"前",
@@ -1244,37 +1244,37 @@ const entries = [
   {word:"多重ゼータ値",ruby:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>",english:"multiple zeta value (MZV)",type:"noun",jisho:"多重ゼータ値",ch:"1.1",
     ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
     ee:"We define the multiple zeta value by an infinite series."},
-  {word:"無限級数",ruby:"<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"infinite series",type:"noun",jisho:"無限級数",ch:"1.1",
+  {word:"無限級数",ruby:"<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"infinite series",type:"noun",jisho:"無限級数",ch:"1.1",gen:true,
     ej:"ζ(<i>k</i><sub>1</sub>,…,<i>k<sub>r</sub></i>) を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
     ee:"We define ζ(k₁,…,kᵣ) by an infinite series."},
-  {word:"有理数体",ruby:"<ruby>有<rt>ゆう</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>体<rt>たい</rt></ruby>",english:"field of rational numbers (ℚ)",type:"noun",jisho:"有理数",ch:"1.1",
+  {word:"有理数体",ruby:"<ruby>有<rt>ゆう</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>体<rt>たい</rt></ruby>",english:"field of rational numbers (ℚ)",type:"noun",jisho:"有理数",ch:"1.1",gen:true,
     ej:"<ruby>有<rt>ゆう</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>体<rt>たい</rt></ruby> ℚ <ruby>上<rt>じょう</rt></ruby>，<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>で<ruby>張<rt>は</rt></ruby>られるベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>を<ruby>導<rt>どう</rt></ruby><ruby>入<rt>にゅう</rt></ruby>する．",
     ee:"Over ℚ, we introduce the vector space spanned by MZVs."},
-  {word:"代数",ruby:"<ruby>代<rt>だい</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"algebra",type:"noun",jisho:"代数",ch:"1.1",
+  {word:"代数",ruby:"<ruby>代<rt>だい</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"algebra",type:"noun",jisho:"代数",ch:"1.1",gen:true,
     ej:"そのベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>が ℚ <ruby>代<rt>だい</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>構<rt>こう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>をもつ．",
     ee:"That vector space has the structure of a ℚ-algebra."},
-  {word:"構造",ruby:"<ruby>構<rt>こう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>",english:"structure",type:"noun",jisho:"構造",ch:"1.1",
+  {word:"構造",ruby:"<ruby>構<rt>こう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>",english:"structure",type:"noun",jisho:"構造",ch:"1.1",gen:true,
     ej:"ℚ <ruby>代<rt>だい</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>構<rt>こう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>をもつ．",
     ee:"It has the structure of a ℚ-algebra."},
-  {word:"部分空間",ruby:"<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>",english:"subspace",type:"noun",jisho:"部分空間",ch:"1.1",
+  {word:"部分空間",ruby:"<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>",english:"subspace",type:"noun",jisho:"部分空間",ch:"1.1",gen:true,
     ej:"「<ruby>重<rt>おも</rt></ruby>さ」ごとに<ruby>決<rt>き</rt></ruby>まる<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>の<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>",
     ee:"The dimension of the subspace determined by each weight."},
-  {word:"次元",ruby:"<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>",english:"dimension",type:"noun",jisho:"次元",ch:"1.1",
+  {word:"次元",ruby:"<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>",english:"dimension",type:"noun",jisho:"次元",ch:"1.1",gen:true,
     ej:"<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>顕<rt>けん</rt></ruby><ruby>著<rt>ちょ</rt></ruby>な<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>を<ruby>述<rt>の</rt></ruby>べる．",
     ee:"We state remarkable conjectures concerning the dimension."},
-  {word:"予想",ruby:"<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>",english:"conjecture",type:"noun",jisho:"予想",ch:"1.1",
+  {word:"予想",ruby:"<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>",english:"conjecture",type:"noun",jisho:"予想",ch:"1.1",gen:true,
     ej:"<ruby>次<rt>じ</rt></ruby><ruby>元<rt>げん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>顕<rt>けん</rt></ruby><ruby>著<rt>ちょ</rt></ruby>な<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>",
     ee:"Remarkable conjectures concerning the dimension."},
-  {word:"級数",ruby:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"series",type:"noun",jisho:"級数",ch:"1.1",
+  {word:"級数",ruby:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"series",type:"noun",jisho:"級数",ch:"1.1",gen:true,
     ej:"<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>による<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>",
     ee:"Definition by series."},
-  {word:"定義",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>",english:"definition",type:"noun",jisho:"定義",ch:"1.1",
+  {word:"定義",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>",english:"definition",type:"noun",jisho:"定義",ch:"1.1",gen:true,
     ej:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby> 1.1　<ruby>与<rt>あた</rt></ruby>えられたいくつかの<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して…",
     ee:"Definition 1.1: For given natural numbers …"},
-  {word:"自然数",ruby:"<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"natural number",type:"noun",jisho:"自然数",ch:"1.1",
+  {word:"自然数",ruby:"<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"natural number",type:"noun",jisho:"自然数",ch:"1.1",gen:true,
     ej:"<ruby>与<rt>あた</rt></ruby>えられた<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby> <i>k</i><sub>1</sub>,…,<i>k<sub>r</sub></i>",
     ee:"Given natural numbers k₁, …, kᵣ."},
-  {word:"変数",ruby:"<ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"variable",type:"noun",jisho:"変数",ch:"1.1",
+  {word:"変数",ruby:"<ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"variable",type:"noun",jisho:"変数",ch:"1.1",gen:true,
     ej:"<ruby>和<rt>わ</rt></ruby>の<ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby> <i>m<sub>i</sub></i> たちも<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>である．",
     ee:"The summation variables mᵢ are also natural numbers."},
   {word:"成分",ruby:"<ruby>成<rt>せい</rt></ruby><ruby>分<rt>ぶん</rt></ruby>",english:"component; entry",type:"noun",jisho:"成分",ch:"1.1",
@@ -1283,22 +1283,22 @@ const entries = [
   {word:"順序",ruby:"<ruby>順<rt>じゅん</rt></ruby><ruby>序<rt>じょ</rt></ruby>",english:"order (ordering)",type:"noun",jisho:"順序",ch:"1.1",
     ej:"<ruby>成<rt>せい</rt></ruby><ruby>分<rt>ぶん</rt></ruby>の<ruby>順<rt>じゅん</rt></ruby><ruby>序<rt>じょ</rt></ruby>が<ruby>違<rt>ちが</rt></ruby>うと<ruby>値<rt>あたい</rt></ruby>は<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby>に<ruby>異<rt>こと</rt></ruby>なる．",
     ee:"When the order of components differs, the values generally differ."},
-  {word:"値",ruby:"<ruby>値<rt>あたい</rt></ruby>",english:"value",type:"noun",jisho:"値",ch:"1.1",
+  {word:"値",ruby:"<ruby>値<rt>あたい</rt></ruby>",english:"value",type:"noun",jisho:"値",ch:"1.1",gen:true,
     ej:"ζ(2,3) と ζ(3,2) は<ruby>異<rt>こと</rt></ruby>なる<ruby>値<rt>あたい</rt></ruby>をもつ．",
     ee:"ζ(2,3) and ζ(3,2) have different values."},
-  {word:"重さ",ruby:"<ruby>重<rt>おも</rt></ruby>さ",english:"weight",type:"noun",jisho:"重さ",ch:"1.1",
+  {word:"重さ",ruby:"<ruby>重<rt>おも</rt></ruby>さ",english:"weight",type:"noun",jisho:"重さ",ch:"1.1",gen:true,
     ej:"|<b>k</b>| := <i>k</i><sub>1</sub>+⋯+<i>k<sub>r</sub></i> を<ruby>重<rt>おも</rt></ruby>さ (weight) という．",
     ee:"|k| := k₁+⋯+kᵣ is called the weight."},
-  {word:"深さ",ruby:"<ruby>深<rt>ふか</rt></ruby>さ",english:"depth",type:"noun",jisho:"深さ",ch:"1.1",
+  {word:"深さ",ruby:"<ruby>深<rt>ふか</rt></ruby>さ",english:"depth",type:"noun",jisho:"深さ",ch:"1.1",gen:true,
     ej:"dep(<b>k</b>) := <i>r</i> を<ruby>深<rt>ふか</rt></ruby>さ (depth) という．",
     ee:"dep(k) := r is called the depth."},
-  {word:"収束",ruby:"<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>",english:"convergence",type:"noun",jisho:"収束",ch:"1.1",
+  {word:"収束",ruby:"<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>",english:"convergence",type:"noun",jisho:"収束",ch:"1.1",gen:true,
     ej:"<i>k<sub>r</sub></i> ≧ 2 であれば<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>して<ruby>一<rt>ひと</rt></ruby>つの<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby>を<ruby>定<rt>さだ</rt></ruby>める．",
     ee:"If kᵣ ≥ 2, it converges and determines a real number."},
-  {word:"発散",ruby:"<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>",english:"divergence",type:"noun",jisho:"発散",ch:"1.1",
+  {word:"発散",ruby:"<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>",english:"divergence",type:"noun",jisho:"発散",ch:"1.1",gen:true,
     ej:"<i>k<sub>r</sub></i> = 1 のときは<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>する．",
     ee:"When kᵣ = 1, it diverges."},
-  {word:"命題",ruby:"<ruby>命<rt>めい</rt></ruby><ruby>題<rt>だい</rt></ruby>",english:"proposition",type:"noun",jisho:"命題",ch:"1.1",
+  {word:"命題",ruby:"<ruby>命<rt>めい</rt></ruby><ruby>題<rt>だい</rt></ruby>",english:"proposition",type:"noun",jisho:"命題",ch:"1.1",gen:true,
     ej:"<ruby>命<rt>めい</rt></ruby><ruby>題<rt>だい</rt></ruby> 1.2　(1.1)の<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>は <i>k<sub>r</sub></i> ≧ 2 であれば<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>する．",
     ee:"Proposition 1.2: The series (1.1) converges if kᵣ ≥ 2."},
   {word:"許容的",ruby:"<ruby>許<rt>きょ</rt></ruby><ruby>容<rt>よう</rt></ruby><ruby>的<rt>てき</rt></ruby>",english:"admissible",type:"noun",jisho:"許容",ch:"1.1",
@@ -1313,7 +1313,7 @@ const entries = [
   {word:"注意",ruby:"<ruby>注<rt>ちゅう</rt></ruby><ruby>意<rt>い</rt></ruby>",english:"remark; caution",type:"noun",jisho:"注意",ch:"1.1",
     ej:"<ruby>注<rt>ちゅう</rt></ruby><ruby>意<rt>い</rt></ruby>が<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>である．",
     ee:"Caution is needed."},
-  {word:"和",ruby:"<ruby>和<rt>わ</rt></ruby>",english:"sum; summation",type:"noun",jisho:"和",ch:"1.1",
+  {word:"和",ruby:"<ruby>和<rt>わ</rt></ruby>",english:"sum; summation",type:"noun",jisho:"和",ch:"1.1",gen:true,
     ej:"<ruby>和<rt>わ</rt></ruby>の<ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby> <i>m<sub>i</sub></i> たちも<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>である．",
     ee:"The summation variables mᵢ are also natural numbers."},
   {word:"有限和",ruby:"<ruby>有<rt>ゆう</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>和<rt>わ</rt></ruby>",english:"finite sum",type:"noun",jisho:"有限",ch:"1.1",
@@ -1322,13 +1322,13 @@ const entries = [
   {word:"定数倍",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>倍<rt>ばい</rt></ruby>",english:"constant multiple",type:"noun",jisho:"定数",ch:"1.1",
     ej:"<i>m<sup>ε</sup></i> の<ruby>定<rt>てい</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>倍<rt>ばい</rt></ruby>で<ruby>押<rt>お</rt></ruby>さえられる．",
     ee:"Bounded by a constant multiple of mᵉ."},
-  {word:"不等式",ruby:"<ruby>不<rt>ふ</rt></ruby><ruby>等<rt>とう</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"inequality",type:"noun",jisho:"不等式",ch:"1.1",
+  {word:"不等式",ruby:"<ruby>不<rt>ふ</rt></ruby><ruby>等<rt>とう</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"inequality",type:"noun",jisho:"不等式",ch:"1.1",gen:true,
     ej:"この<ruby>不<rt>ふ</rt></ruby><ruby>等<rt>とう</rt></ruby><ruby>式<rt>しき</rt></ruby>に<ruby>注<rt>ちゅう</rt></ruby><ruby>意<rt>い</rt></ruby>すると",
     ee:"Noting this inequality, …"},
-  {word:"調和級数",ruby:"<ruby>調<rt>ちょう</rt></ruby><ruby>和<rt>わ</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"harmonic series",type:"noun",jisho:"調和級数",ch:"1.1",
+  {word:"調和級数",ruby:"<ruby>調<rt>ちょう</rt></ruby><ruby>和<rt>わ</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"harmonic series",type:"noun",jisho:"調和級数",ch:"1.1",gen:true,
     ej:"<ruby>調<rt>ちょう</rt></ruby><ruby>和<rt>わ</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>が<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>するというよく<ruby>知<rt>し</rt></ruby>られた<ruby>事<rt>じ</rt></ruby><ruby>実<rt>じつ</rt></ruby>",
     ee:"The well-known fact that the harmonic series diverges."},
-  {word:"複素変数",ruby:"<ruby>複<rt>ふく</rt></ruby><ruby>素<rt>そ</rt></ruby><ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"complex variable",type:"noun",jisho:"複素",ch:"1.1",
+  {word:"複素変数",ruby:"<ruby>複<rt>ふく</rt></ruby><ruby>素<rt>そ</rt></ruby><ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"complex variable",type:"noun",jisho:"複素",ch:"1.1",gen:true,
     ej:"<ruby>成<rt>せい</rt></ruby><ruby>分<rt>ぶん</rt></ruby>を<ruby>複<rt>ふく</rt></ruby><ruby>素<rt>そ</rt></ruby><ruby>変<rt>へん</rt></ruby><ruby>数<rt>すう</rt></ruby>にした<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ「<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>」",
     ee:"The multiple zeta 'function' with complex variables as components."},
   {word:"絶対収束域",ruby:"<ruby>絶<rt>ぜっ</rt></ruby><ruby>対<rt>たい</rt></ruby><ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby><ruby>域<rt>いき</rt></ruby>",english:"region of absolute convergence",type:"noun",jisho:"絶対収束",ch:"1.1",
@@ -1339,19 +1339,19 @@ const entries = [
     ee:"In this chapter, we define multiple zeta values."},
 
   // §1.1 verbs
-  {word:"定義する",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する",english:"to define",type:"verb",jisho:"定義する",ch:"1.1",
+  {word:"定義する",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する",english:"to define",type:"verb",jisho:"定義する",ch:"1.1",gen:true,
     ej:"ζ(<i>k</i><sub>1</sub>,…,<i>k<sub>r</sub></i>) を<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
     ee:"We define ζ(k₁,…,kᵣ) by an infinite series."},
-  {word:"導入する",ruby:"<ruby>導<rt>どう</rt></ruby><ruby>入<rt>にゅう</rt></ruby>する",english:"to introduce (a concept)",type:"verb",jisho:"導入する",ch:"1.1",
+  {word:"導入する",ruby:"<ruby>導<rt>どう</rt></ruby><ruby>入<rt>にゅう</rt></ruby>する",english:"to introduce (a concept)",type:"verb",jisho:"導入する",ch:"1.1",gen:true,
     ej:"ベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>を<ruby>導<rt>どう</rt></ruby><ruby>入<rt>にゅう</rt></ruby>する．",
     ee:"We introduce a vector space."},
   {word:"張る",ruby:"<ruby>張<rt>は</rt></ruby>る",english:"to span (a vector space)",type:"verb",jisho:"張る",ch:"1.1",
     ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>で<ruby>張<rt>は</rt></ruby>られるベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>",
     ee:"The vector space spanned by MZVs."},
-  {word:"述べる",ruby:"<ruby>述<rt>の</rt></ruby>べる",english:"to state; to describe",type:"verb",jisho:"述べる",ch:"1.1",
+  {word:"述べる",ruby:"<ruby>述<rt>の</rt></ruby>べる",english:"to state; to describe",type:"verb",jisho:"述べる",ch:"1.1",gen:true,
     ej:"<ruby>顕<rt>けん</rt></ruby><ruby>著<rt>ちょ</rt></ruby>な<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>などを<ruby>述<rt>の</rt></ruby>べる．",
     ee:"We state remarkable conjectures."},
-  {word:"異なる",ruby:"<ruby>異<rt>こと</rt></ruby>なる",english:"to differ; to be different",type:"verb",jisho:"異なる",ch:"1.1",
+  {word:"異なる",ruby:"<ruby>異<rt>こと</rt></ruby>なる",english:"to differ; to be different",type:"verb",jisho:"異なる",ch:"1.1",gen:true,
     ej:"ζ(2,3) と ζ(3,2) は<ruby>異<rt>こと</rt></ruby>なる<ruby>値<rt>あたい</rt></ruby>をもつ．",
     ee:"ζ(2,3) and ζ(3,2) have different values."},
   {word:"略す",ruby:"<ruby>略<rt>りゃく</rt></ruby>す",english:"to abbreviate",type:"verb",jisho:"略す",ch:"1.1",
@@ -1360,13 +1360,13 @@ const entries = [
   {word:"与える",ruby:"<ruby>与<rt>あた</rt></ruby>える",english:"to give (passive: given)",type:"verb",jisho:"与える",ch:"1.1",
     ej:"<ruby>与<rt>あた</rt></ruby>えられたいくつかの<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して",
     ee:"For given natural numbers, …"},
-  {word:"収束する",ruby:"<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>する",english:"to converge",type:"verb",jisho:"収束",ch:"1.1",
+  {word:"収束する",ruby:"<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>する",english:"to converge",type:"verb",jisho:"収束",ch:"1.1",gen:true,
     ej:"<i>k<sub>r</sub></i> ≧ 2 であれば<ruby>収<rt>しゅう</rt></ruby><ruby>束<rt>そく</rt></ruby>して<ruby>一<rt>ひと</rt></ruby>つの<ruby>実<rt>じつ</rt></ruby><ruby>数<rt>すう</rt></ruby>を<ruby>定<rt>さだ</rt></ruby>める．",
     ee:"If kᵣ ≥ 2, it converges and determines a real number."},
-  {word:"発散する",ruby:"<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>する",english:"to diverge",type:"verb",jisho:"発散",ch:"1.1",
+  {word:"発散する",ruby:"<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>する",english:"to diverge",type:"verb",jisho:"発散",ch:"1.1",gen:true,
     ej:"<i>k<sub>r</sub></i> = 1 のときは<ruby>発<rt>はっ</rt></ruby><ruby>散<rt>さん</rt></ruby>する．",
     ee:"When kᵣ = 1, it diverges."},
-  {word:"成り立つ",ruby:"<ruby>成<rt>な</rt></ruby>り<ruby>立<rt>た</rt></ruby>つ",english:"to hold (of a formula/theorem)",type:"verb",jisho:"成り立つ",ch:"1.1",
+  {word:"成り立つ",ruby:"<ruby>成<rt>な</rt></ruby>り<ruby>立<rt>た</rt></ruby>つ",english:"to hold (of a formula/theorem)",type:"verb",jisho:"成り立つ",ch:"1.1",gen:true,
     ej:"が<ruby>成<rt>な</rt></ruby>り<ruby>立<rt>た</rt></ruby>つから，",
     ee:"Since [the inequality] holds, …"},
   {word:"帰着する",ruby:"<ruby>帰<rt>き</rt></ruby><ruby>着<rt>ちゃく</rt></ruby>する",english:"to reduce to; to come down to",type:"verb",jisho:"帰着",ch:"1.1",
@@ -1374,10 +1374,10 @@ const entries = [
     ee:"It also reduces to the divergence of the harmonic series."},
 
   // ─── Chapter 1 §1.2 ───
-  {word:"円周率",ruby:"<ruby>円<rt>えん</rt></ruby><ruby>周<rt>しゅう</rt></ruby><ruby>率<rt>りつ</rt></ruby>",english:"pi (π); the ratio of circumference",type:"noun",jisho:"円周率",ch:"1.2",
+  {word:"円周率",ruby:"<ruby>円<rt>えん</rt></ruby><ruby>周<rt>しゅう</rt></ruby><ruby>率<rt>りつ</rt></ruby>",english:"pi (π); the ratio of circumference",type:"noun",jisho:"円周率",ch:"1.2",gen:true,
     ej:"<ruby>円<rt>えん</rt></ruby><ruby>周<rt>しゅう</rt></ruby><ruby>率<rt>りつ</rt></ruby>のべきの<ruby>有<rt>ゆう</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>数<rt>すう</rt></ruby><ruby>倍<rt>ばい</rt></ruby>である．",
     ee:"It is a rational multiple of a power of π."},
-  {word:"二項係数",ruby:"<ruby>二<rt>に</rt></ruby><ruby>項<rt>こう</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"binomial coefficient",type:"noun",jisho:"二項係数",ch:"1.2",
+  {word:"二項係数",ruby:"<ruby>二<rt>に</rt></ruby><ruby>項<rt>こう</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"binomial coefficient",type:"noun",jisho:"二項係数",ch:"1.2",gen:true,
     ej:"<ruby>個<rt>こ</rt></ruby><ruby>数<rt>すう</rt></ruby>は<ruby>二<rt>に</rt></ruby><ruby>項<rt>こう</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>数<rt>すう</rt></ruby>に<ruby>等<rt>ひと</rt></ruby>しい．",
     ee:"The count equals a binomial coefficient."},
   {word:"総数",ruby:"<ruby>総<rt>そう</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"total number",type:"noun",jisho:"総数",ch:"1.2",
@@ -1386,22 +1386,22 @@ const entries = [
   {word:"関係",ruby:"<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby>",english:"relation; relationship",type:"noun",jisho:"関係",ch:"1.2",
     ej:"Euler による<ruby>有<rt>ゆう</rt></ruby><ruby>名<rt>めい</rt></ruby>な<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby> ζ(1,2)=ζ(3)",
     ee:"Euler's famous relation ζ(1,2)=ζ(3)."},
-  {word:"数列",ruby:"<ruby>数<rt>すう</rt></ruby><ruby>列<rt>れつ</rt></ruby>",english:"sequence (of numbers)",type:"noun",jisho:"数列",ch:"1.2",
+  {word:"数列",ruby:"<ruby>数<rt>すう</rt></ruby><ruby>列<rt>れつ</rt></ruby>",english:"sequence (of numbers)",type:"noun",jisho:"数列",ch:"1.2",gen:true,
     ej:"<ruby>数<rt>すう</rt></ruby><ruby>列<rt>れつ</rt></ruby> <i>d<sub>k</sub></i> を<ruby>次<rt>つぎ</rt></ruby>の<ruby>漸<rt>ぜん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>式<rt>しき</rt></ruby>で<ruby>定<rt>さだ</rt></ruby>める．",
     ee:"We define the sequence dₖ by the following recurrence."},
-  {word:"漸化式",ruby:"<ruby>漸<rt>ぜん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"recurrence relation",type:"noun",jisho:"漸化式",ch:"1.2",
+  {word:"漸化式",ruby:"<ruby>漸<rt>ぜん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"recurrence relation",type:"noun",jisho:"漸化式",ch:"1.2",gen:true,
     ej:"<ruby>次<rt>つぎ</rt></ruby>の<ruby>漸<rt>ぜん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>式<rt>しき</rt></ruby>で<ruby>定<rt>さだ</rt></ruby>める (Padovan <ruby>数<rt>すう</rt></ruby><ruby>列<rt>れつ</rt></ruby>とよばれている)．",
     ee:"Defined by the following recurrence (called the Padovan sequence)."},
-  {word:"母関数",ruby:"<ruby>母<rt>ぼ</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"generating function",type:"noun",jisho:"母関数",ch:"1.2",
+  {word:"母関数",ruby:"<ruby>母<rt>ぼ</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>",english:"generating function",type:"noun",jisho:"母関数",ch:"1.2",gen:true,
     ej:"<ruby>形<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby><ruby>的<rt>てき</rt></ruby>べき<ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>による<ruby>母<rt>ぼ</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>形<rt>かたち</rt></ruby>で<ruby>書<rt>か</rt></ruby>くと",
     ee:"Writing in the form of a generating function via formal power series."},
-  {word:"定理",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>理<rt>り</rt></ruby>",english:"theorem",type:"noun",jisho:"定理",ch:"1.2",
+  {word:"定理",ruby:"<ruby>定<rt>てい</rt></ruby><ruby>理<rt>り</rt></ruby>",english:"theorem",type:"noun",jisho:"定理",ch:"1.2",gen:true,
     ej:"<ruby>定<rt>てい</rt></ruby><ruby>理<rt>り</rt></ruby> 1.8 (Goncharov) すべての <i>k</i> に<ruby>対<rt>たい</rt></ruby>し dim<sub>ℚ</sub> 𝒵<sub><i>k</i></sub> ≦ <i>d<sub>k</sub></i>",
     ee:"Theorem 1.8 (Goncharov): For all k, dim_ℚ 𝒵ₖ ≤ dₖ."},
-  {word:"線形関係式",ruby:"<ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"linear relation",type:"noun",jisho:"線形",ch:"1.2",
+  {word:"線形関係式",ruby:"<ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>",english:"linear relation",type:"noun",jisho:"線形",ch:"1.2",gen:true,
     ej:"<ruby>異<rt>こと</rt></ruby>なる<ruby>重<rt>おも</rt></ruby>さの<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>に<ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>はないであろうと<ruby>信<rt>しん</rt></ruby>じられている．",
     ee:"It is believed there are no linear relations among MZVs of different weights."},
-  {word:"独立",ruby:"<ruby>独<rt>どく</rt></ruby><ruby>立<rt>りつ</rt></ruby>",english:"independent; independence",type:"noun",jisho:"独立",ch:"1.2",
+  {word:"独立",ruby:"<ruby>独<rt>どく</rt></ruby><ruby>立<rt>りつ</rt></ruby>",english:"independent; independence",type:"noun",jisho:"独立",ch:"1.2",gen:true,
     ej:"ζ(5) と ζ(2,3) が ℚ <ruby>上<rt>じょう</rt></ruby><ruby>独<rt>どく</rt></ruby><ruby>立<rt>りつ</rt></ruby>であることを<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>する",
     ee:"To prove that ζ(5) and ζ(2,3) are independent over ℚ."},
   {word:"評価",ruby:"<ruby>評<rt>ひょう</rt></ruby><ruby>価<rt>か</rt></ruby>",english:"estimate; bound",type:"noun",jisho:"評価",ch:"1.2",
@@ -1421,7 +1421,7 @@ const entries = [
   {word:"信じる",ruby:"<ruby>信<rt>しん</rt></ruby>じる",english:"to believe (conjectured to be true)",type:"verb",jisho:"信じる",ch:"1.2",
     ej:"<ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby><ruby>式<rt>しき</rt></ruby>はないであろうと<ruby>信<rt>しん</rt></ruby>じられている．",
     ee:"It is believed that there are no linear relations."},
-  {word:"証明する",ruby:"<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>する",english:"to prove",type:"verb",jisho:"証明する",ch:"1.2",
+  {word:"証明する",ruby:"<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>する",english:"to prove",type:"verb",jisho:"証明する",ch:"1.2",gen:true,
     ej:"<ruby>混<rt>こん</rt></ruby><ruby>合<rt>ごう</rt></ruby> Tate モチーフの<ruby>理<rt>り</rt></ruby><ruby>論<rt>ろん</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いて<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>した．",
     ee:"Proved using the theory of mixed Tate motives."},
 
@@ -1445,16 +1445,16 @@ const entries = [
   {word:"未解決問題",ruby:"<ruby>未<rt>み</rt></ruby><ruby>解<rt>かい</rt></ruby><ruby>決<rt>けつ</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>",english:"open problem; unsolved problem",type:"noun",jisho:"未解決",ch:"1.2",
     ej:"<ruby>今<rt>いま</rt></ruby>なお<ruby>残<rt>のこ</rt></ruby>る<ruby>重<rt>じゅう</rt></ruby><ruby>要<rt>よう</rt></ruby>な<ruby>未<rt>み</rt></ruby><ruby>解<rt>かい</rt></ruby><ruby>決<rt>けつ</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>の<ruby>一<rt>ひと</rt></ruby>つである．",
     ee:"This is one of the important open problems that still remains."},
-  {word:"生成元",ruby:"<ruby>生<rt>せい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>元<rt>げん</rt></ruby>",english:"generator",type:"noun",jisho:"生成",ch:"1.2",
+  {word:"生成元",ruby:"<ruby>生<rt>せい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>元<rt>げん</rt></ruby>",english:"generator",type:"noun",jisho:"生成",ch:"1.2",gen:true,
     ej:"ベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby> 𝒵 の<ruby>生<rt>せい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>元<rt>げん</rt></ruby>について<ruby>次<rt>つぎ</rt></ruby>の<ruby>具<rt>ぐ</rt></ruby><ruby>体<rt>たい</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>を<ruby>提<rt>てい</rt></ruby><ruby>出<rt>しゅつ</rt></ruby>した．",
     ee:"Proposed the following concrete conjecture about generators of the vector space 𝒵."},
-  {word:"基底",ruby:"<ruby>基<rt>き</rt></ruby><ruby>底<rt>てい</rt></ruby>",english:"basis (of a vector space)",type:"noun",jisho:"基底",ch:"1.2",
+  {word:"基底",ruby:"<ruby>基<rt>き</rt></ruby><ruby>底<rt>てい</rt></ruby>",english:"basis (of a vector space)",type:"noun",jisho:"基底",ch:"1.2",gen:true,
     ej:"<ruby>各<rt>かく</rt></ruby><ruby>重<rt>おも</rt></ruby>さの<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>の<ruby>基<rt>き</rt></ruby><ruby>底<rt>てい</rt></ruby>をなしていく",
     ee:"Form a basis of the space for each weight."},
   {word:"生成系",ruby:"<ruby>生<rt>せい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>系<rt>けい</rt></ruby>",english:"generating set",type:"noun",jisho:"生成",ch:"1.2",
     ej:"この<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>（<ruby>生<rt>せい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>系<rt>けい</rt></ruby>であること）はのちに Brown が<ruby>証<rt>しょう</rt></ruby><ruby>明<rt>めい</rt></ruby>した．",
     ee:"This conjecture (that they form a generating set) was later proved by Brown."},
-  {word:"線形結合",ruby:"<ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>結<rt>けつ</rt></ruby><ruby>合<rt>ごう</rt></ruby>",english:"linear combination",type:"noun",jisho:"線形結合",ch:"1.2",
+  {word:"線形結合",ruby:"<ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>結<rt>けつ</rt></ruby><ruby>合<rt>ごう</rt></ruby>",english:"linear combination",type:"noun",jisho:"線形結合",ch:"1.2",gen:true,
     ej:"ℚ <ruby>線<rt>せん</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>結<rt>けつ</rt></ruby><ruby>合<rt>ごう</rt></ruby>で<ruby>書<rt>か</rt></ruby>けるであろう．",
     ee:"Can probably be written as a ℚ-linear combination."},
   {word:"独立性",ruby:"<ruby>独<rt>どく</rt></ruby><ruby>立<rt>りつ</rt></ruby><ruby>性<rt>せい</rt></ruby>",english:"independence (linear/algebraic)",type:"noun",jisho:"独立性",ch:"1.2",
@@ -1467,7 +1467,7 @@ const entries = [
     ej:"ℓ <ruby>進<rt>しん</rt></ruby> Galois <ruby>表<rt>ひょう</rt></ruby><ruby>現<rt>げん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する",
     ee:"Concerning ℓ-adic Galois representations."},
   // §1.3
-  {word:"積",ruby:"<ruby>積<rt>せき</rt></ruby>",english:"product (multiplication)",type:"noun",jisho:"積",ch:"1.3",
+  {word:"積",ruby:"<ruby>積<rt>せき</rt></ruby>",english:"product (multiplication)",type:"noun",jisho:"積",ch:"1.3",gen:true,
     ej:"ℚ ベクトル<ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby> 𝒵 は<ruby>積<rt>せき</rt></ruby>について<ruby>閉<rt>と</rt></ruby>じている．",
     ee:"The ℚ-vector space 𝒵 is closed under the product."},
   {word:"積構造",ruby:"<ruby>積<rt>せき</rt></ruby><ruby>構<rt>こう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>",english:"product structure; multiplicative structure",type:"noun",jisho:"積",ch:"1.3",
@@ -1493,27 +1493,32 @@ const entries = [
   {word:"提出する",ruby:"<ruby>提<rt>てい</rt></ruby><ruby>出<rt>しゅつ</rt></ruby>する",english:"to propose; to put forward",type:"verb",jisho:"提出する",ch:"1.2",
     ej:"Hoffman は<ruby>次<rt>つぎ</rt></ruby>の<ruby>具<rt>ぐ</rt></ruby><ruby>体<rt>たい</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>予<rt>よ</rt></ruby><ruby>想<rt>そう</rt></ruby>を<ruby>提<rt>てい</rt></ruby><ruby>出<rt>しゅつ</rt></ruby>した．",
     ee:"Hoffman proposed the following concrete conjecture."},
-  {word:"閉じる",ruby:"<ruby>閉<rt>と</rt></ruby>じる",english:"to be closed (under an operation)",type:"verb",jisho:"閉じる",ch:"1.3",
+  {word:"閉じる",ruby:"<ruby>閉<rt>と</rt></ruby>じる",english:"to be closed (under an operation)",type:"verb",jisho:"閉じる",ch:"1.3",gen:true,
     ej:"𝒵 は<ruby>積<rt>せき</rt></ruby>について<ruby>閉<rt>と</rt></ruby>じている．",
     ee:"𝒵 is closed under the product."},
-  {word:"満たす",ruby:"<ruby>満<rt>み</rt></ruby>たす",english:"to satisfy (a condition/equation)",type:"verb",jisho:"満たす",ch:"1.3",
+  {word:"満たす",ruby:"<ruby>満<rt>み</rt></ruby>たす",english:"to satisfy (a condition/equation)",type:"verb",jisho:"満たす",ch:"1.3",gen:true,
     ej:"𝒵<sub><i>k</i></sub> · 𝒵<sub><i>l</i></sub> ⊂ 𝒵<sub><i>k</i>+<i>l</i></sub> を<ruby>満<rt>み</rt></ruby>たす．",
     ee:"It satisfies 𝒵ₖ · 𝒵ₗ ⊂ 𝒵ₖ₊ₗ."},
   {word:"従う",ruby:"<ruby>従<rt>したが</rt></ruby>う",english:"to follow (from a result)",type:"verb",jisho:"従う",ch:"1.2",
     ej:"<ruby>知<rt>し</rt></ruby>られていた<ruby>命<rt>めい</rt></ruby><ruby>題<rt>だい</rt></ruby>が<ruby>従<rt>したが</rt></ruby>う",
     ee:"Known propositions follow [from this]."},
   {word:"確かめる",ruby:"<ruby>確<rt>たし</rt></ruby>かめる",english:"to verify; to confirm",type:"verb",jisho:"確かめる",ch:"1.2",
-    ej:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby><ruby>漸<rt>ぜん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>式<rt>しき</rt></ruby>を<ruby>満<rt>み</rt></ruby>たすことを<ruby>確<rt>たし</rt></ruby>かめることで<ruby>容<rt>よう</rt></ruby><ruby>易<rt>い</rt></ruby>にわかる．",
+    ej:"<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby><ruby>漸<rt>ぜん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>式<rt>shiki</rt></ruby>を<ruby>満<rt>み</rt></ruby>たすことを<ruby>確<rt>たし</rt></ruby>かめることで<ruby>容<rt>よう</rt></ruby><ruby>易<rt>い</rt></ruby>にわかる．",
     ee:"This can be easily seen by verifying that it satisfies the defining recurrence."},
 
+  // ─── General MZV terms (not yet in covered pages) ───
+  {word:"反復積分",ruby:"<ruby>反<rt>はん</rt></ruby><ruby>復<rt>ぷく</rt></ruby><ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby>",english:"iterated integral",type:"noun",jisho:"反復積分",ch:"—",gen:true,
+    ej:"<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>は<ruby>反<rt>はん</rt></ruby><ruby>復<rt>ぷく</rt></ruby><ruby>積<rt>せき</rt></ruby><ruby>分<rt>ぶん</rt></ruby>としても<ruby>表<rt>あらわ</rt></ruby>すことができる．",
+    ee:"Multiple zeta values can also be expressed as iterated integrals."},
+
   // ─── Grammar patterns ───
-  {word:"ただし",ruby:"ただし",english:"provided that; where",type:"grammar",jisho:"ただし",ch:"1.1",
+  {word:"ただし",ruby:"ただし",english:"provided that; where",type:"grammar",jisho:"ただし",ch:"1.1",gen:true,
     ej:"<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby> <i>k</i><sub>1</sub>,…,<i>k<sub>r</sub></i>，ただし <i>k<sub>r</sub></i> ≧ 2，に<ruby>対<rt>たい</rt></ruby>して",
     ee:"For natural numbers k₁,…,kᵣ, where kᵣ ≥ 2."},
-  {word:"に対して",ruby:"に<ruby>対<rt>たい</rt></ruby>して",english:"for; with respect to",type:"grammar",jisho:"に対して",ch:"1.1",
+  {word:"に対して",ruby:"に<ruby>対<rt>たい</rt></ruby>して",english:"for; with respect to",type:"grammar",jisho:"に対して",ch:"1.1",gen:true,
     ej:"<ruby>与<rt>あた</rt></ruby>えられた<ruby>自<rt>し</rt></ruby><ruby>然<rt>ぜん</rt></ruby><ruby>数<rt>すう</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して，<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>を<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
     ee:"For given natural numbers, we define the MZV."},
-  {word:"によって",ruby:"によって",english:"by means of; depending on",type:"grammar",jisho:"によって",ch:"1.1",
+  {word:"によって",ruby:"によって",english:"by means of; depending on",type:"grammar",jisho:"によって",ch:"1.1",gen:true,
     ej:"<ruby>無<rt>む</rt></ruby><ruby>限<rt>げん</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>によって<ruby>定<rt>てい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>する．",
     ee:"We define [it] by means of an infinite series."},
   {word:"一般に",ruby:"<ruby>一<rt>いっ</rt></ruby><ruby>般<rt>ぱん</rt></ruby>に",english:"in general; generally",type:"grammar",jisho:"一般に",ch:"1.1",
@@ -1525,7 +1530,7 @@ const entries = [
   {word:"〜ごとに",ruby:"〜ごとに",english:"for each ~; per ~",type:"grammar",jisho:"ごとに",ch:"1.1",
     ej:"<ruby>重<rt>おも</rt></ruby>さごとに<ruby>決<rt>き</rt></ruby>まる<ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby><ruby>空<rt>くう</rt></ruby><ruby>間<rt>かん</rt></ruby>",
     ee:"The subspace determined for each weight."},
-  {word:"すなわち",ruby:"すなわち",english:"namely; that is to say",type:"grammar",jisho:"すなわち",ch:"1.2",
+  {word:"すなわち",ruby:"すなわち",english:"namely; that is to say",type:"grammar",jisho:"すなわち",ch:"1.2",gen:true,
     ej:"<ruby>深<rt>ふか</rt></ruby>さ <i>r</i>=1 の<ruby>多<rt>た</rt></ruby><ruby>重<rt>じゅう</rt></ruby>ゼータ<ruby>値<rt>ち</rt></ruby>はすなわち Riemann ゼータ<ruby>関<rt>かん</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>値<rt>あたい</rt></ruby>に<ruby>他<rt>ほか</rt></ruby>ならない．",
     ee:"Depth r=1 MZVs are namely nothing other than values of the Riemann zeta function."},
   {word:"〜に他ならない",ruby:"〜に<ruby>他<rt>ほか</rt></ruby>ならない",english:"is nothing other than ~",type:"grammar",jisho:"他ならない",ch:"1.2",
@@ -1587,7 +1592,7 @@ const entries = [
   {word:"いわゆる",ruby:"いわゆる",english:"so-called; what is known as",type:"grammar",jisho:"いわゆる",ch:"1.1",
     ej:"いわゆる Dirichlet <ruby>級<rt>きゅう</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>形<rt>かたち</rt></ruby>に<ruby>書<rt>か</rt></ruby>く",
     ee:"Write in the form of a so-called Dirichlet series."},
-  {word:"したがって",ruby:"したがって",english:"therefore; consequently",type:"grammar",jisho:"従って",ch:"1.1",
+  {word:"したがって",ruby:"したがって",english:"therefore; consequently",type:"grammar",jisho:"従って",ch:"1.1",gen:true,
     ej:"したがって，<ruby>任<rt>にん</rt></ruby><ruby>意<rt>い</rt></ruby>の<ruby>正<rt>せい</rt></ruby>の<ruby>数<rt>すう</rt></ruby> ε > 0 に<ruby>対<rt>たい</rt></ruby>して",
     ee:"Therefore, for any positive number ε > 0, …"},
   {word:"よって",ruby:"よって",english:"therefore; hence (shorter form)",type:"grammar",jisho:"よって",ch:"1.1",
@@ -1811,17 +1816,26 @@ function renderCards() {
   const info = document.getElementById('pageInfo');
   const seen = new Set();
 
+  // Helper: strip HTML to plain text for searching
+  const stripHtml = s => (s||'').replace(/<ruby>([^<]*)<rt>[^<]*<\/rt><\/ruby>/g,'$1').replace(/<[^>]*>/g,'');
+
   const filtered = entries.filter(e => {
-    // dedup by word
+    // dedup by word (but allow same word to appear if we're showing "all")
     if (seen.has(e.word)) return false;
     seen.add(e.word);
     const matchType = activeFilter === 'all' || e.type === activeFilter;
-    const matchCh = chapterFilter === 'all' || e.ch === chapterFilter;
-    const matchSearch = searchTerm === '' ||
-      e.word.includes(searchTerm) ||
-      e.english.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      e.ruby.replace(/<[^>]*>/g,'').includes(searchTerm);
-    return matchType && matchCh && matchSearch;
+    // Chapter matching: "General" shows both ch==="—" and gen===true entries
+    const matchCh = chapterFilter === 'all' || e.ch === chapterFilter || (chapterFilter === '—' && e.gen);
+    if (!matchType || !matchCh) return false;
+    if (searchTerm === '') return true;
+    const st = searchTerm.toLowerCase();
+    return e.word.toLowerCase().includes(st) ||
+      (e.english||'').toLowerCase().includes(st) ||
+      stripHtml(e.ruby).toLowerCase().includes(st) ||
+      stripHtml(e.ej).toLowerCase().includes(st) ||
+      (e.ee||'').toLowerCase().includes(st) ||
+      (e.note||'').toLowerCase().includes(st) ||
+      stripHtml(e.reading).toLowerCase().includes(st);
   });
 
   info.textContent = `${filtered.length} entries`;
@@ -1829,6 +1843,40 @@ function renderCards() {
   if (!filtered.length) {
     container.innerHTML = '<div class="empty-state">No matching entries found.</div>';
     return;
+  }
+
+  // Highlight function: highlights search term in plain text (not inside HTML tags)
+  function hl(text) {
+    if (!searchTerm || !text) return text;
+    // For plain text (English, romaji, notes)
+    const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(`(${escaped})`, 'gi');
+    return text.replace(re, '<mark style="background:rgba(43,58,55,0.15);padding:0 1px;border-radius:2px;">$1</mark>');
+  }
+
+  // Highlight in ruby HTML: highlight in both base text and plain segments
+  function hlRuby(html) {
+    if (!searchTerm || !html) return html;
+    const st = searchTerm.toLowerCase();
+    // Parse into segments
+    const re2 = /(<ruby>[^<]*<rt>[^<]*<\/rt><\/ruby>)|(<[^>]*>)|([^<]+)/g;
+    let m, result = '';
+    while ((m = re2.exec(html)) !== null) {
+      if (m[1]) {
+        // Ruby tag — check if base matches
+        const base = m[1].replace(/<ruby>([^<]*)<rt>[^<]*<\/rt><\/ruby>/, '$1');
+        if (base.toLowerCase().includes(st)) {
+          result += '<mark style="background:rgba(43,58,55,0.15);padding:0 1px;border-radius:2px;">' + m[1] + '</mark>';
+        } else {
+          result += m[1];
+        }
+      } else if (m[2]) {
+        result += m[2]; // HTML tag, pass through
+      } else {
+        result += hl(m[3]); // plain text, highlight
+      }
+    }
+    return result;
   }
 
   const PAGE_SIZE = 50;
@@ -1848,12 +1896,12 @@ function renderCards() {
         </div>
         <div class="formula-display">${e.formula}</div>
         <div class="example-label" style="text-align:center;margin-top:0.5rem;">How to read</div>
-        <div class="formula-reading">${e.reading}</div>
-        <div class="formula-romaji">${e.romaji}</div>
-        <div class="word-english" style="text-align:center;margin:0.3rem 0;">${e.english}</div>
+        <div class="formula-reading">${hlRuby(e.reading)}</div>
+        <div class="formula-romaji">${hl(e.romaji)}</div>
+        <div class="word-english" style="text-align:center;margin:0.3rem 0;">${hl(e.english)}</div>
         <div class="example" style="margin-top:0.6rem;">
           <div class="example-label">Note</div>
-          <div class="example-en" style="font-style:normal;color:#666;font-size:0.78rem;">${e.note}</div>
+          <div class="example-en" style="font-style:normal;color:#666;font-size:0.78rem;">${hl(e.note)}</div>
         </div>
       </div>`;
     }
@@ -1861,16 +1909,16 @@ function renderCards() {
     const jUrl = `https://jisho.org/search/${encodeURIComponent(e.jisho)}`;
     return `<div class="card" data-type="${e.type}">
       <span class="chapter-badge">${chLabel}</span>
-      <div class="word-japanese">${e.ruby}</div>
-      <div class="word-english">${e.english}</div>
+      <div class="word-japanese">${hlRuby(e.ruby)}</div>
+      <div class="word-english">${hl(e.english)}</div>
       <div class="word-meta">
         <span class="tag ${tagClass}">${typeLabel}</span>
         <a class="jisho-link" href="${jUrl}" target="_blank" rel="noopener">→ jisho.org</a>
       </div>
       <div class="example">
         <div class="example-label">Example</div>
-        <div class="example-ja">${e.ej}</div>
-        <div class="example-en">${e.ee}</div>
+        <div class="example-ja">${hlRuby(e.ej)}</div>
+        <div class="example-en">${hl(e.ee)}</div>
       </div>
     </div>`;
   }).join('');
@@ -1950,7 +1998,9 @@ function getUniqueEntries(types, sections) {
   return entries.filter(e => {
     if (seen.has(e.word)) return false;
     seen.add(e.word);
-    return types.includes(e.type) && (!sections || sections.includes(e.ch));
+    const matchType = types.includes(e.type);
+    const matchSec = !sections || sections.includes(e.ch) || (sections.includes('—') && e.gen);
+    return matchType && matchSec;
   }).map(e => {
     // Normalize formula entries for quiz compatibility
     if (e.type === 'formula') {
