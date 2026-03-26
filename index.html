@@ -763,7 +763,7 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <p><span data-i18n="created_by">Created by:</span> <a href="https://www.henrikbachmann.com/">Henrik Bachmann</a></p>
-    <p><span data-i18n="last_updated">Last updated:</span> 14th March 2026</p>
+    <p><span data-i18n="last_updated">Last updated:</span> 26th March 2026</p>
     <p class="visitor-count" id="visitor-count"></p>
   </footer>
 
@@ -1008,7 +1008,7 @@ const REFERENCES = [
   },
   {
     id: "r14",
-    title: "On $\\mathrm{sl}_2$-algebras and multiple Eisenstein series",
+    title: "On $\\mathfrak{sl}_2$-algebras and multiple Eisenstein series",
     authors: ["bachmann"],
     year: 2025,
     type: "notes",
@@ -1019,7 +1019,7 @@ const REFERENCES = [
   },
   {
     id: "r15",
-    title: "On the $\\mathrm{sl}_2$-algebra of formal multiple Eisenstein series",
+    title: "On the $\\mathfrak{sl}_2$-algebra of formal multiple Eisenstein series",
     authors: ["bachmann"],
     year: 2024,
     type: "notes",
@@ -1136,7 +1136,7 @@ const REFERENCES = [
   },
   {
     id: "s04",
-    title: "$\\mathrm{sl}_2$代数と多重アイゼンシュタイン級数について",
+    title: "$\\mathfrak{sl}_2$代数と多重アイゼンシュタイン級数について",
     authors: ["bachmann"],
     year: 2025,
     type: "slides",
@@ -1149,7 +1149,7 @@ const REFERENCES = [
   },
   {
     id: "s05",
-    title: "$\\mathrm{sl}_2$-algebras and multiple Eisenstein series",
+    title: "$\\mathfrak{sl}_2$-algebras and multiple Eisenstein series",
     authors: ["bachmann"],
     year: 2025,
     type: "slides",
@@ -1629,6 +1629,36 @@ const REFERENCES = [
       { label: "PDF", url: "https://drive.google.com/file/d/1AU75weXRTB4p6-1U28UGJy2Q6G2qTxnb/view" }
     ],
     journal: "Japan-India Workshop on L-functions and Multiple Zeta Functions, Sophia University, March 2026"
+  },
+  {
+    id: "k15",
+    title: "Family of linear relations among multiple Eisenstein series",
+    authors: ["kanno"],
+    year: 2026,
+    month: 3,
+    day: 23,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "relations"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1MJ1AnsyD39FTjBq2DZXPFttyO7LkqQby/view" }
+    ],
+    journal: "MSJ Spring Meeting 2026, Tokyo University of Science, March 2026"
+  },
+  {
+    id: "k16",
+    title: "On $\\mathbb{Q}$-linear relations among multiple Eisenstein series",
+    authors: ["kanno"],
+    year: 2026,
+    month: 3,
+    day: 16,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "relations"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1b6chPPME257TxKIJ3RRWSglvMjpLNFQL/view" }
+    ],
+    journal: "Meeting in the Middle, University of Hawaii at Manoa, March 2026"
   },
   {
     id: "k06",
@@ -2251,6 +2281,21 @@ const REFERENCES = [
     journal: "Japan-India Workshop on L-functions and Multiple Zeta Functions, March 2026"
   },
   {
+    id: "yj04",
+    title: "On the $\\mathfrak{sl}_2$-structure of Schur Eisenstein series",
+    authors: ["yujinbo"],
+    year: 2026,
+    month: 3,
+    day: 17,
+    type: "slides",
+    tags: ["Schur multiple Eisenstein series", "sl2-algebra"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1x3F1Uo79-0ZT5a8WZih1zLLZ8SJIvxU0/view" }
+    ],
+    journal: "Meeting in the Middle, University of Hawaii at Manoa, March 2026"
+  },
+  {
     id: "ccht01",
     title: "Algebra structures of multiple Eisenstein series in positive characteristic",
     authors: ["twchang", "sychen", "fjhuang", "hctsui"],
@@ -2585,10 +2630,14 @@ const REFERENCES = [
   // --- Search highlight helper ---
   function highlightText(text, query) {
     if (!query) return text;
-    // Escape regex special chars in query
+    // Split text into math ($...$) and non-math segments, only highlight non-math
+    const parts = text.split(/(\$[^$]+\$)/g);
     const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const re = new RegExp(`(${escaped})`, 'gi');
-    return text.replace(re, '<mark class="search-hl">$1</mark>');
+    return parts.map(part => {
+      if (part.startsWith('$') && part.endsWith('$')) return part; // skip math
+      return part.replace(re, '<mark class="search-hl">$1</mark>');
+    }).join('');
   }
 
   // --- Render references ---
@@ -2676,7 +2725,7 @@ const REFERENCES = [
           <div class="ref-detail">
             <span class="ref-authors">${authorsHTML}${appendixHTML}</span>
             <span class="ref-dot">·</span>
-            <span class="ref-meta">${hl(r.journal)}, ${r.year}</span>
+            <span class="ref-meta">${hl(r.journal)}${r.journal.includes(String(r.year)) ? '' : `, ${r.year}`}</span>
             <span class="ref-dot">·</span>
             <span class="ref-type" title="${r.type}">${flag} ${typeEmoji} ${typeName(r.type)}</span>
             ${linksHTML ? '<span class="ref-dot">·</span>' : ''}
