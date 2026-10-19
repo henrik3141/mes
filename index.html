@@ -25,13 +25,52 @@
     --tag-active: #2b3a37;
     --tag-active-text: #faf8f5;
     --shadow: rgba(44, 36, 24, 0.06);
+    --link: #1a7a5a;
+    --link-border: #b8d8c8;
+    --link-bg: #eef6f2;
+    --link-hover-text: #fff;
+    --mark-bg: #e8d44d40;
+    --mark-border: #c4a84d;
+    --new-bg: #fbe9c9;
+    --new-text: #8a5a12;
+    --new-border: #ecc98a;
+    color-scheme: light;
     --font-serif: 'Latin Modern Roman', 'Computer Modern', 'CMU Serif', 'STIX Two Text', 'Libertinus Serif', Georgia, 'Times New Roman', serif;
     --font-mono: 'Latin Modern Mono', 'CMU Typewriter Text', 'Courier New', monospace;
     --max-width: 820px;
     --transition: 0.2s ease;
   }
 
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1d1b18;
+      --bg-alt: #25221e;
+      --text: #ebe5da;
+      --text-muted: #a89c8b;
+      --accent: #a9cbc2;
+      --accent-hover: #c2dcd5;
+      --border: #4a443b;
+      --border-light: #35312b;
+      --tag-bg: #2d2924;
+      --tag-active: #a9cbc2;
+      --tag-active-text: #1d1b18;
+      --shadow: rgba(0, 0, 0, 0.3);
+      --link: #85cfae;
+      --link-border: #2f5c49;
+      --link-bg: #1f2d27;
+      --link-hover-text: #1d1b18;
+      --mark-bg: #e8d44d33;
+      --mark-border: #b39a45;
+      --new-bg: #3b2d16;
+      --new-text: #f0c47a;
+      --new-border: #6b5126;
+      color-scheme: dark;
+    }
+  }
+
   html { font-size: 17px; scroll-behavior: smooth; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   body {
     font-family: var(--font-serif);
@@ -63,6 +102,13 @@
     margin-bottom: 0.35rem;
     color: var(--text);
     font-variant: small-caps;
+  }
+
+  .site-header .header-meta {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.1rem;
   }
 
   .site-header .subtitle {
@@ -166,11 +212,11 @@
   }
 
   mark.search-hl {
-    background: #e8d44d40;
+    background: var(--mark-bg);
     color: inherit;
     padding: 0 1px;
     border-radius: 2px;
-    border-bottom: 1.5px solid #c4a84d;
+    border-bottom: 1.5px solid var(--mark-border);
   }
 
   /* ===== FILTER BAR ===== */
@@ -178,9 +224,9 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     margin-bottom: 1.6rem;
-    padding: 1rem 1.2rem;
+    padding: 0.8rem 1rem;
     background: var(--bg-alt);
     border: 1px solid var(--border-light);
     border-radius: 3px;
@@ -327,6 +373,49 @@
     font-family: var(--font-mono);
     flex-shrink: 0;
     white-space: nowrap;
+    width: 2.3rem;
+    text-align: right;
+  }
+
+  .ref-new {
+    display: inline-block;
+    vertical-align: 0.12em;
+    margin-left: 0.25rem;
+    font-weight: 400;
+    font-size: 0.66rem;
+    line-height: 1.5;
+    padding: 0 0.45rem;
+    border-radius: 999px;
+    border: 1px solid var(--new-border);
+    background: var(--new-bg);
+    color: var(--new-text);
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+  }
+
+  .year-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin: 1.8rem 0 0.1rem;
+    font-size: 1rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .year-heading:first-child { margin-top: 0.2rem; }
+
+  .year-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    align-self: center;
+  }
+
+  .year-heading .year-count {
+    font-size: 0.72rem;
+    font-style: italic;
   }
 
   .ref-title {
@@ -384,20 +473,20 @@
 
   .ref-links a {
     font-size: 0.72rem;
-    color: #1a7a5a;
+    color: var(--link);
     text-decoration: none;
     padding: 0.1rem 0.45rem;
-    border: 1px solid #b8d8c8;
+    border: 1px solid var(--link-border);
     border-radius: 3px;
-    background: #eef6f2;
+    background: var(--link-bg);
     transition: all var(--transition);
     letter-spacing: 0.01em;
   }
 
   .ref-links a:hover {
-    background: #1a7a5a;
-    color: #fff;
-    border-color: #1a7a5a;
+    background: var(--link);
+    color: var(--link-hover-text);
+    border-color: var(--link);
   }
 
   .ref-type {
@@ -670,9 +759,14 @@
     .page-wrapper { padding: 2rem 1rem 3rem; }
     .site-header h1 { font-size: 1.65rem; }
     .nav-tab { padding: 0.6rem 1rem; font-size: 0.9rem; }
-    .filter-bar { flex-direction: column; align-items: stretch; }
-    .filter-sep { display: none; }
-    .result-count { margin-left: 0; margin-top: 0.3rem; }
+    .filter-bar { padding: 0.7rem; }
+    .filter-bar label, .filter-sep { display: none; }
+    .filter-bar select { flex: 1 1 40%; min-width: 0; }
+    .filter-bar .sort-btn { flex: 1 1 auto; }
+    .result-count { flex-basis: 100%; margin-left: 0; text-align: right; }
+    .ref-number { width: 2rem; }
+    .ref-detail { padding-left: 2.5rem; }
+    .lang-toggle { top: 0.6rem; right: 0.8rem; }
     .author-grid { grid-template-columns: 1fr; }
   }
 </style>
@@ -691,6 +785,7 @@
   <header class="site-header">
     <p class="subtitle" data-i18n="header_subtitle">References for</p>
     <h1 data-i18n="header_title">Multiple Eisenstein Series</h1>
+    <p class="header-meta" id="header-meta"></p>
   </header>
 
   <!-- NAVIGATION -->
@@ -730,6 +825,7 @@
       <label data-i18n="label_sort">Sort:</label>
       <button class="sort-btn active" id="sort-year-desc" data-i18n="newest_first">Newest first</button>
       <button class="sort-btn" id="sort-year-asc" data-i18n="oldest_first">Oldest first</button>
+      <button class="sort-btn" id="filter-new" aria-pressed="false"></button>
       <span class="result-count" id="result-count"></span>
     </div>
 
@@ -763,7 +859,7 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <p><span data-i18n="created_by">Created by:</span> <a href="https://www.henrikbachmann.com/">Henrik Bachmann</a></p>
-    <p><span data-i18n="last_updated">Last updated:</span> 26th March 2026</p>
+    <p><span data-i18n="last_updated">Last updated:</span> 20th October 2026</p>
     <p class="visitor-count" id="visitor-count"></p>
   </footer>
 
@@ -804,23 +900,23 @@ const AUTHORS = [
   { id: "bachmann", name: "Henrik Bachmann", url: "https://www.henrikbachmann.com/", affiliation: "Nagoya University", affiliation_ja: "名古屋大学" },
   { id: "vanittersum", name: "Jan-Willem van Ittersum", url: "https://staff.fnwi.uva.nl/j.w.m.vanittersum/", affiliation: "University of Amsterdam", affiliation_ja: "アムステルダム大学" },
   { id: "matthes", name: "Nils Matthes", url: "https://nilsmatthes.github.io/", affiliation: "", affiliation_ja: "" },
-  { id: "kuehn", name: "Ulf Kühn", url: "https://www.math.uni-hamburg.de/home/kuehn/", affiliation: "University of Hamburg", affiliation_ja: "ハンブルク大学" },
+  { id: "kuehn", name: "Ulf Kühn", url: "https://www.math.uni-hamburg.de/en/forschung/bereiche/az/zahlentheorie/personen/kuehn-ulf.html", affiliation: "University of Hamburg", affiliation_ja: "ハンブルク大学" },
   { id: "burmester", name: "Annika Burmester", url: "https://sites.google.com/view/annikaburmester", affiliation: "Bielefeld University", affiliation_ja: "ビーレフェルト大学" },
   { id: "tasaka", name: "Koji Tasaka", name_ja: "田坂 浩二", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/", affiliation: "Kindai University", affiliation_ja: "近畿大学" },
-  { id: "tsumura", name: "Hirofumi Tsumura", name_ja: "津村 博文", url: "http://www.comp.tmu.ac.jp/math-tsumura/index.htm", affiliation: "Tokyo Metropolitan University", affiliation_ja: "東京都立大学" },
-  { id: "kanno", name: "Hayato Kanno", name_ja: "菅野 隼人", url: "https://sites.google.com/view/hkanno/home", affiliation: "Tohoku University", affiliation_ja: "東北大学" },
+  { id: "tsumura", name: "Hirofumi Tsumura", name_ja: "津村 博文", url: "https://researchmap.jp/hiro_tsumu", affiliation: "Tokyo Metropolitan University", affiliation_ja: "東京都立大学" },
+  { id: "kanno", name: "Hayato Kanno", name_ja: "菅野 隼", url: "https://sites.google.com/view/hkanno/home", affiliation: "Tohoku University", affiliation_ja: "東北大学" },
   { id: "yaddaden", name: "Khalef Yaddaden", url: "https://khalefyaddaden.github.io/", affiliation: "University of Caen-Normandie", affiliation_ja: "カーン・ノルマンディー大学" },
-  { id: "kaneko", name: "Masanobu Kaneko", name_ja: "金子 昌信", url: "https://www2.math.kyushu-u.ac.jp/~mkaneko/", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
+  { id: "kaneko", name: "Masanobu Kaneko", name_ja: "金子 昌信", url: "https://www2.math.kyushu-u.ac.jp/~mkaneko/", affiliation: "Kyushu University (Professor Emeritus)", affiliation_ja: "九州大学 名誉教授" },
   { id: "sakugawa", name: "Kenji Sakugawa", name_ja: "佐久川 健司", url: "https://sites.google.com/site/kenjisakugawashomepage/home", affiliation: "Shinshu University", affiliation_ja: "信州大学" },
   { id: "hara", name: "Takashi Hara", name_ja: "原 隆", url: "https://edu.tsuda.ac.jp/~t-hara/index.html", affiliation: "Tsuda University", affiliation_ja: "津田塾大学" },
   { id: "hirose", name: "Minoru Hirose", name_ja: "廣瀬 稔", url: "https://sites.google.com/view/minoru-hirose/english", affiliation: "Kagoshima University", affiliation_ja: "鹿児島大学" },
-  { id: "sato", name: "Nobuo Sato", name_ja: "佐藤 信夫", url: "", affiliation: "National Taiwan University", affiliation_ja: "国立台湾大学" },
+  { id: "sato", name: "Nobuo Sato", name_ja: "佐藤 信夫", url: "https://www.math.ntu.edu.tw/en/entity_people/entity_people/21721", affiliation: "National Taiwan University", affiliation_ja: "国立台湾大学" },
   { id: "gangl", name: "Herbert Gangl", url: "https://www.maths.dur.ac.uk/users/herbert.gangl/", affiliation: "Durham University", affiliation_ja: "ダラム大学" },
   { id: "zagier", name: "Don Zagier", url: "https://people.mpim-bonn.mpg.de/zagier/", affiliation: "Max Planck Institute / ICTP", affiliation_ja: "マックス・プランク研究所 / ICTP" },
   { id: "kina", name: "Katsumi Kina", name_ja: "喜納 勝海", url: "https://sites.google.com/view/katsumikina/", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
   { id: "seki", name: "Shin-ichiro Seki", name_ja: "関 真一朗", url: "https://sites.google.com/view/shinichiro-seki/home-english", affiliation: "Nagahama Institute of Bio-Science and Technology", affiliation_ja: "長浜バイオ大学" },
-  { id: "maesaka", name: "Takumi Maesaka", name_ja: "前坂 巧", url: "https://mathlog.info/users/657/articles", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
-  { id: "yuan", name: "Huafeng Yuan", url: "", affiliation: "", affiliation_ja: "" },
+  { id: "maesaka", name: "Takumi Maesaka", name_ja: "前阪 拓己", url: "https://mathlog.info/users/657/articles", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
+  { id: "yuan", name: "Haiping Yuan", url: "", affiliation: "York College of Pennsylvania", affiliation_ja: "" },
   { id: "zhao", name: "Jianqiang Zhao", url: "", affiliation: "The Bishop's School", affiliation_ja: "" },
   { id: "turan", name: "Can Turan", url: "", affiliation: "University of Hamburg", affiliation_ja: "ハンブルク大学" },
   { id: "skadborg", name: "Rasmus Peter Skadborg", url: "", affiliation: "", affiliation_ja: "" },
@@ -829,7 +925,16 @@ const AUTHORS = [
   { id: "sychen", name: "Song-Yun Chen", url: "", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
   { id: "fjhuang", name: "Fei-Jun Huang", url: "", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
   { id: "hctsui", name: "Hung-Chun Tsui", url: "", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
-  { id: "sunjianbo", name: "Jianbo Sun", name_ja: "孫 荐博", url: "", affiliation: "Kyushu University", affiliation_ja: "九州大学" }
+  { id: "sunjianbo", name: "Jianbo Sun", name_ja: "孫 荐博", url: "", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
+  { id: "kawamura", name: "Hanamichi Kawamura", name_ja: "川村 花道", url: "https://sites.google.com/view/hanamichikawamura", affiliation: "Tokyo University of Science", affiliation_ja: "東京理科大学" },
+  { id: "schneps", name: "Leila Schneps", url: "", affiliation: "CNRS, Paris", affiliation_ja: "" },
+  { id: "cychang", name: "Chieh-Yu Chang", url: "https://www.math.nthu.edu.tw/~cychang/", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
+  { id: "hjchen", name: "Huei-Jeng Chen", url: "", affiliation: "", affiliation_ja: "" },
+  { id: "twatanabe", name: "Taiki Watanabe", url: "", affiliation: "The University of Tokyo", affiliation_ja: "東京大学" },
+  { id: "gshin", name: "Gyucheol Shin", url: "https://sites.google.com/view/gyucheolshin/", affiliation: "Kangwon National University", affiliation_ja: "" },
+  { id: "zudilin", name: "Wadim Zudilin", url: "https://www.math.ru.nl/~wzudilin/", affiliation: "Radboud University Nijmegen", affiliation_ja: "" },
+  { id: "hongminh", name: "Killian Hong-Minh", url: "", affiliation: "Trinity College Dublin", affiliation_ja: "" },
+  { id: "mozgovoy", name: "Sergey Mozgovoy", url: "https://www.maths.tcd.ie/~mozgovoy/", affiliation: "Trinity College Dublin", affiliation_ja: "" }
 ];
 
 // ===================================================================
@@ -838,12 +943,140 @@ const AUTHORS = [
 // ===================================================================
 const REFERENCES = [
   {
-    id: "r01",
-    title: "Relations and Derivatives of Multiple Eisenstein Series",
+    id: "r23",
+    title: "Zagier's 2-3-2 formula for multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2026,
+    month: 10,
+    day: 16,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "relations", "sl2-algebra"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2610.23052" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "r24",
+    title: "A Hoffman basis for multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2026,
+    month: 10,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "Hoffman basis"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/hoffmanbasismes_v3.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "r25",
+    title: "Lie algebras for multiple Eisenstein series and multiple $q$-zeta values",
+    authors: ["bachmann", "kawamura"],
+    year: 2026,
+    month: 9,
+    day: 10,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "q-analogues", "Lie algebra"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2609.29574" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "r26",
+    title: "The $\\mathfrak{sl}_2$-algebra structure of multiple Eisenstein series",
     authors: ["bachmann", "kanno"],
     year: 2026,
+    month: 9,
+    day: 3,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "sl2-algebra"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2609.03777" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "r27",
+    title: "An $\\mathfrak{sl}_2$-action on the uri Lie algebra",
+    authors: ["bachmann"],
+    year: 2026,
+    month: 9,
+    day: 2,
+    type: "preprint",
+    tags: ["formal multiple Eisenstein series", "Lie algebra", "sl2-algebra"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2609.02137" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "r28",
+    title: "Schur Eisenstein series and Schur MacMahon series",
+    authors: ["bachmann", "yujinbo"],
+    year: 2026,
+    month: 7,
+    day: 30,
+    type: "preprint",
+    tags: ["Schur multiple Eisenstein series", "quasimodular forms", "MacMahon"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2607.27702" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "r29",
+    title: "A Weighted Sum Formula for Double Eisenstein Series",
+    authors: ["bachmann"],
+    year: 2026,
+    month: 7,
+    day: 23,
+    type: "notes",
+    tags: ["double Eisenstein series", "relations", "multiple divisor functions"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2607.21358" }
+    ],
+    added: "2026-10-20",
+    journal: "Non-refereed note"
+  },
+  {
+    id: "r30",
+    title: "Relations and derivatives for multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2026,
+    month: 7,
+    day: 21,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "relations", "derivatives"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.4171/OWR/2026/7" },
+      { label: "PDF", url: "https://publications.mfo.de/bitstream/handle/mfo/4441/OWR_2026_07.pdf?sequence=1&isAllowed=y" }
+    ],
+    added: "2026-10-20",
+    journal: "Oberwolfach Rep. 23 (2026), no. 1, 449–450"
+  },
+  {
+    id: "r01",
+    title: "Relations and Derivatives of Multiple Eisenstein Series",
+    authors: ["bachmann", "kanno", "maesaka"],
+    year: 2026,
     month: 2,
-    day: 12,
+    day: 9,
     type: "preprint",
     tags: ["multiple Eisenstein series", "derivatives", "relations"],
     language: "English",
@@ -865,7 +1098,7 @@ const REFERENCES = [
       { label: "Journal", url: "https://www.sciencedirect.com/science/article/pii/S0001870825006371" },
       { label: "arXiv", url: "https://arxiv.org/abs/2312.04124" }
     ],
-    journal: "Adv. Math. 487 (2026)"
+    journal: "Adv. Math. 487, 110739 (2026)"
   },
   {
     id: "r03",
@@ -932,6 +1165,7 @@ const REFERENCES = [
     language: "English",
     links: [
       { label: "Journal", url: "https://link.springer.com/chapter/10.1007/978-3-030-37031-2_8" },
+      { label: "arXiv", url: "https://arxiv.org/abs/1704.06930" },
       { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmann_mes_and_qmzv.pdf" }
     ],
     journal: "Springer Proc. Math. Stat. 314, 173–235"
@@ -980,7 +1214,7 @@ const REFERENCES = [
   },
   {
     id: "r12",
-    title: "The algebra of multiple divisor functions and applications to multiple zeta values",
+    title: "The algebra of generating functions for multiple divisor sums and applications to multiple zeta values",
     authors: ["bachmann", "kuehn"],
     year: 2016,
     type: "paper",
@@ -997,14 +1231,14 @@ const REFERENCES = [
     title: "Derivatives of multiple Eisenstein series",
     authors: ["bachmann"],
     year: 2026,
-    month: 1,
+    month: 3,
     type: "notes",
     tags: ["multiple Eisenstein series", "derivatives"],
     language: "English",
     links: [
-      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmann_rims_mesderivative.pdf" }
+      { label: "PDF", url: "https://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/2339-04.pdf" }
     ],
-    journal: "RIMS Kôkyûroku, to appear"
+    journal: "RIMS Kôkyûroku No. 2339 (2026)"
   },
   {
     id: "r14",
@@ -1014,8 +1248,10 @@ const REFERENCES = [
     type: "notes",
     tags: ["multiple Eisenstein series", "sl2-algebra"],
     language: "English",
-    links: [],
-    journal: "Proceedings of the 71st Algebra Symposium, to appear"
+    links: [
+      { label: "PDF", url: "https://www.mathsoc.jp/section/algebra/algsymp_past/algsymp25_files/procalgsymp2025.pdf" }
+    ],
+    journal: "Proceedings of the 70th Algebra Symposium (2025)"
   },
   {
     id: "r15",
@@ -1068,6 +1304,51 @@ const REFERENCES = [
     journal: "RIMS Kôkyûroku, No. 2015, p. 22–43"
   },
   {
+    id: "r31",
+    title: "Relations satisfied by double $q$-zeta values",
+    authors: ["bachmann", "burmester", "kuehn"],
+    year: 2020,
+    type: "notes",
+    tags: ["q-analogues", "double zeta values", "formal double Eisenstein space"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/2160-16.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "RIMS Kôkyûroku No. 2160, 219–232 (2020)"
+  },
+  {
+    id: "r32",
+    title: "A short note on a conjecture of Okounkov about a $q$-analogue of multiple zeta values",
+    authors: ["bachmann", "kuehn"],
+    year: 2014,
+    month: 7,
+    day: 25,
+    type: "notes",
+    tags: ["q-analogues", "multiple divisor functions", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/1407.6796" }
+    ],
+    added: "2026-10-20",
+    journal: "Non-refereed note"
+  },
+  {
+    id: "r33",
+    title: "Modular forms and $q$-analogues of modified double zeta values",
+    authors: ["bachmann"],
+    year: 2020,
+    type: "paper",
+    tags: ["q-analogues", "double zeta values", "modular forms", "period polynomials"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://link.springer.com/article/10.1007/s12188-020-00227-7" },
+      { label: "arXiv", url: "https://arxiv.org/abs/1808.09674" }
+    ],
+    added: "2026-10-20",
+    journal: "Abh. Math. Semin. Univ. Hambg. 90(2), 201–213 (2020)"
+  },
+  {
     id: "r21",
     title: "Multiple Eisenstein series and $q$-analogues of multiple zeta values",
     authors: ["bachmann"],
@@ -1092,6 +1373,38 @@ const REFERENCES = [
       { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/msc_henrik_bachmann.pdf" }
     ],
     journal: "Master's Thesis, University of Hamburg"
+  },
+  {
+    id: "s28",
+    title: "Recent developments on multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2026,
+    month: 9,
+    day: 12,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "survey"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/tokyopolylogtalk-handout.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "FJ-LMI Workshop on Polylogarithms, The University of Tokyo, September 2026"
+  },
+  {
+    id: "s29",
+    title: "Relations and derivatives of multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2026,
+    month: 6,
+    day: 12,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "relations", "derivatives"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachmanngalway_reldermes_june2026.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "Sixth International Workshop on Zeta Functions in Algebra and Geometry, University of Galway, June 2026"
   },
   {
     id: "s01",
@@ -1159,6 +1472,21 @@ const REFERENCES = [
       { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/shanghaitalkbachmann.pdf" }
     ],
     journal: "Tongji University, July 2025"
+  },
+  {
+    id: "s30",
+    title: "$\\mathfrak{sl}_2$-algebras and multiple Eisenstein series",
+    authors: ["bachmann"],
+    year: 2025,
+    month: 6,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "sl2-algebra"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/hkutalkbachmann.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "HKU Number Theory Days 2025, The University of Hong Kong, June 2025"
   },
   {
     id: "s06",
@@ -1286,7 +1614,7 @@ const REFERENCES = [
     tags: ["formal double Eisenstein space", "double zeta values"],
     language: "English",
     links: [
-      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/formaldzs_バッハマン_月例報告会.pdf" }
+      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/formaldzs_%E3%83%8F%E3%82%99%E3%83%83%E3%83%8F%E3%83%9E%E3%83%B3_%E6%9C%88%E4%BE%8B%E5%A0%B1%E5%91%8A%E4%BC%9A.pdf" }
     ],
     journal: "月例報告会, May 2021"
   },
@@ -1411,7 +1739,7 @@ const REFERENCES = [
     id: "b01",
     title: "A generalization of formal multiple zeta values related to multiple Eisenstein series and multiple $q$-zeta values",
     authors: ["burmester"],
-    year: 2024,
+    year: 2025,
     type: "paper",
     tags: ["formal multiple Eisenstein series", "q-analogues", "multiple zeta values"],
     language: "English",
@@ -1419,7 +1747,7 @@ const REFERENCES = [
       { label: "Journal", url: "https://www.sciencedirect.com/science/article/pii/S0022314X24002221" },
       { label: "arXiv", url: "https://arxiv.org/abs/2307.02370" }
     ],
-    journal: "J. Number Theory 269, 106–137 (2024)"
+    journal: "J. Number Theory 269, 106–137 (2025)"
   },
   {
     id: "b02",
@@ -1476,6 +1804,87 @@ const REFERENCES = [
       { label: "arXiv", url: "https://arxiv.org/abs/2504.19661" }
     ],
     journal: "Preprint"
+  },
+  {
+    id: "b13",
+    title: "Moulds, Bimoulds, and some Lie algebras",
+    authors: ["burmester", "kuehn", "schneps"],
+    year: 2026,
+    month: 9,
+    day: 21,
+    type: "preprint",
+    tags: ["Lie algebra", "q-analogues", "multiple Eisenstein series"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2609.25168" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "b14",
+    title: "Lie algebra structures for multiple Eisenstein series",
+    authors: ["burmester"],
+    year: 2026,
+    month: 7,
+    day: 21,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "Lie algebra"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.4171/OWR/2026/7" },
+      { label: "PDF", url: "https://publications.mfo.de/bitstream/handle/mfo/4441/OWR_2026_07.pdf?sequence=1&isAllowed=y" }
+    ],
+    added: "2026-10-20",
+    journal: "Oberwolfach Rep. 23 (2026), no. 1, 446–448"
+  },
+  {
+    id: "b15",
+    title: "Formal multiple $q$-zeta values",
+    authors: ["burmester"],
+    year: 2022,
+    month: 9,
+    day: 13,
+    type: "slides",
+    tags: ["q-analogues", "formal multiple Eisenstein series"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.dropbox.com/s/n9huoqo40r182uy/dmv_burmester.pdf?dl=1" }
+    ],
+    added: "2026-10-20",
+    journal: "DMV Annual Meeting, Berlin, September 2022"
+  },
+  {
+    id: "b16",
+    title: "Post-Lie algebras related to multiple ($q$-)zeta values",
+    authors: ["burmester"],
+    year: 2023,
+    month: 3,
+    day: 31,
+    type: "slides",
+    tags: ["Lie algebra", "q-analogues"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.dropbox.com/s/cxjehc9myu2h05f/Post-lie%20algebras%20related%20to%20%28q%29mzv_burmester.pdf?dl=1" }
+    ],
+    added: "2026-10-20",
+    journal: "ACPMS Seminar, online, March 2023"
+  },
+  {
+    id: "uk01",
+    title: "Interesting coproducts through post-Lie algebras",
+    authors: ["kuehn"],
+    year: 2025,
+    month: 6,
+    day: 20,
+    type: "slides",
+    tags: ["Lie algebra"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.math.ntnu.no/acpms/slides/ACPMS-UKuehn_20-06-2025.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "ACPMS Seminar, online, June 2025"
   },
   {
     id: "b05",
@@ -1611,7 +2020,8 @@ const REFERENCES = [
     tags: ["multiple Eisenstein series", "level N", "multiple zeta values"],
     language: "Japanese",
     links: [
-      { label: "PDF", url: "https://drive.google.com/file/d/1bE5gXztHcXFgRvZsk7eBRvOYlzxRLaCy/view" }
+      { label: "PDF", url: "https://drive.google.com/file/d/1bE5gXztHcXFgRvZsk7eBRvOYlzxRLaCy/view" },
+      { label: "Summary", url: "https://drive.google.com/file/d/1Vsg2V9uRBZmFNOkWHjWUysJZuTmqpVFL/view" }
     ],
     journal: "Master's Thesis, Tohoku University"
   },
@@ -1636,7 +2046,7 @@ const REFERENCES = [
     authors: ["kanno"],
     year: 2026,
     month: 3,
-    day: 23,
+    day: 24,
     type: "slides",
     tags: ["multiple Eisenstein series", "relations"],
     language: "English",
@@ -1651,7 +2061,7 @@ const REFERENCES = [
     authors: ["kanno"],
     year: 2026,
     month: 3,
-    day: 16,
+    day: 18,
     type: "slides",
     tags: ["multiple Eisenstein series", "relations"],
     language: "English",
@@ -1791,11 +2201,43 @@ const REFERENCES = [
     journal: "第23回仙台広島整数論集会, Tohoku University, July 2024"
   },
   {
+    id: "k17",
+    title: "多重$\\wp$-関数とその応用",
+    authors: ["kanno"],
+    year: 2026,
+    month: 3,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "Weierstrass p-function"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/2339-03.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "RIMS Kôkyûroku No. 2339 (2026)"
+  },
+  {
+    id: "k18",
+    title: "Algebra of multiple Eisenstein series",
+    authors: ["kanno"],
+    year: 2026,
+    month: 9,
+    day: 14,
+    type: "poster",
+    tags: ["multiple Eisenstein series", "relations", "derivatives"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1_z8fHUccDMg5cImGWwqVa7YXzdbHeKpw/view" }
+    ],
+    added: "2026-10-20",
+    journal: "L-functions and Motives in Niseko 2026, Niseko, September 2026"
+  },
+  {
     id: "t01",
     title: "Symmetric multiple Eisenstein series",
-    authors: ["tasaka", "sakugawa", "hara"],
+    authors: ["hara", "sakugawa", "tasaka"],
     year: 2026,
     month: 1,
+    day: 20,
     type: "preprint",
     tags: ["multiple Eisenstein series", "symmetric"],
     language: "English",
@@ -1828,7 +2270,8 @@ const REFERENCES = [
     language: "English",
     links: [
       { label: "Journal", url: "https://doi.org/10.1007/s00208-013-0930-5" },
-      { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/paper/Double Eisenstein series of level 2.pdf" }
+      { label: "arXiv", url: "https://arxiv.org/abs/1112.5697" },
+      { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/paper/Double%20Eisenstein%20series%20of%20level%202.pdf" }
     ],
     journal: "Math. Ann. 357(3), 1091–1118 (2013)"
   },
@@ -1845,6 +2288,22 @@ const REFERENCES = [
       { label: "arXiv", url: "https://arxiv.org/abs/1402.1585" }
     ],
     journal: "Ramanujan J. 38(3), 455–463 (2015)"
+  },
+  {
+    id: "hi01",
+    title: "A unified proof of conjectures on the spaces of multiple $q$-zeta values",
+    authors: ["hirose", "maesaka", "twatanabe"],
+    year: 2026,
+    month: 5,
+    day: 27,
+    type: "preprint",
+    tags: ["q-analogues", "multiple zeta values", "bi-brackets"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2605.28584" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
   },
   {
     id: "t05",
@@ -1869,7 +2328,8 @@ const REFERENCES = [
     language: "English",
     links: [
       { label: "Journal", url: "https://doi.org/10.1007/s11139-013-9513-z" },
-      { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/paper/Representing integers.pdf" }
+      { label: "arXiv", url: "https://arxiv.org/abs/1112.5696" },
+      { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/paper/Representing%20integers.pdf" }
     ],
     journal: "Ramanujan J. 33(1), 1–21 (2014)"
   },
@@ -1950,6 +2410,23 @@ const REFERENCES = [
     journal: "第26回整数論サマースクール報告集, pp. 311–330 (2018)"
   },
   {
+    id: "t13",
+    title: "Multiple zeta values and modular forms",
+    authors: ["tasaka"],
+    year: 2026,
+    month: 7,
+    day: 21,
+    type: "notes",
+    tags: ["double Eisenstein series", "period polynomials", "modular forms"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.4171/OWR/2026/7" },
+      { label: "PDF", url: "https://publications.mfo.de/bitstream/handle/mfo/4441/OWR_2026_07.pdf?sequence=1&isAllowed=y" }
+    ],
+    added: "2026-10-20",
+    journal: "Oberwolfach Rep. 23 (2026), no. 1, 454–458"
+  },
+  {
     id: "gkz01",
     title: "Double zeta values and modular forms",
     authors: ["gangl", "kaneko", "zagier"],
@@ -2010,7 +2487,7 @@ const REFERENCES = [
     tags: ["double Eisenstein series", "modular forms", "level N"],
     language: "English",
     links: [
-      { label: "Journal", url: "https://link.springer.com/article/10.1007/s11139-024-00940-6" },
+      { label: "Journal", url: "https://link.springer.com/article/10.1007/s11139-024-00954-y" },
       { label: "arXiv", url: "https://arxiv.org/abs/2403.06917" }
     ],
     journal: "Ramanujan J. 65(4), 1651–1696 (2024)"
@@ -2018,16 +2495,16 @@ const REFERENCES = [
   {
     id: "ki02",
     title: "Multiple $\\wp$-functions and their applications",
-    authors: ["kina", "kanno"],
-    year: 2025,
-    month: 7,
-    type: "preprint",
+    authors: ["kanno", "kina"],
+    year: 2026,
+    type: "paper",
     tags: ["multiple Eisenstein series", "Weierstrass p-function"],
     language: "English",
     links: [
+      { label: "Journal", url: "https://doi.org/10.1016/j.jalgebra.2026.04.055" },
       { label: "arXiv", url: "https://arxiv.org/abs/2507.14118" }
     ],
-    journal: "Preprint"
+    journal: "J. Algebra 705, 165–196 (2026)"
   },
   {
     id: "ki03",
@@ -2035,7 +2512,7 @@ const REFERENCES = [
     authors: ["kina"],
     year: 2026,
     month: 2,
-    day: 15,
+    day: 18,
     type: "slides",
     tags: ["multiple Eisenstein series", "Weierstrass p-function"],
     language: "English",
@@ -2071,18 +2548,101 @@ const REFERENCES = [
     journal: "第18回多重ゼータ研究集会 & 第64回関西多重ゼータ研究会, Kindai University, February 2024"
   },
   {
+    id: "ki06",
+    title: "多重$\\wp$関数について",
+    authors: ["kina"],
+    year: 2026,
+    month: 3,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "Weierstrass p-function"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/2339-20.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "RIMS Kôkyûroku No. 2339 (2026)"
+  },
+  {
+    id: "ki07",
+    title: "Multiple $\\wp$-functions and associated multiple Eisenstein series",
+    authors: ["kina"],
+    year: 2026,
+    month: 7,
+    day: 21,
+    type: "notes",
+    tags: ["multiple Eisenstein series", "Weierstrass p-function"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.4171/OWR/2026/7" },
+      { label: "PDF", url: "https://publications.mfo.de/bitstream/handle/mfo/4441/OWR_2026_07.pdf?sequence=1&isAllowed=y" }
+    ],
+    added: "2026-10-20",
+    journal: "Oberwolfach Rep. 23 (2026), no. 1, 462–464"
+  },
+  {
+    id: "ki08",
+    title: "Zeros of Quasimodular Forms Defined by Iterated Sums",
+    authors: ["kina", "gshin"],
+    year: 2026,
+    month: 9,
+    day: 11,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "quasimodular forms"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2609.12729" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "ki09",
+    title: "Zeros of Quasimodular Forms Defined by Iterated Sums",
+    authors: ["kina"],
+    year: 2026,
+    month: 10,
+    day: 16,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "quasimodular forms"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1ehsZPDHz5N3_Wsv6TZAPDXlf5ubacT24/view" }
+    ],
+    added: "2026-10-20",
+    journal: "RIMS 解析的整数論とその周辺, Kyoto University, October 2026"
+  },
+  {
+    id: "ki10",
+    title: "Multiple $\\wp$-functions and their applications",
+    authors: ["kina"],
+    year: 2025,
+    month: 9,
+    day: 3,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "Weierstrass p-function"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1dEE0ebfpI74cInNTnogFWNal5Ty785tx/view" }
+    ],
+    added: "2026-10-20",
+    journal: "第17回福岡数論研究集会, Kyushu University, September 2025"
+  },
+  {
     id: "ln01",
     title: "Multiple zeta values (多重ゼータ値) — Lecture Notes",
     authors: ["bachmann"],
-    year: 2025,
+    year: 2026,
+    month: 8,
+    day: 3,
     type: "lecture notes",
     tags: ["multiple zeta values", "multiple Eisenstein series", "q-analogues", "modular forms", "survey"],
     language: "English",
     links: [
-      { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/mzv_2025_lecture_notes_v25.pdf" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2608.02230" },
+      { label: "PDF (2025)", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/mzv_2025_lecture_notes_v25.pdf" },
       { label: "Course page", url: "https://www.henrikbachmann.com/mzv2025.html" }
     ],
-    journal: "Nagoya University, Spring 2025"
+    journal: "Lecture notes, Nagoya University, arXiv 2026"
   },
   {
     id: "yz01",
@@ -2093,9 +2653,56 @@ const REFERENCES = [
     tags: ["double Eisenstein series", "double shuffle relations", "double zeta values", "level N"],
     language: "English",
     links: [
+      { label: "Journal", url: "https://doi.org/10.1112/jlms/jdv042" },
       { label: "arXiv", url: "https://arxiv.org/abs/1401.6699" }
     ],
     journal: "J. London Math. Soc. (2) 92, 520–546 (2015)"
+  },
+  {
+    id: "yz02",
+    title: "Bachmann–Kühn's brackets and multiple zeta values at level $N$",
+    authors: ["yuan", "zhao"],
+    year: 2016,
+    type: "paper",
+    tags: ["multiple divisor functions", "multiple zeta values", "level N"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.1007/s00229-015-0798-7" },
+      { label: "arXiv", url: "https://arxiv.org/abs/1408.4983" }
+    ],
+    added: "2026-10-20",
+    journal: "Manuscripta Math. 150, 177–210 (2016)"
+  },
+  {
+    id: "zu01",
+    title: "Multiple $q$-zeta brackets",
+    authors: ["zudilin"],
+    year: 2015,
+    type: "paper",
+    tags: ["bi-brackets", "q-analogues", "multiple zeta values"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.3390/math3010119" },
+      { label: "arXiv", url: "https://arxiv.org/abs/1412.0163" }
+    ],
+    added: "2026-10-20",
+    journal: "Mathematics 3(1), 119–130 (2015)"
+  },
+  {
+    id: "hm01",
+    title: "Quasi-modularity of symmetric quasi-shuffles",
+    authors: ["hongminh", "mozgovoy"],
+    year: 2026,
+    month: 9,
+    day: 9,
+    type: "preprint",
+    tags: ["q-analogues", "quasimodular forms", "MacMahon"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2609.10309" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
   },
   {
     id: "blog01",
@@ -2118,7 +2725,7 @@ const REFERENCES = [
     authors: ["maesaka"],
     year: 2026,
     month: 3,
-    day: 11,
+    day: 10,
     type: "blog",
     tags: ["formal multiple Eisenstein series", "relations"],
     language: "Japanese",
@@ -2133,7 +2740,7 @@ const REFERENCES = [
     authors: ["maesaka"],
     year: 2026,
     month: 3,
-    day: 11,
+    day: 10,
     type: "blog",
     tags: ["formal multiple Eisenstein series", "derivations"],
     language: "Japanese",
@@ -2148,7 +2755,7 @@ const REFERENCES = [
     authors: ["maesaka"],
     year: 2026,
     month: 3,
-    day: 4,
+    day: 3,
     type: "blog",
     tags: ["multiple Eisenstein series"],
     language: "Japanese",
@@ -2156,6 +2763,70 @@ const REFERENCES = [
       { label: "Blog", url: "https://mathlog.info/articles/MJS27GvEPgvuKWomMuZ0" }
     ],
     journal: "Mathlog, March 2026"
+  },
+  {
+    id: "blog05",
+    title: "swap invariantなq多重ゼータ値",
+    authors: ["maesaka"],
+    year: 2026,
+    month: 3,
+    day: 1,
+    type: "blog",
+    tags: ["q-analogues", "bi-brackets", "multiple Eisenstein series"],
+    language: "Japanese",
+    links: [
+      { label: "Blog", url: "https://mathlog.info/articles/piDhcQaJUtc481JwhllY" }
+    ],
+    added: "2026-10-20",
+    journal: "Mathlog, March 2026"
+  },
+  {
+    id: "blog06",
+    title: "多重Eisenstein級数のFourier級数展開",
+    authors: ["maesaka"],
+    year: 2026,
+    month: 2,
+    day: 17,
+    type: "blog",
+    tags: ["multiple Eisenstein series", "Fourier expansion"],
+    language: "Japanese",
+    links: [
+      { label: "Blog", url: "https://mathlog.info/articles/fWfHDu1J5Bt9q6TvbHdE" }
+    ],
+    added: "2026-10-20",
+    journal: "Mathlog, February 2026"
+  },
+  {
+    id: "blog07",
+    title: "多重Eisenstein級数の調和正規化",
+    authors: ["maesaka"],
+    year: 2026,
+    month: 2,
+    day: 17,
+    type: "blog",
+    tags: ["multiple Eisenstein series", "regularization"],
+    language: "Japanese",
+    links: [
+      { label: "Blog", url: "https://mathlog.info/articles/8q7YExHiIljhMuxou1uM" }
+    ],
+    added: "2026-10-20",
+    journal: "Mathlog, February 2026"
+  },
+  {
+    id: "blog08",
+    title: "2が並んだq多重ゼータ値とEisenstein級数の関係",
+    authors: ["maesaka"],
+    year: 2025,
+    month: 9,
+    day: 25,
+    type: "blog",
+    tags: ["q-analogues", "Eisenstein series"],
+    language: "Japanese",
+    links: [
+      { label: "Blog", url: "https://mathlog.info/articles/nxv70xR2rxTMW9g8i50L" }
+    ],
+    added: "2026-10-20",
+    journal: "Mathlog, September 2025"
   },
   {
     id: "ct01",
@@ -2286,7 +2957,7 @@ const REFERENCES = [
     authors: ["yujinbo"],
     year: 2026,
     month: 3,
-    day: 17,
+    day: 19,
     type: "slides",
     tags: ["Schur multiple Eisenstein series", "sl2-algebra"],
     language: "English",
@@ -2296,12 +2967,75 @@ const REFERENCES = [
     journal: "Meeting in the Middle, University of Hawaii at Manoa, March 2026"
   },
   {
+    id: "yj05",
+    title: "Modularity criteria for multiple Eisenstein series",
+    authors: ["yujinbo"],
+    year: 2026,
+    month: 10,
+    day: 15,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "modular forms"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2610.21291" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "yj06",
+    title: "The Young Tableaux Hopf algebra and multiple Schur series",
+    authors: ["yujinbo"],
+    year: 2026,
+    month: 7,
+    day: 10,
+    type: "preprint",
+    tags: ["Schur multiple Eisenstein series", "q-analogues", "quasimodular forms"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2607.09157" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "yj07",
+    title: "Schur Eisenstein series and quasimodular forms",
+    authors: ["yujinbo"],
+    year: 2026,
+    month: 8,
+    type: "notes",
+    tags: ["Schur multiple Eisenstein series", "quasimodular forms"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/2354-03.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "RIMS Kôkyûroku No. 2354, 19–27 (2026)"
+  },
+  {
+    id: "yj08",
+    title: "Schur functions and quasimodular forms",
+    authors: ["yujinbo"],
+    year: 2026,
+    month: 8,
+    day: 18,
+    type: "slides",
+    tags: ["Schur multiple Eisenstein series", "quasimodular forms", "MacMahon"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1b_m5uvpByivFiZheFqz1KBvQMONx642T/view" }
+    ],
+    added: "2026-10-20",
+    journal: "Building Bridges 7th EU/US Workshop on Automorphic Forms and Related Topics, Będlewo, August 2026"
+  },
+  {
     id: "ccht01",
     title: "Algebra structures of multiple Eisenstein series in positive characteristic",
     authors: ["twchang", "sychen", "fjhuang", "hctsui"],
     year: 2026,
     month: 3,
-    day: 10,
+    day: 11,
     type: "preprint",
     tags: ["multiple Eisenstein series", "positive characteristic", "function fields"],
     language: "English",
@@ -2312,7 +3046,7 @@ const REFERENCES = [
   },
   {
     id: "ccht02",
-    title: "On $\\star$-shuffle relations for multiple Eisenstein series of arbitrary rank in positive characteristic",
+    title: "On $q$-shuffle relations for multiple Eisenstein series of arbitrary rank in positive characteristic",
     authors: ["twchang", "sychen", "fjhuang", "hctsui"],
     year: 2025,
     month: 4,
@@ -2323,6 +3057,37 @@ const REFERENCES = [
       { label: "arXiv", url: "https://arxiv.org/abs/2504.18879" }
     ],
     journal: "Preprint"
+  },
+  {
+    id: "ccht03",
+    title: "On Multiple Eisenstein Series in Positive Characteristic: Direct Sum Result",
+    authors: ["cychang", "sychen", "fjhuang", "hctsui"],
+    year: 2026,
+    month: 9,
+    day: 16,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "positive characteristic", "function fields"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2609.18777" }
+    ],
+    added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "hjc01",
+    title: "On shuffle of double Eisenstein series in positive characteristic",
+    authors: ["hjchen"],
+    year: 2017,
+    type: "paper",
+    tags: ["double Eisenstein series", "positive characteristic", "shuffle relations", "function fields"],
+    language: "English",
+    links: [
+      { label: "Journal", url: "https://doi.org/10.5802/jtnb.1002" },
+      { label: "PDF", url: "https://jtnb.centre-mersenne.org/item/10.5802/jtnb.1002.pdf" }
+    ],
+    added: "2026-10-20",
+    journal: "J. Théor. Nombres Bordeaux 29(3), 815–825 (2017)"
   },
   {
     id: "sj01",
@@ -2383,6 +3148,12 @@ const REFERENCES = [
       chart_title: 'References by year',
       total_entries: 'Total entries',
       total_authors: 'Authors',
+      new_badge: 'new',
+      new_only: 'New',
+      new_title: 'Added in the latest update',
+      meta_refs: 'references',
+      meta_people: 'mathematicians',
+      meta_added: (n, ym) => `${n} added in ${ym}`,
     },
     ja: {
       header_subtitle: '文献リスト',
@@ -2413,6 +3184,12 @@ const REFERENCES = [
       chart_title: '年別文献数',
       total_entries: '総文献数',
       total_authors: '研究者数',
+      new_badge: '新着',
+      new_only: '新着',
+      new_title: '最新の更新で追加',
+      meta_refs: '件の文献',
+      meta_people: '名の研究者',
+      meta_added: (n, ym) => `${ym}に${n}件追加`,
     }
   };
 
@@ -2456,6 +3233,7 @@ const REFERENCES = [
       document.documentElement.lang = currentLang === 'ja' ? 'ja' : 'en';
       applyI18n();
       populateDropdowns();
+      renderHeaderMeta();
       renderReferences();
       renderAuthors();
       renderStats();
@@ -2497,6 +3275,31 @@ const REFERENCES = [
   // --- State ---
   let sortDesc = true;
   let activeAuthorFilter = null; // author id or null
+  let newOnly = false;
+
+  // Entries carry an "added" date (YYYY-MM-DD). The latest date marks the newest batch.
+  const LATEST_ADDED = REFERENCES.reduce((m, r) => (r.added && r.added > m ? r.added : m), '');
+  const isNew = r => Boolean(LATEST_ADDED) && r.added === LATEST_ADDED;
+  const NEW_COUNT = REFERENCES.filter(isNew).length;
+
+  function formatYearMonth(iso) {
+    const [y, m] = iso.split('-').map(Number);
+    if (currentLang === 'ja') return `${y}年${m}月`;
+    return new Date(Date.UTC(y, m - 1, 1)).toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  }
+
+  function renderHeaderMeta() {
+    const people = AUTHORS.filter(a => REFERENCES.some(r => r.authors.includes(a.id) || (r.appendix || []).includes(a.id))).length;
+    let s = currentLang === 'ja'
+      ? `${REFERENCES.length}${t('meta_refs')} · ${people}${t('meta_people')}`
+      : `${REFERENCES.length} ${t('meta_refs')} · ${people} ${t('meta_people')}`;
+    if (NEW_COUNT) s += ` · ${t('meta_added')(NEW_COUNT, formatYearMonth(LATEST_ADDED))}`;
+    $('#header-meta').textContent = s;
+    const nb = $('#filter-new');
+    nb.textContent = `✦ ${t('new_only')} (${NEW_COUNT})`;
+    nb.title = t('new_title');
+    nb.style.display = NEW_COUNT ? '' : 'none';
+  }
 
   // --- Author HTML for reference list (clickable to filter) ---
   function getAuthorName(a) {
@@ -2594,6 +3397,13 @@ const REFERENCES = [
     renderReferences();
   });
 
+  $('#filter-new').addEventListener('click', () => {
+    newOnly = !newOnly;
+    $('#filter-new').classList.toggle('active', newOnly);
+    $('#filter-new').setAttribute('aria-pressed', String(newOnly));
+    renderReferences();
+  });
+
   typeSelect.addEventListener('change', renderReferences);
   langSelect.addEventListener('change', renderReferences);
 
@@ -2650,6 +3460,7 @@ const REFERENCES = [
     let refs = REFERENCES.filter(r => {
       if (typeFilter !== 'all' && r.type !== typeFilter) return false;
       if (langFilter !== 'all' && r.language !== langFilter) return false;
+      if (newOnly && !isNew(r)) return false;
       if (activeTags.length > 0 && !activeTags.some(t => r.tags.includes(t))) return false;
       if (activeAuthorFilter) {
         const allAuthors = [...r.authors, ...(r.appendix || [])];
@@ -2686,7 +3497,17 @@ const REFERENCES = [
       empty.style.display = 'block';
     } else {
       empty.style.display = 'none';
+      const yearCounts = {};
+      refs.forEach(r => { yearCounts[r.year] = (yearCounts[r.year] || 0) + 1; });
+      let lastYear = null;
       refs.forEach((r, i) => {
+        if (r.year !== lastYear) {
+          lastYear = r.year;
+          const h = document.createElement('li');
+          h.className = 'year-heading';
+          h.innerHTML = `<span>${r.year}</span><span class="year-count">${yearCounts[r.year]}</span>`;
+          list.appendChild(h);
+        }
         const li = document.createElement('li');
         li.className = 'ref-item';
 
@@ -2720,7 +3541,7 @@ const REFERENCES = [
         li.innerHTML = `
           <div class="ref-head">
             <span class="ref-number">[${i + 1}]</span>
-            <span class="ref-title">${hl(r.title)}</span>
+            <span class="ref-title">${hl(r.title)}${isNew(r) ? ` <span class="ref-new" title="${t('new_title')}">${t('new_badge')}</span>` : ''}</span>
           </div>
           <div class="ref-detail">
             <span class="ref-authors">${authorsHTML}${appendixHTML}</span>
@@ -2813,7 +3634,7 @@ const REFERENCES = [
         <span class="author-name">${nameHTML}</span>
         ${displayAff ? `<span class="author-dot">·</span><span class="author-affiliation">${displayAff}</span>` : ''}
         <span class="author-dot">·</span>
-        <button class="author-show-refs" data-author-id="${a.id}">${count} ${t('references')} (${breakdown})</button>
+        <button class="author-show-refs" data-author-id="${a.id}">${count} ${count === 1 ? t('reference') : t('references')} (${breakdown})</button>
       `;
       list.appendChild(li);
     });
@@ -2912,13 +3733,13 @@ const REFERENCES = [
       const ym = yearData.get(y);
       let total = 0;
       ym.forEach(v => total += v);
-      const heightPct = (total / maxTotal) * 100;
+      const heightPct = (total / maxTotal) * 90;
 
       let stackHTML = '';
       activeTypes.forEach(tp => {
         const count = ym.get(tp) || 0;
         if (count > 0) {
-          const segPct = (count / total) * heightPct;
+          const segPct = (count / total) * 100;
           stackHTML += `<div class="stats-bar-segment" style="height:${segPct}%;background:${TYPE_COLORS[tp] || '#999'}" title="${typeName(tp)}: ${count}"></div>`;
         }
       });
@@ -2948,6 +3769,7 @@ const REFERENCES = [
       if (activeAuthorFilter) params.set('author', activeAuthorFilter);
       if (searchInput.value.trim()) params.set('q', searchInput.value.trim());
       if (!sortDesc) params.set('sort', 'asc');
+      if (newOnly) params.set('new', '1');
       const activeTab = document.querySelector('.nav-tab.active');
       if (activeTab && activeTab.dataset.view !== 'references') params.set('view', activeTab.dataset.view);
       const qs = params.toString();
@@ -2966,6 +3788,11 @@ const REFERENCES = [
         sortDesc = false;
         $('#sort-year-desc').classList.remove('active');
         $('#sort-year-asc').classList.add('active');
+      }
+      if (params.get('new') === '1' && NEW_COUNT) {
+        newOnly = true;
+        $('#filter-new').classList.add('active');
+        $('#filter-new').setAttribute('aria-pressed', 'true');
       }
       if (params.has('author')) {
         setAuthorFilter(params.get('author'));
@@ -2987,6 +3814,7 @@ const REFERENCES = [
   renderReferences = function() { _origRender(); updateURL(); };
 
   // --- Init ---
+  renderHeaderMeta();
   loadFromURL();
   renderReferences();
   renderAuthors();
