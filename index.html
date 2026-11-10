@@ -859,7 +859,8 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <p><span data-i18n="created_by">Created by:</span> <a href="https://www.henrikbachmann.com/">Henrik Bachmann</a></p>
-    <p><span data-i18n="last_updated">Last updated:</span> 20th October 2026</p>
+    <p><span data-i18n="see_also">See also:</span> <a href="https://eisensteinseries.github.io/MESMeeting/" data-i18n="mes_meeting">Multiple Eisenstein Series Research Meeting</a></p>
+    <p><span data-i18n="last_updated">Last updated:</span> 10th November 2026</p>
     <p class="visitor-count" id="visitor-count"></p>
   </footer>
 
@@ -922,19 +923,21 @@ const AUTHORS = [
   { id: "skadborg", name: "Rasmus Peter Skadborg", url: "", affiliation: "", affiliation_ja: "" },
   { id: "yujinbo", name: "Jinbo Yu", name_ja: "余 錦波", url: "https://sites.google.com/view/yujinbo/home", affiliation: "Nagoya University", affiliation_ja: "名古屋大学" },
   { id: "twchang", name: "Ting-Wei Chang", url: "https://twchang.com/", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
-  { id: "sychen", name: "Song-Yun Chen", url: "", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
-  { id: "fjhuang", name: "Fei-Jun Huang", url: "", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
-  { id: "hctsui", name: "Hung-Chun Tsui", url: "", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
+  { id: "sychen", name: "Song-Yun Chen", url: "https://sites.google.com/view/songyun-math/homepage", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
+  { id: "fjhuang", name: "Fei-Jun Huang", url: "https://feijunhuang.github.io/", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
+  { id: "hctsui", name: "Hung-Chun Tsui", url: "https://hctsui.org/", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
   { id: "sunjianbo", name: "Jianbo Sun", name_ja: "孫 荐博", url: "", affiliation: "Kyushu University", affiliation_ja: "九州大学" },
   { id: "kawamura", name: "Hanamichi Kawamura", name_ja: "川村 花道", url: "https://sites.google.com/view/hanamichikawamura", affiliation: "Tokyo University of Science", affiliation_ja: "東京理科大学" },
-  { id: "schneps", name: "Leila Schneps", url: "", affiliation: "CNRS, Paris", affiliation_ja: "" },
-  { id: "cychang", name: "Chieh-Yu Chang", url: "https://www.math.nthu.edu.tw/~cychang/", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
+  { id: "schneps", name: "Leila Schneps", url: "https://webusers.imj-prg.fr/~leila.schneps/", affiliation: "CNRS, Paris", affiliation_ja: "" },
+  { id: "cychang", name: "Chieh-Yu Chang", url: "https://sites.google.com/gapp.nthu.edu.tw/cychang/", affiliation: "National Tsing Hua University", affiliation_ja: "国立清華大学" },
   { id: "hjchen", name: "Huei-Jeng Chen", url: "", affiliation: "", affiliation_ja: "" },
   { id: "twatanabe", name: "Taiki Watanabe", url: "", affiliation: "The University of Tokyo", affiliation_ja: "東京大学" },
   { id: "gshin", name: "Gyucheol Shin", url: "https://sites.google.com/view/gyucheolshin/", affiliation: "Kangwon National University", affiliation_ja: "" },
   { id: "zudilin", name: "Wadim Zudilin", url: "https://www.math.ru.nl/~wzudilin/", affiliation: "Radboud University Nijmegen", affiliation_ja: "" },
   { id: "hongminh", name: "Killian Hong-Minh", url: "", affiliation: "Trinity College Dublin", affiliation_ja: "" },
-  { id: "mozgovoy", name: "Sergey Mozgovoy", url: "https://www.maths.tcd.ie/~mozgovoy/", affiliation: "Trinity College Dublin", affiliation_ja: "" }
+  { id: "mozgovoy", name: "Sergey Mozgovoy", url: "https://www.maths.tcd.ie/~mozgovoy/", affiliation: "Trinity College Dublin", affiliation_ja: "" },
+  { id: "murakami", name: "Yuya Murakami", name_ja: "村上 友哉", url: "https://sites.google.com/view/yuya-murakami/home", affiliation: "RIKEN iTHEMS", affiliation_ja: "理化学研究所 iTHEMS" },
+  { id: "vleeshouwers", name: "Abel Vleeshouwers", url: "", affiliation: "Radboud University Nijmegen", affiliation_ja: "" }
 ];
 
 // ===================================================================
@@ -1188,13 +1191,14 @@ const REFERENCES = [
     id: "r10",
     title: "The double shuffle relations for multiple Eisenstein series",
     authors: ["bachmann", "tasaka"],
-    year: 2017,
+    year: 2018,
     type: "paper",
     tags: ["multiple Eisenstein series", "double shuffle relations"],
     language: "English",
     links: [
       { label: "Journal", url: "https://www.cambridge.org/core/journals/nagoya-mathematical-journal/article/double-shuffle-relations-for-multiple-eisenstein-series/7FDE55A2B0BA609AB72D3F95436F08FF" },
-      { label: "arXiv", url: "http://arxiv.org/abs/1501.03408" }
+      { label: "arXiv", url: "http://arxiv.org/abs/1501.03408" },
+      { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/paper/Multiple%20Eisenstein%20series.pdf" }
     ],
     journal: "Nagoya Math. J. 230, 180–212"
   },
@@ -1493,13 +1497,15 @@ const REFERENCES = [
     title: "Recent developments and 12 open problems on multiple Eisenstein series",
     authors: ["bachmann"],
     year: 2024,
+    month: 12,
+    day: 8,
     type: "slides",
     tags: ["multiple Eisenstein series", "open problems", "survey"],
     language: "English",
     links: [
       { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/mes_openproblems_bachmann.pdf" }
     ],
-    journal: "Tohoku University, December 2024"
+    journal: "Sendai Seminar on Multiple Eisenstein Series, Tohoku University, December 2024"
   },
   {
     id: "s07",
@@ -2232,6 +2238,22 @@ const REFERENCES = [
     journal: "L-functions and Motives in Niseko 2026, Niseko, September 2026"
   },
   {
+    id: "k19",
+    title: "$\\mathfrak{sl}_2$ acts on the algebra of multiple Eisenstein series",
+    authors: ["kanno"],
+    year: 2026,
+    month: 11,
+    day: 8,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "sl2-algebra"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1fIwTIw5eCFUocU5CfthDxY6o72DfTq7r/view" }
+    ],
+    added: "2026-11-10",
+    journal: "2nd Multiple Eisenstein Series Research Meeting, Nagoya University, November 2026"
+  },
+  {
     id: "t01",
     title: "Symmetric multiple Eisenstein series",
     authors: ["hara", "sakugawa", "tasaka"],
@@ -2303,6 +2325,22 @@ const REFERENCES = [
       { label: "arXiv", url: "https://arxiv.org/abs/2605.28584" }
     ],
     added: "2026-10-20",
+    journal: "Preprint"
+  },
+  {
+    id: "vi01",
+    title: "Multiple $q$-zeta values as polynomials in partition multiplicities",
+    authors: ["vanittersum"],
+    year: 2026,
+    month: 11,
+    day: 4,
+    type: "preprint",
+    tags: ["q-analogues", "multiple zeta values", "bi-brackets"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2611.06301" }
+    ],
+    added: "2026-11-10",
     journal: "Preprint"
   },
   {
@@ -2466,19 +2504,6 @@ const REFERENCES = [
     journal: "Japan-Korea Number Theory Seminar (2004)"
   },
   {
-    id: "mk03",
-    title: "多重ゼータ値と多重ベルヌーイ数 (多重ゼータ値と多重Eisenstein級数)",
-    authors: ["kaneko"],
-    year: 2008,
-    type: "notes",
-    tags: ["multiple Eisenstein series", "multiple zeta values"],
-    language: "Japanese",
-    links: [
-      { label: "PDF", url: "https://www2.math.kyushu-u.ac.jp/~mkaneko/papers/alg-symp2008.pdf" }
-    ],
-    journal: "第53回代数学シンポジウム報告集 (2008)"
-  },
-  {
     id: "ki01",
     title: "Double Eisenstein series and modular forms of level 4",
     authors: ["kina"],
@@ -2626,6 +2651,38 @@ const REFERENCES = [
     ],
     added: "2026-10-20",
     journal: "第17回福岡数論研究集会, Kyushu University, September 2025"
+  },
+  {
+    id: "ki11",
+    title: "On the Space Defined by the Modular Transformation Law for Multiple Eisenstein Series",
+    authors: ["kina"],
+    year: 2026,
+    month: 11,
+    day: 2,
+    type: "preprint",
+    tags: ["multiple Eisenstein series", "modular forms"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2611.02331" }
+    ],
+    added: "2026-11-10",
+    journal: "Preprint"
+  },
+  {
+    id: "ki12",
+    title: "On the Space Defined by the Modular Transformation Law for MES",
+    authors: ["kina"],
+    year: 2026,
+    month: 11,
+    day: 8,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "modular forms"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1gMA8EVs3zHueUekgublzZBJVjRnHvZPA/view" }
+    ],
+    added: "2026-11-10",
+    journal: "2nd Multiple Eisenstein Series Research Meeting, Nagoya University, November 2026"
   },
   {
     id: "ln01",
@@ -2840,6 +2897,22 @@ const REFERENCES = [
       { label: "PDF", url: "https://www.henrikbachmann.com/uploads/7/7/6/3/77634444/bachelorarbeit_turan.pdf" }
     ],
     journal: "Bachelor's Thesis, University of Hamburg"
+  },
+  {
+    id: "av01",
+    title: "Multiple zeta values and their $q$-analogues",
+    authors: ["vleeshouwers"],
+    year: 2020,
+    month: 7,
+    day: 17,
+    type: "thesis",
+    tags: ["q-analogues", "multiple zeta values", "bi-brackets"],
+    language: "English",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2007.08865" }
+    ],
+    added: "2026-11-10",
+    journal: "Master's Thesis, Radboud University Nijmegen"
   },
   {
     id: "rs01",
@@ -3075,6 +3148,85 @@ const REFERENCES = [
     journal: "Preprint"
   },
   {
+    id: "hct01",
+    title: "A Direct Sum Theorem for Multiple Eisenstein Series in Positive Characteristic",
+    authors: ["hctsui"],
+    year: 2026,
+    month: 11,
+    day: 8,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "positive characteristic", "function fields"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://files.hctsui.org/slides/2026-11-8-the-2nd-multiple-eisenstein-series-research-meeting.pdf" }
+    ],
+    added: "2026-11-10",
+    journal: "2nd Multiple Eisenstein Series Research Meeting, Nagoya University, November 2026"
+  },
+  {
+    id: "hct02",
+    title: "Recent Developments on Multiple Eisenstein Series in Positive Characteristic",
+    authors: ["hctsui"],
+    year: 2026,
+    month: 7,
+    day: 6,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "positive characteristic", "function fields"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://files.hctsui.org/slides/2026-7-6-tohuku-university-number-theory-seminar.pdf" }
+    ],
+    added: "2026-11-10",
+    journal: "Number Theory Seminar, Tohoku University, July 2026"
+  },
+  {
+    id: "hct03",
+    title: "On $q$-shuffle Relations for Multiple Eisenstein Series in Positive Characteristic",
+    authors: ["hctsui"],
+    year: 2025,
+    month: 9,
+    day: 3,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "positive characteristic", "function fields"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://files.hctsui.org/slides/2025-9-3-japan-taiwan-number-theory-conference.pdf" }
+    ],
+    added: "2026-11-10",
+    journal: "Japan-Taiwan Number Theory Conference, Kyukamura Shikanoshima, Fukuoka, September 2025"
+  },
+  {
+    id: "fjh01",
+    title: "On $q$-shuffle relations for multiple Eisenstein series in positive characteristic",
+    authors: ["fjhuang"],
+    year: 2026,
+    month: 2,
+    day: 8,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "positive characteristic", "function fields"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1nOdXO1yxGMG_It3i7TFeWiek_mqV_der/view" }
+    ],
+    added: "2026-11-10",
+    journal: "名古屋-関西ゼータ若手研究集会, Nagoya University, February 2026"
+  },
+  {
+    id: "ccht04",
+    title: "On $q$-shuffle Relation for Multiple Eisenstein Series of Arbitrary Rank in Positive Characteristic",
+    authors: ["sychen", "fjhuang"],
+    year: 2026,
+    month: 1,
+    type: "poster",
+    tags: ["multiple Eisenstein series", "positive characteristic", "function fields"],
+    language: "English",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1DNmHBSxaTNjc8Wdi4--LuB4gM55kvyPE/view" }
+    ],
+    added: "2026-11-10",
+    journal: "2026 TMS Annual Meeting, National Chung Cheng University, January 2026"
+  },
+  {
     id: "hjc01",
     title: "On shuffle of double Eisenstein series in positive characteristic",
     authors: ["hjchen"],
@@ -3103,6 +3255,22 @@ const REFERENCES = [
       { label: "PDF", url: "https://www.math.kindai.ac.jp/laboratory/tasaka/2ndKindaiWS/1_1_Sun_Jianbo_KindaiSpeed.pdf" }
     ],
     journal: "2nd Kindai Workshop: MZV and Modular Forms, Kindai University, November 2024"
+  },
+  {
+    id: "ym01",
+    title: "偽テータ関数と多重Eisenstein級数の量子モジュラー性",
+    authors: ["murakami"],
+    year: 2025,
+    month: 3,
+    day: 9,
+    type: "slides",
+    tags: ["multiple Eisenstein series", "quantum modular forms"],
+    language: "Japanese",
+    links: [
+      { label: "PDF", url: "https://drive.google.com/file/d/1_2_JWGVEjKPCr9V5Zpex7YS77mAjovk_/view" }
+    ],
+    added: "2026-11-10",
+    journal: "東北-名古屋ゼータ若手研究集会, Tohoku University, March 2025"
   }
 ];
 
@@ -3138,6 +3306,8 @@ const REFERENCES = [
       no_results: 'No references match the current filters.',
       created_by: 'Created by:',
       last_updated: 'Last updated:',
+      see_also: 'See also:',
+      mes_meeting: 'Multiple Eisenstein Series Research Meeting',
       references: 'references',
       reference: 'reference',
       appendix_by: 'Appendix by',
@@ -3174,6 +3344,8 @@ const REFERENCES = [
       no_results: '条件に一致する文献がありません。',
       created_by: '作成者:',
       last_updated: '最終更新:',
+      see_also: '関連:',
+      mes_meeting: '多重アイゼンシュタイン研究会',
       references: '件',
       reference: '件',
       appendix_by: '付録:',
